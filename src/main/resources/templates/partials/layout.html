@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:fragment="header">
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Pennywise - Finance your life</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{~/css/resources/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.0-beta/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+
+</head>
+<body>
+<nav th:fragment="navbar" class="navbar navbar-dark bg-dark">
+    <div id="preloader">
+        <div id="status">&nbsp;</div>
+    </div>
+    <a class="navbar-brand" href="/">
+        <i class="fas fa-crown"></i>
+        <img src="#" width="30" height="30" class="d-inline-block align-top" alt="">
+        Pennywise
+    </a>
+
+
+    <div class="d-flex flex-row">
+        <div class="text-right header-action-icon p-1 pr-3">
+            <span class="badge-alert badge badge-pill  badge-danger">3</span>
+            <i class="fas fa-ellipsis-h header-action-icon"></i>
+        </div>
+
+        <div class="header-action-icon p-1 pr-3">
+            <span class="badge-alert badge badge-pill  badge-danger">7</span>
+            <i class="fas fa-bell "></i>
+        </div>
+        <div class="btn-group header-button text-right">
+            <button class="btn btn-primary btn-sm header-button" type="button">
+                <div sec:authorize="isAuthenticated()">
+                    <span th:text="${#authentication.principal.profile.firstName}"/>
+                    <th:block th:if="${currentUserConnection == null}" >
+                        <!--<span th:text="${#authentication.principal.username}"/>-->
+                    </th:block>
+
+                    <th:block th:unless="${currentUserConnection == null}" >
+
+
+                        <a th:if="${currentUserConnection.providerId == 'facebook'}" class="ml btn btn-social-icon btn-sm btn-facebook">   <i class="fa fa-facebook"></i></a>
+                        <a th:if="${currentUserConnection.providerId == 'twitter'}"  class="ml btn btn-social-icon btn-sm btn-twitter">    <i class="fa fa-twitter"></i></a>
+                        <a th:if="${currentUserConnection.providerId == 'github'}"   class="ml btn btn-social-icon btn-sm btn-github">     <i class="fa fa-github"></i></a>
+                        <a th:if="${currentUserConnection.providerId == 'google'}"   class="ml btn btn-social-icon btn-sm btn-google-plus"><i class="fa fa-google-plus"></i></a>
+
+                        as <a th:href="${currentUserConnection.profileUrl}" class="navbar-link"><span th:text="${currentUserDisplayName}"/></a>
+                        <img th:src="${currentUserConnection.imageUrl}" width="32" height="32" />
+                    </th:block>
+
+
+                </div>
+
+                <div sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/login}">
+                        Login
+                    </a>
+                </div>
+
+            </button>
+            <button type="button" class="btn btn-sm btn-primary header-button dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" th:href="@{~/profile}">Profile</a>
+                <a class="dropdown-item" th:href="@{~/static/view}">Add bill</a>
+                <a class="dropdown-item" th:href="@{~/static/view}">Settings</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" th:href="@{~/logout}">Logout</a>
+            </div>
+        </div>
+    </div>
+
+
+</nav>
+
+<!-- Footer -->
+<footer  th:fragment="footer">
+
+    <div class="footer-spacer"></div>
+
+    <nav class="navbar navbar-light bg-light navbar-footer fixed-bottom">
+        <a class="navbar-brand" href="#">Pennywise</a>
+    </nav>
+
+    <!--JS Files -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <!-- Preloader -->
+    <script type="text/javascript">
+        //<![CDATA[
+        $(window).on('load', function() { // makes sure the whole site is loaded
+            $('#status').fadeOut(); // will first fade out the loading animation
+            $('#preloader').delay(350).fadeOut('slow'); // will fade out the white DIV that covers the website.
+            $('body').delay(350).css({'overflow':'visible'});
+        })
+        //]]>
+    </script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.0-beta/js/bootstrap-select.min.js"></script>
+    <script th:src="@{~/js/plugins/scotchPanels.js}"></script>
+    <script th:src="@{~/built/main.js}"></script>
+</footer>
+
+
+
+
+</body>
+</html>

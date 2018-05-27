@@ -1,5 +1,4 @@
 # Pennywise  
--
 Personal Finance and Management System
 
 
