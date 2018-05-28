@@ -16,7 +16,7 @@
 
 </head>
 <body>
-<nav th:fragment="navbar" class="navbar navbar-dark bg-dark">
+<nav th:fragment="navbar" class="navbar navbar-dark navbar-header">
     <div id="preloader">
         <div id="status">&nbsp;</div>
     </div>
@@ -29,13 +29,15 @@
 
     <div class="d-flex flex-row">
         <div class="text-right header-action-icon p-1 pr-3">
-            <span class="badge-alert badge badge-pill  badge-danger">3</span>
-            <i class="fas fa-ellipsis-h header-action-icon"></i>
+
+            <div th:replace="partials/notification-center :: general" />
+
         </div>
 
         <div class="header-action-icon p-1 pr-3">
-            <span class="badge-alert badge badge-pill  badge-danger">7</span>
-            <i class="fas fa-bell "></i>
+
+            <div th:replace="partials/notification-center :: alert" />
+
         </div>
         <div class="btn-group header-button text-right">
             <button class="btn btn-primary btn-sm header-button" type="button">

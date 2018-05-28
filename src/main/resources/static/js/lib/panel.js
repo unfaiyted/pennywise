@@ -1,3 +1,5 @@
+import styles from '../../css/module/panel.css'
+
 module.exports = {
 
     settings: {
@@ -16,15 +18,29 @@ module.exports = {
         // $('.toggle-panel').off();  $('.overlay').off();
         //  $( window ).off();
         let panelMember = $('#panel-main').scotchPanel({
-            containerSelector: 'body', // As a jQuery Selector
+            containerSelector: '.panel-container', // As a jQuery Selector
             direction: 'left', // Make it toggle in from the left
             duration: 300, // Speed in ms how fast you want it to be
             transition: 'ease', // CSS3 transition type: linear, ease, ease-in, ease-out, ease-in-out, cubic-bezier(P1x,P1y,P2x,P2y)
             clickSelector: '.toggle-panel', // Enables toggling when clicking elements of this class
             distanceX: '380px', // Size fo the toggle
-            enableEscapeKey: true // Clicking Esc will close the panel
+            enableEscapeKey: true, // Clicking Esc will close the panel
+
+            afterPanelClose: function() {
+                $('#panel-main').animate({
+                    width: "+=50px",
+                    });
+            },
+            afterPanelOpen: function() {
+                $('#panel-main').animate({
+                    width: "-=50px",
+                });
+            }
         });
 
+        $('#panel-main').animate({
+            width: "+=50px",
+        });
 
         $('.toggle-panel').click(function () {
             //disable sticky handler default
