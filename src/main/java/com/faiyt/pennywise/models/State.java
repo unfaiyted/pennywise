@@ -17,6 +17,9 @@ public class State {
     @Column
     private String abbr;
 
+
+    public State() {}
+
     public State(String name, String abbr) {
         this.name = name;
         this.abbr = abbr;
@@ -38,6 +41,11 @@ public class State {
         this.abbr = abbr;
     }
 
+    public Long getId() {
+        return id;
+    }
 
-
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

@@ -12,7 +12,7 @@ public class Merchant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
-    private String merchant;
+    private String name;
     @Column
     private String website;
     @Column
@@ -22,9 +22,12 @@ public class Merchant {
     @ManyToOne
     private Address address;
 
+    public Merchant() {
+        this.address = new Address();
+    }
 
-    public Merchant(String merchant, String website, String websiteUsername, String phoneNumber, Address address) {
-        this.merchant = merchant;
+    public Merchant(String name, String website, String websiteUsername, String phoneNumber, Address address) {
+        this.name = name;
         this.website = website;
         this.websiteUsername = websiteUsername;
         this.phoneNumber = phoneNumber;
@@ -39,12 +42,12 @@ public class Merchant {
         this.id = id;
     }
 
-    public String getMerchant() {
-        return merchant;
+    public String getName() {
+        return name;
     }
 
-    public void setMerchant(String merchant) {
-        this.merchant = merchant;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getWebsite() {

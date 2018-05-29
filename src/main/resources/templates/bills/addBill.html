@@ -24,8 +24,7 @@
         </div>
 
 
-
-        <form  id="bill-form" name="merchant-form" class="col-12 col-lg-6 mx-auto">
+        <form  id="bill-form" name="merchant-form" class="col-12 col-lg-6 mx-auto" th:action="@{/bill/add}"  th:object="${bill}">
 
             <ul id="progressbar" class="text-center">
                 <li class="active">Basics</li>
@@ -40,29 +39,40 @@
                     <span class="text-muted">If you want to track who you owe specifically</span></div>
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="inputAddress">
+                        <label th:for="*{merchant.name}">
                             <p>Merchant</p>
-
                         </label>
-                        <input type="text" class="form-control" id="merchant-name" placeholder="Bill Me Merchant">
+                        <input type="text" class="form-control" th:field="*{merchant.name}" placeholder="Bill Me Merchant">
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="amount">Payment Amount</label>
-                            <input type="text" class="form-control" id="amount">
+                            <label  th:for="*{payment}">Payment Amount</label>
+                            <input type="text" class="form-control"  th:field="*{payment}">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="frequency">Pay Frequency</label>
                             <select id="frequency" class="form-control">
-                                <option selected>Choose...</option>
-                                <option>...</option>
+                                <th:block th:each="freq : ${payFreq}">
+
+                                    <option th:value="${freq.id}" th:text="${freq.name}"></option>
+                                </th:block>
                             </select>
                         </div>
                         <div class="form-group col-md-4">
+                            <label  th:for="*{firstDueDate}">Next due date</label>
+                            <input type="text" class="form-control"  th:field="*{firstDueDate}">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6 mx-auto">
                             <label for="category">Category</label>
                             <select id="category" class="form-control">
-                                <option selected>Choose...</option>
-                                <option>...</option>
+                                <th:block th:each="category : ${categories}">
+
+                                    <option th:value="${category.id}" th:text="${category.name}"></option>
+                                </th:block>
+
                             </select>
                         </div>
                     </div>
@@ -80,28 +90,33 @@
 
                 <div class="card-body">
                 <div class="form-group">
-                    <label for="inputAddress">Address</label>
-                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                    <label th:for="*{merchant.address.title}">Addressed To</label>
+                    <input type="text" class="form-control"  th:field="*{merchant.address.title}"  placeholder="Business C/O Place">
                 </div>
                 <div class="form-group">
-                    <label for="inputAddress2">Address 2</label>
-                    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                    <label th:for="*{merchant.address.street}">Address</label>
+                    <input type="text" class="form-control"  th:field="*{merchant.address.street}" placeholder="123 8th Street APT #4">
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="inputCity">City</label>
-                        <input type="text" class="form-control" id="inputCity">
+                        <label th:for="*{merchant.address.city}">City</label>
+                        <input type="text" class="form-control" th:field="*{merchant.address.city}" >
                     </div>
                     <div class="form-group col-md-4">
                         <label for="inputState">State</label>
                         <select id="inputState" class="form-control">
-                            <option selected>Choose...</option>
-                            <option>...</option>
+
+                            <th:block th:each="state : ${states}">
+
+                                <option th:value="${state.id}" th:text="${state.name}"></option>
+                            </th:block>
+
+
                         </select>
                     </div>
                     <div class="form-group col-md-2">
-                        <label for="inputZip">Zip</label>
-                        <input type="text" class="form-control" id="inputZip">
+                        <label th:for="*{merchant.address.zipCode}">Zip</label>
+                        <input type="text" class="form-control" th:field="*{merchant.address.zipCode}">
                     </div>
                 </div>
 
@@ -121,28 +136,29 @@
 
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="inputAddress">Website URL</label>
-                        <input type="text" class="form-control" id="inputAddress" placeholder="http://billpayonline.com/login">
+                        <label th:for="*{merchant.website}" >Website URL</label>
+                        <input type="text" class="form-control" th:field="*{merchant.website}" placeholder="http://billpayonline.com/login">
                     </div>
                     <div class="form-group">
-                        <label for="inputAddress2">Username</label>
-                        <input type="text" class="form-control" id="inputAddress2" placeholder="Username1">
+                        <label th:for="*{merchant.websiteUsername}">Username</label>
+                        <input type="text" class="form-control" th:field="*{merchant.websiteUsername}" placeholder="PersonalUsername101">
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-3">
-                            <label for="interest-rate">Interest Rate</label>
-                            <input type="text" class="form-control" id="interest-rate" placeholder="11.2%">
+                            <label th:for="*{interestRate}" >Interest Rate</label>
+                            <input type="text" class="form-control" th:field="*{interestRate}" placeholder="11.2%">
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="interest-type">Interest Type </label>
-                            <select id="interest-type" class="form-control">
-                                <option selected>Choose...</option>
-                                <option>...</option>
+                            <label  >Interest Type </label>
+                            <select   class="form-control">
+                                <option  value="NONE" selected>Choose...</option>
+                                <option  value="COMPOUND" >Compound</option>
+                                <option  value="SIMPLE" >Simple</option>
                             </select>
                         </div>
                         <div class="form-group col-md-5">
-                            <label for="inputZip">Total Owed:</label>
-                            <input type="text" class="form-control" id="totalOwed">
+                            <label th:for="*{totalOwed}" >Total Owed:</label>
+                            <input type="text" class="form-control"  th:field="*{totalOwed}" >
                         </div>
                     </div>
 
@@ -160,7 +176,75 @@
                     <span class="text-muted">Hey! Does all your information match?</span>
                 </div>
 
-                <div class="card-body">
+                <div class="card-body text-left">
+
+                    <div class="pb-3">
+                        <h4>Basics</h4>
+
+                        <div class="row">
+                            <div class="col-md-6 font-weight-bold">Merchant:</div>
+                            <div class="col-md-6">Merchant Name</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 font-weight-bold">  Payment Info:</div>
+                            <div class="col-md-6">$156.56 (Twice a Month)</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 font-weight-bold">Next Due Date:</div>
+                            <div class="col-md-6">Nov 3rd 2018</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 font-weight-bold" >Category</div>
+                            <div class="col-md-6">Other</div>
+                        </div>
+
+
+                    </div>
+                    <div class="pb-3">
+                        <h4>Address Info</h4>
+
+                        <div class="row">
+                            <div class="col-md-6 font-weight-bold">Address:</div>
+
+                            <div class="col-md-6">
+
+                                <div class="col-md-12 p-0">J/W Piping C/O Saddie Hawkins</div>
+                                <div class="col-md-12 p-0">7822 Misty Fried Dr</div>
+                                <div class="col-md-12 p-0">San Antonio, Texas 78209-2203</div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="pb-3">
+
+                        <h4>Details</h4>
+
+
+                        <div class="row">
+                            <div class="col-md-6 font-weight-bold">Website:</div>
+                            <div class="col-md-6">http://website.com/login</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 font-weight-bold">Website Username:</div>
+                            <div class="col-md-6">bestGurl101</div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-6 font-weight-bold">Interest:</div>
+                            <div class="col-md-6">11.2% (Compound)</div>
+                        </div>
+
+
+                    </div>
+
+
                     <div class="text-center">
                         <input type="button" name="previous" class=" btn btn-primary previous action-button-previous" value="Previous"/>
                         <input type="button" name="submit" class=" btn btn-primary submit action-button" value="Yeah!"/>

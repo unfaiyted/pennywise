@@ -50,13 +50,20 @@ public class UserController {
         users.addDefaultRole(user.getId());
 
         authenticate(user);
-        return "redirect:/profile";
+        return "redirect:/dashboard";
     }
-    
+
+
 
     @GetMapping("/profile")
     public String loadProfile(Model model) {
         return "users/profile";
+    }
+
+
+    @GetMapping("/dashboard")
+    public String viewDashboard(Model model) {
+        return "users/dashboard";
     }
 
 

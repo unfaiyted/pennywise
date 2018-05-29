@@ -14,12 +14,7 @@ public class PayFrequency {
     @Column
     private String name;
 
-    // Monthly
-    // Weekly
-    // Bi-Weekly
-    // Every-Monday
-    // Every 2 weeks....
-    // on and on... hmm
+    public PayFrequency() {}
 
     public PayFrequency(String name) {
         this.name = name;

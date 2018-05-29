@@ -11,7 +11,7 @@ public class Address {
     private Long id;
 
     @Column
-    private String addresedTo;
+    private String title;
     @Column
     private String street;
     @Column
@@ -23,9 +23,11 @@ public class Address {
     @ManyToOne
     private State state;
 
-    public Address(Long id, String addresedTo, String street, String city, State state, String zipCode) {
+    public  Address() {}
+
+    public Address(Long id, String title, String street, String city, State state, String zipCode) {
         this.id = id;
-        this.addresedTo = addresedTo;
+        this.title = title;
         this.street = street;
         this.city = city;
         this.state = state;
@@ -40,12 +42,12 @@ public class Address {
         this.id = id;
     }
 
-    public String getAddresedTo() {
-        return addresedTo;
+    public String getTitle() {
+        return title;
     }
 
-    public void setAddresedTo(String addresedTo) {
-        this.addresedTo = addresedTo;
+    public void setTitle(String addresedTo) {
+        this.title = addresedTo;
     }
 
     public String getStreet() {

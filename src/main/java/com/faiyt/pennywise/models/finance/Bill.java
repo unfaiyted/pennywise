@@ -1,6 +1,5 @@
 package com.faiyt.pennywise.models.finance;
 
-import com.faiyt.pennywise.models.Address;
 import com.faiyt.pennywise.models.user.User;
 
 import javax.persistence.*;
@@ -24,20 +23,40 @@ public class Bill {
     @Column
     private String interestType;
 
+    @Column
+    private Double payment;
+    @Column
+    private Double totalOwed;
+
+
     @ManyToOne
     private BillCategory category;
-
     @ManyToOne
     private Merchant merchant;
-
     @ManyToOne
     private User owner;
 
+
+    public Bill() {
+        this.merchant = new Merchant();
+        this.owner = new User();
+    }
 
     public Bill(Long id, User owner, LocalDateTime firstDueDate) {
         this.id = id;
         this.owner = owner;
         this.firstDueDate = firstDueDate;
+    }
+
+    public Bill(String nickname, LocalDateTime createdAt, LocalDateTime firstDueDate, Double interestRate, String interestType, BillCategory category, Merchant merchant, User owner) {
+        this.nickname = nickname;
+        this.createdAt = createdAt;
+        this.firstDueDate = firstDueDate;
+        this.interestRate = interestRate;
+        this.interestType = interestType;
+        this.category = category;
+        this.merchant = merchant;
+        this.owner = owner;
     }
 
     public Long getId() {
@@ -113,5 +132,22 @@ public class Bill {
 
     public void setMerchant(Merchant merchant) {
         this.merchant = merchant;
+    }
+
+    public Double getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Double payment) {
+        this.payment = payment;
+    }
+
+
+    public Double getTotalOwed() {
+        return totalOwed;
+    }
+
+    public void setTotalOwed(Double totalOwed) {
+        this.totalOwed = totalOwed;
     }
 }

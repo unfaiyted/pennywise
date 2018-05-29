@@ -12,6 +12,7 @@ public class BillCategory {
     @Column
     private String name;
 
+    public BillCategory() {}
 
     public BillCategory(String name) {
         this.name = name;
