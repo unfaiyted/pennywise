@@ -11,12 +11,15 @@
                 General
                 <a href="#" class="toggle-panel"> <i class="fas fa-expand"></i></a>
             </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center"><i class="fas fa-columns"></i> Dashboard</li>
+            <li class="list-group-item d-flex justify-content-between align-items-center"><i class="fas fa-columns"></i>
+                <a th:href="@{~/profile}">Dashboard</a> </li>
             <li class="list-group-item d-flex justify-content-between align-items-center"><i class="fas fa-columns"></i> Profile</li>
         </ul>
         <ul class="list-group">
             <li class="card-header">Actions </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center"><i class="fas fa-columns"></i> Tasks</li>
+            <li class="list-group-item d-flex justify-content-between align-items-center"><i class="fas fa-columns"></i>
+               <a th:href="@{~/bill/add}">Add new Bill</a>
+            </li>
             <li class="list-group-item d-flex justify-content-between align-items-center"><i class="fas fa-columns"></i> Calendar</li>
             <li class="list-group-item d-flex justify-content-between align-items-center"><i class="fas fa-columns"></i> Timeline</li>
         </ul>

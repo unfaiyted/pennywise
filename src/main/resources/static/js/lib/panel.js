@@ -41,6 +41,10 @@ module.exports = {
         $('#panel-main').animate({
             width: "+=50px",
         });
+        $('.container').animate({
+            paddingLeft: "+=50px",
+        });
+
 
         $('.toggle-panel').click(function () {
             //disable sticky handler default

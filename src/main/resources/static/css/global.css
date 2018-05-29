@@ -39,7 +39,7 @@ body {
 .splash-container {
     position: relative;
     width: 100%;
-    height: calc(100vh - 60px);
+    height: calc(100vh - 77px);
     background: url("../img/header.jpg");
     background-size: cover;
     background-position:center;
@@ -49,6 +49,7 @@ body {
 .navbar {
     padding-top: 12px;
     padding-bottom: 10px;
+    border: 0;
 }
 
 
@@ -98,6 +99,20 @@ body {
 }
 
 
+.ripple {
+    background-position: center;
+    transition: background 0.8s;
+}
+.ripple:hover {
+    background: #47a7f5 radial-gradient(circle, transparent 1%, #47a7f5 1%) center/15000%;
+}
+.ripple:active {
+    background-color: #6eb9f7;
+    background-size: 100%;
+    transition: background 0s;
+}
+
+
 
 button .btn-primary {
     padding-bottom: 35px;
@@ -140,7 +155,7 @@ button .btn-primary {
 
 .dropdown-menu .icon{
     font-size: 40px;
-    color: #03bbf3;
+    color: rgb(218, 45, 26);
 }
 .dropdown-menu p  {
     margin-bottom: 2px;
@@ -148,10 +163,12 @@ button .btn-primary {
 
 .dropdown-menu .title {
     color: black;
+    font-weight: bold;
 }
 
+
 .dropdown-menu .time {
-    color: #32a3c5;;
+    color: #912320;
 }
 
 
@@ -215,4 +232,31 @@ element.style {
 
 .dropdown-menu .list-group-item {
     border: 0px;
+}
+
+.tag-button {
+    background-color: rgba(133, 4, 0, 0.72);
+    border: 3px solid #fff;
+    color: #fff;
+    border-radius: 25px;
+    width: 250px;
+    height:50px;
+    line-height: 40px;
+    -webkit-box-shadow: -1px -1px 44px -6px rgba(255,255,255,1);
+    -moz-box-shadow: -1px -1px 44px -6px rgba(255,255,255,1);
+    box-shadow: -1px -1px 44px -6px rgba(255,255,255,1);
+}
+
+.tag-button:hover {
+    background-color: rgba(200,0,0,0.75);
+    -webkit-box-shadow: -1px -1px 44px -6px rgba(255,0,0,1);
+    -moz-box-shadow: -1px -1px 44px -6px rgba(255,0,0,1);
+    box-shadow: -1px -1px 44px -6px rgba(255,0,0,1);
+    cursor: pointer;
+
+}
+
+.tag-button a {
+    color: #fff;
+    text-decoration: none;
 }

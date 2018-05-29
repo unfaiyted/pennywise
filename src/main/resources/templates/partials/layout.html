@@ -16,13 +16,13 @@
 
 </head>
 <body>
-<nav th:fragment="navbar" class="navbar navbar-dark navbar-header">
+<nav th:fragment="navbar" class="navbar navbar-dark bg-red-gradient navbar-header">
     <div id="preloader">
         <div id="status">&nbsp;</div>
     </div>
     <a class="navbar-brand" href="/">
-        <i class="fas fa-crown"></i>
-        <img src="#" width="30" height="30" class="d-inline-block align-top" alt="">
+        <!--<i class="fas fa-crown"></i>-->
+        <img th:src="@{~/img/balloons.png}" width="30" height="30" class="d-inline-block align-top" alt="">
         Pennywise
     </a>
 
@@ -90,7 +90,7 @@
 
     <div class="footer-spacer"></div>
 
-    <nav class="navbar navbar-light bg-light navbar-footer fixed-bottom">
+    <nav class="navbar navbar-dark bg-dark navbar-footer fixed-bottom">
         <a class="navbar-brand" href="#">Pennywise</a>
     </nav>
 
@@ -112,6 +112,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.0-beta/js/bootstrap-select.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
     <script th:src="@{~/js/plugins/scotchPanels.js}"></script>
     <script th:src="@{~/built/main.js}"></script>
 </footer>

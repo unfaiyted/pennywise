@@ -8,7 +8,8 @@ module.exports = {
     // add the promise and fetch polyfill first
     entry: {
         main: ['promise-polyfill', 'whatwg-fetch', './src/main/resources/static/js/global.js'],
-        user: './src/main/resources/static/js/user.js'
+        user: './src/main/resources/static/js/user.js',
+        form: './src/main/resources/static/js/form.js'
 
     },
     // where to put the transpiled javascript

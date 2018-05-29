@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="partials/layout :: header">
+    <meta charset="UTF-8" />
+    <title>Home</title>
+</head>
+<body>
+
+<div th:replace="partials/layout :: navbar" />
+
+
+<div class="panel-container">
+    <span class="overlay"></span>
+    <div class="container">
+        <div th:replace="partials/panel :: left-panel" />
+
+        <div class="text-left">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Dane Miller</a></li>
+                <li class="breadcrumb-item active">Add Bill</li>
+            </ol>
+        </div>
+
+
+
+        <form  id="bill-form" name="merchant-form" class="col-12 col-lg-6 mx-auto">
+
+            <ul id="progressbar" class="text-center">
+                <li class="active">Basics</li>
+                <li>Address Info</li>
+                <li>Details</li>
+                <li>Confirm</li>
+
+            </ul>
+
+            <fieldset class="card">
+                <div class="card-header"><p>Basics</p>
+                    <span class="text-muted">If you want to track who you owe specifically</span></div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="inputAddress">
+                            <p>Merchant</p>
+
+                        </label>
+                        <input type="text" class="form-control" id="merchant-name" placeholder="Bill Me Merchant">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="amount">Payment Amount</label>
+                            <input type="text" class="form-control" id="amount">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="frequency">Pay Frequency</label>
+                            <select id="frequency" class="form-control">
+                                <option selected>Choose...</option>
+                                <option>...</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="category">Category</label>
+                            <select id="category" class="form-control">
+                                <option selected>Choose...</option>
+                                <option>...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <input type="button" name="next" class=" btn btn-primary next action-button" value="Next"/>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset  class="card">
+                <div class="card-header">
+                    <p>Address Info</p>
+                    <span class="text-muted">If you want to track who you owe specifically</span>
+                </div>
+
+                <div class="card-body">
+                <div class="form-group">
+                    <label for="inputAddress">Address</label>
+                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress2">Address 2</label>
+                    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputCity">City</label>
+                        <input type="text" class="form-control" id="inputCity">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputState">State</label>
+                        <select id="inputState" class="form-control">
+                            <option selected>Choose...</option>
+                            <option>...</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputZip">Zip</label>
+                        <input type="text" class="form-control" id="inputZip">
+                    </div>
+                </div>
+
+                    <div class="text-center">
+                        <input type="button" name="previous" class=" btn btn-primary previous action-button-previous" value="Previous"/>
+                        <input type="button" name="next" class=" btn btn-primary next action-button" value="Next"/>
+                    </div>
+                </div>
+            </fieldset>
+
+
+            <fieldset  class="card">
+                <div class="card-header">
+                    <p>Details</p>
+                    <span class="text-muted">Just a bit more (optional) info...</span>
+                </div>
+
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="inputAddress">Website URL</label>
+                        <input type="text" class="form-control" id="inputAddress" placeholder="http://billpayonline.com/login">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress2">Username</label>
+                        <input type="text" class="form-control" id="inputAddress2" placeholder="Username1">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label for="interest-rate">Interest Rate</label>
+                            <input type="text" class="form-control" id="interest-rate" placeholder="11.2%">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="interest-type">Interest Type </label>
+                            <select id="interest-type" class="form-control">
+                                <option selected>Choose...</option>
+                                <option>...</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="inputZip">Total Owed:</label>
+                            <input type="text" class="form-control" id="totalOwed">
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <input type="button" name="previous" class=" btn btn-primary previous action-button-previous" value="Previous"/>
+                        <input type="button" name="next" class=" btn btn-primary next action-button" value="Next"/>
+                    </div>
+                </div>
+            </fieldset>
+
+
+            <fieldset  class="card">
+                <div class="card-header">
+                    <p>Confirm</p>
+                    <span class="text-muted">Hey! Does all your information match?</span>
+                </div>
+
+                <div class="card-body">
+                    <div class="text-center">
+                        <input type="button" name="previous" class=" btn btn-primary previous action-button-previous" value="Previous"/>
+                        <input type="button" name="submit" class=" btn btn-primary submit action-button" value="Yeah!"/>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+<div th:replace="partials/layout :: footer" />
+<script th:src="@{~/built/form.js}"></script>
+</body>
+</html>

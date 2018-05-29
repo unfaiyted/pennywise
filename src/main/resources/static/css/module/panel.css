@@ -1,5 +1,5 @@
 #panel-main {
-    background-color: #6f6f6f;
+    background-color: #212529;
     border-right: 1px solid #333333;
     -webkit-box-shadow: 1px 1px 8px 2px rgba(0,0,0,0.12);
     box-shadow: 1px 1px 8px 2px rgba(0,0,0,0.12);
@@ -8,9 +8,9 @@
 
 li.card-header {
     color: #fff;
-    background: #00B4DB;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to top, #0083B0, #00B4DB);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to top, #0083B0, #00B4DB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #232526;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #414345, #232526);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #414345, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
 
