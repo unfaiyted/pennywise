@@ -90,12 +90,16 @@ module.exports = {
     },
 
 
-
-
 };
 
 
-module.exports.init();
+
+if ($(".ct-chart")[0]){
+    // Do something if class exists
+
+    module.exports.init();
+}
+
 
 
 

@@ -94,7 +94,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .permitAll()
                     .and()
                      .authorizeRequests()
-                     .antMatchers("/bill/**")
+                     .antMatchers("/bill/**","/dashboard")
                      .hasAuthority("USER")
                     /* Pages that require authentication */
                 .and()
