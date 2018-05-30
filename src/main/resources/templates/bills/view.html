@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="partials/layout :: header">
+    <meta charset="UTF-8" />
+    <title>Home</title>
+</head>
+<body>
+
+<div th:replace="partials/layout :: navbar" />
+
+<div class="panel-container">
+    <span class="overlay"></span>
+    <div class="container">
+        <div th:replace="partials/panel :: left-panel" />
+
+        <div class="row">
+
+
+        <div class="text-left col-12">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Dane Miller</a></li>
+                <li class="breadcrumb-item active">Bills</li>
+            </ol>
+        </div>
+        </div>
+
+            <div class="card bg-dark-gradient text-white mb-1 m-2">
+                <div class="card-body">
+                    <div class="d-flex flew-row justify-content-center">
+                        <div class="p-1">
+                            <i class="fas fa-hand-holding-usd big-icon"></i>
+                        </div>
+                        <div class="p-1 text-right">
+                            <span class="card-text-amount" th:text="'$' + ${total}">$5500.00</span>
+                            <span class="">total bills monthly</span>
+                        </div>
+
+                        <div class="align-self-center  ml-4 p-2 w-100">
+                           <ul class="row justify-content-center">
+                               <li class="card bg-green-gradient mr-3 col-md-3 bill-analysis">
+                                   <div class="amt" th:text="${#lists.size(bills)}">14</div>
+                                   <div class="desc">total bills</div> </li>
+                               <li class="card bg-green-gradient mr-3 col-md-3  bill-analysis">
+                                   <div class="amt" th:text="'$' +${totalCC}">$3611.00</div>
+                                   <div class="desc">in credit cards only</div>
+                               </li>
+                               <li class="card bg-green-gradient mr-3 col-md-3  bill-analysis">
+                                   <div class="amt">$XXX.xx</div>
+                                   <div class="desc">estimated monthly interest</div>
+
+                                   </li>
+                           </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        <div class="row">
+
+            <div class="col-12 m-4">
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Dane's Bills</h3>
+                </div>
+
+                <div class="card-table">
+
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <td>Category</td>
+                            <td>Name</td>
+                            <td>Status</td>
+                            <td>Payment</td>
+                            <td>Action</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <th:block th:each="bill : ${bills}">
+                            <tr class="bill"  th:data-id="${bill.id}">
+                                <td class="big-icon pl-4"><i th:class="${bill.category.icon}"></i></td>
+                                <td><p><a href="#" th:text="${bill.merchant.name}"></a></p>
+                                    <span class="text-muted" th:text="'Since ' + ${#temporals.format(bill.createdAt, 'MM/dd/yyyy ')} ">Since 05/01/2012</span>
+                                </td>
+                                <td><span class="badge badge-primary">Late</span></td>
+                                <td ><span th:text="'$' + ${#numbers.formatDecimal(bill.payment, 0, 'COMMA', 2, 'POINT')}">$114.00</span> (<span th:text="${bill.frequency.name}">Monthly</span>)</td>
+                                <td>
+                                    <button class="btn btn-secondary" data-toggle="modal" data-target="#pay-modal"> Pay </button>
+                                    <button class="btn btn-primary delete-btn"  th:data-id="${bill.id}"> Delete </button></td>
+                            </tr>
+
+                        </th:block>
+
+
+
+
+
+
+
+                        </tbody>
+                    </table>
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+
+
+    </div>
+</div>
+</div>
+<div th:replace="partials/layout :: footer" />
+
+<div th:replace="bills/payPanel :: modal" />
+<script th:src="@{~/built/bills.js}"></script>
+</body>
+</html>

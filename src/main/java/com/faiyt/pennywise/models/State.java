@@ -18,9 +18,17 @@ public class State {
     private String abbr;
 
 
-    public State() {}
+    public State() {
+
+    }
 
     public State(String name, String abbr) {
+        this.name = name;
+        this.abbr = abbr;
+    }
+
+    public State(Long id, String name, String abbr) {
+        this.id = id;
         this.name = name;
         this.abbr = abbr;
     }

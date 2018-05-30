@@ -23,7 +23,9 @@ public class Address {
     @ManyToOne
     private State state;
 
-    public  Address() {}
+    public  Address() {
+        this.state = new State();
+    }
 
     public Address(Long id, String title, String street, String city, State state, String zipCode) {
         this.id = id;

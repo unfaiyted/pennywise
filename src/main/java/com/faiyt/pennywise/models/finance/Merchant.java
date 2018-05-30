@@ -19,7 +19,7 @@ public class Merchant {
     private String websiteUsername;
     @Column
     private String phoneNumber;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Address address;
 
     public Merchant() {
@@ -80,5 +80,17 @@ public class Merchant {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "Merchant{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", website='" + website + '\'' +
+                ", websiteUsername='" + websiteUsername + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address=" + address +
+                '}';
     }
 }

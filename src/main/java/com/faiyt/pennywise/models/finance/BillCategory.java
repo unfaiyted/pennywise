@@ -12,10 +12,14 @@ public class BillCategory {
     @Column
     private String name;
 
+    @Column
+    private String icon;
+
     public BillCategory() {}
 
-    public BillCategory(String name) {
+    public BillCategory(String name, String icon ) {
         this.name = name;
+        this.icon = icon;
     }
 
     public Long getId() {
@@ -32,5 +36,21 @@ public class BillCategory {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    @Override
+    public String toString() {
+        return "BillCategory{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

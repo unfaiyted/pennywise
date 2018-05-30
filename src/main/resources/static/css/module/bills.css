@@ -1,0 +1,18 @@
+
+
+.bill-analysis {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+
+}
+
+.bill-analysis .amt {
+    font-size: 25px;
+
+}
+
+.bill-analysis .desc {
+    font-size: 12px;
+}

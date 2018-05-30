@@ -44,6 +44,7 @@ public class UserService {
             try {
                 return  (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             } catch (ClassCastException e) {
+                System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
                 ExtendedSocialUser socialUser = (ExtendedSocialUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
                 return getUsers().findByUsername(socialUser.getUserId());
             }

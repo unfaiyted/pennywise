@@ -1,8 +1,10 @@
 package com.faiyt.pennywise.models.finance;
 
 import com.faiyt.pennywise.models.user.User;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,7 +19,8 @@ public class Bill {
     @Column
     private LocalDateTime createdAt = LocalDateTime.now();
     @Column
-    private LocalDateTime firstDueDate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate firstDueDate;
     @Column
     private Double interestRate;
     @Column
@@ -28,10 +31,11 @@ public class Bill {
     @Column
     private Double totalOwed;
 
-
     @ManyToOne
     private BillCategory category;
     @ManyToOne
+    private PayFrequency frequency;
+    @ManyToOne(cascade = CascadeType.ALL)
     private Merchant merchant;
     @ManyToOne
     private User owner;
@@ -40,15 +44,16 @@ public class Bill {
     public Bill() {
         this.merchant = new Merchant();
         this.owner = new User();
+        this.category = new BillCategory();
     }
 
-    public Bill(Long id, User owner, LocalDateTime firstDueDate) {
+    public Bill(Long id, User owner, LocalDate firstDueDate) {
         this.id = id;
         this.owner = owner;
         this.firstDueDate = firstDueDate;
     }
 
-    public Bill(String nickname, LocalDateTime createdAt, LocalDateTime firstDueDate, Double interestRate, String interestType, BillCategory category, Merchant merchant, User owner) {
+    public Bill(String nickname, PayFrequency frequency, LocalDateTime createdAt, LocalDate firstDueDate, Double interestRate, String interestType, BillCategory category, Merchant merchant, User owner) {
         this.nickname = nickname;
         this.createdAt = createdAt;
         this.firstDueDate = firstDueDate;
@@ -57,6 +62,7 @@ public class Bill {
         this.category = category;
         this.merchant = merchant;
         this.owner = owner;
+        this.frequency = frequency;
     }
 
     public Long getId() {
@@ -85,11 +91,11 @@ public class Bill {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getFirstDueDate() {
+    public LocalDate getFirstDueDate() {
         return firstDueDate;
     }
 
-    public void setFirstDueDate(LocalDateTime firstDueDate) {
+    public void setFirstDueDate(LocalDate firstDueDate) {
         this.firstDueDate = firstDueDate;
     }
 
@@ -149,5 +155,30 @@ public class Bill {
 
     public void setTotalOwed(Double totalOwed) {
         this.totalOwed = totalOwed;
+    }
+
+    public PayFrequency getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(PayFrequency frequency) {
+        this.frequency = frequency;
+    }
+
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "id=" + id +
+                ", nickname='" + nickname + '\'' +
+                ", createdAt=" + createdAt +
+                ", firstDueDate=" + firstDueDate +
+                ", interestRate=" + interestRate +
+                ", interestType='" + interestType + '\'' +
+                ", payment=" + payment +
+                ", totalOwed=" + totalOwed +
+                ", category=" + category +
+                ", merchant=" + merchant +
+                ", owner=" + owner +
+                '}';
     }
 }

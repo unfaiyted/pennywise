@@ -24,7 +24,7 @@
         </div>
 
 
-        <form  id="bill-form" name="merchant-form" class="col-12 col-lg-6 mx-auto" th:action="@{/bill/add}"  th:object="${bill}">
+        <form  id="bill-form" name="merchant-form" class="col-12 col-lg-6 mx-auto" method="post" th:action="@{~/bill/add}"  th:object="${bill}">
 
             <ul id="progressbar" class="text-center">
                 <li class="active">Basics</li>
@@ -66,13 +66,9 @@
 
                     <div class="form-row">
                         <div class="form-group col-md-6 mx-auto">
-                            <label for="category">Category</label>
-                            <select id="category" class="form-control">
-                                <th:block th:each="category : ${categories}">
-
-                                    <option th:value="${category.id}" th:text="${category.name}"></option>
-                                </th:block>
-
+                            <label th:for="*{category.id}">Category</label>
+                            <select th:field="*{category.id}"  class="form-control">
+                                <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}">Category</option>
                             </select>
                         </div>
                     </div>
@@ -103,15 +99,9 @@
                         <input type="text" class="form-control" th:field="*{merchant.address.city}" >
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="inputState">State</label>
-                        <select id="inputState" class="form-control">
-
-                            <th:block th:each="state : ${states}">
-
-                                <option th:value="${state.id}" th:text="${state.name}"></option>
-                            </th:block>
-
-
+                        <label th:for="*{merchant.address.state.id}">State</label>
+                        <select th:field="*{merchant.address.state.id}"  class="form-control">
+                            <option th:each="s : ${states}" th:value="${s.id}" th:text="${s.name}">Texas</option>
                         </select>
                     </div>
                     <div class="form-group col-md-2">
@@ -149,11 +139,11 @@
                             <input type="text" class="form-control" th:field="*{interestRate}" placeholder="11.2%">
                         </div>
                         <div class="form-group col-md-4">
-                            <label  >Interest Type </label>
-                            <select   class="form-control">
-                                <option  value="NONE" selected>Choose...</option>
-                                <option  value="COMPOUND" >Compound</option>
-                                <option  value="SIMPLE" >Simple</option>
+                            <label th:for="*{interestType}">Interest Type </label>
+                            <select th:field="*{interestType}"  name="interestType" class="form-control">
+                                <option  value="None" selected>Choose...</option>
+                                <option  value="Compound" >Compound</option>
+                                <option  value="Simple" >Simple</option>
                             </select>
                         </div>
                         <div class="form-group col-md-5">
@@ -183,22 +173,22 @@
 
                         <div class="row">
                             <div class="col-md-6 font-weight-bold">Merchant:</div>
-                            <div class="col-md-6">Merchant Name</div>
+                            <div class="col-md-6" id="merchant-name">Merchant Name</div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 font-weight-bold">  Payment Info:</div>
-                            <div class="col-md-6">$156.56 (Twice a Month)</div>
+                            <div class="col-md-6"><span id="payment-amount">$156.56</span> (<span id="payment-freq">Twice a Month</span>)</div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 font-weight-bold">Next Due Date:</div>
-                            <div class="col-md-6">Nov 3rd 2018</div>
+                            <div class="col-md-6" id="due-date">Nov 3rd 2018</div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 font-weight-bold" >Category</div>
-                            <div class="col-md-6">Other</div>
+                            <div class="col-md-6" id="payment-category">Other</div>
                         </div>
 
 
@@ -211,9 +201,10 @@
 
                             <div class="col-md-6">
 
-                                <div class="col-md-12 p-0">J/W Piping C/O Saddie Hawkins</div>
-                                <div class="col-md-12 p-0">7822 Misty Fried Dr</div>
-                                <div class="col-md-12 p-0">San Antonio, Texas 78209-2203</div>
+                                <div class="col-md-12 p-0" id="addressee">J/W Piping C/O Saddie Hawkins</div>
+                                <div class="col-md-12 p-0" id="address">7822 Misty Fried Dr</div>
+                                <div class="col-md-12 p-0"><span id="city">San Antonio</span>, <span id="state">Texas</span>
+                                    <span class="zip-code">78209-2203</span></div>
 
                             </div>
                         </div>
@@ -227,27 +218,29 @@
 
                         <div class="row">
                             <div class="col-md-6 font-weight-bold">Website:</div>
-                            <div class="col-md-6">http://website.com/login</div>
+                            <div class="col-md-6" id="website">http://website.com/login</div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 font-weight-bold">Website Username:</div>
-                            <div class="col-md-6">bestGurl101</div>
+                            <div class="col-md-6" id="webUsername">bestGurl101</div>
                         </div>
                         <hr>
 
                         <div class="row">
                             <div class="col-md-6 font-weight-bold">Interest:</div>
-                            <div class="col-md-6">11.2% (Compound)</div>
+                            <div class="col-md-6"><span id="bill-interestRate">11.2%</span> (<span id="bill-interestType">Compound</span>)</div>
                         </div>
-
+                        <div class="row">
+                            <div class="col-md-6 font-weight-bold">Total Owed:</div>
+                            <div class="col-md-6"><span id="bill-totalOwed">$11,545.02</div>
+                        </div>
 
                     </div>
 
-
                     <div class="text-center">
                         <input type="button" name="previous" class=" btn btn-primary previous action-button-previous" value="Previous"/>
-                        <input type="button" name="submit" class=" btn btn-primary submit action-button" value="Yeah!"/>
+                        <input type="submit" name="submit"  class=" btn btn-primary submit action-button" value="Yeah!"/>
                     </div>
                 </div>
             </fieldset>

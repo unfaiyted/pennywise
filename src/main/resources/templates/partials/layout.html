@@ -42,7 +42,7 @@
         <div class="btn-group header-button text-right">
             <button class="btn btn-primary btn-sm header-button" type="button">
                 <div sec:authorize="isAuthenticated()">
-                    <span th:text="${#authentication.principal.profile.firstName}"/>
+                    <span th:text="${#authentication?.principal?.profile?.firstName}"/>
                     <th:block th:if="${currentUserConnection == null}" >
                         <!--<span th:text="${#authentication.principal.username}"/>-->
                     </th:block>
@@ -90,7 +90,7 @@
 
     <div class="footer-spacer"></div>
 
-    <nav class="navbar navbar-dark bg-dark navbar-footer fixed-bottom">
+    <nav class="navbar navbar-dark bg-dark navbar-footer">
         <a class="navbar-brand" href="#">Pennywise</a>
     </nav>
 

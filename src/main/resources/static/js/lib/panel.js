@@ -17,31 +17,35 @@ module.exports = {
 
         // $('.toggle-panel').off();  $('.overlay').off();
         //  $( window ).off();
-        let panelMember = $('#panel-main').scotchPanel({
-            containerSelector: '.panel-container', // As a jQuery Selector
+        let panelMember = $('#panel-back').scotchPanel({
+            containerSelector: 'body', // As a jQuery Selector
             direction: 'left', // Make it toggle in from the left
             duration: 300, // Speed in ms how fast you want it to be
             transition: 'ease', // CSS3 transition type: linear, ease, ease-in, ease-out, ease-in-out, cubic-bezier(P1x,P1y,P2x,P2y)
-            clickSelector: '.toggle-panel', // Enables toggling when clicking elements of this class
+            clickSelector: '.toggle-panel, .panel-click', // Enables toggling when clicking elements of this class
             distanceX: '380px', // Size fo the toggle
             enableEscapeKey: true, // Clicking Esc will close the panel
 
             afterPanelClose: function() {
-                $('#panel-main').animate({
+                $('#panel-back').animate({
                     width: "+=50px",
                     });
             },
             afterPanelOpen: function() {
-                $('#panel-main').animate({
+                $('#panel-back').animate({
                     width: "-=50px",
                 });
             }
         });
 
-        $('#panel-main').animate({
+        $('#panel-back').animate({
             width: "+=50px",
         });
         $('.container').animate({
+            paddingLeft: "+=50px",
+        });
+
+        $('.navbar').animate({
             paddingLeft: "+=50px",
         });
 
@@ -52,9 +56,9 @@ module.exports = {
             // move to top
             $('html,body').animate({scrollTop:0},600);
 
-            let top = $( ".sticky-parent" ).css("top");
+            let top = $( "#panel-main" ).css("top");
 
-            $( ".sticky-parent" ).animate({
+            $( "#panel-main" ).animate({
                 top: "-=" + top ,
             }, 150, function() {
 
@@ -75,7 +79,6 @@ module.exports = {
         module.exports.stickyHandler()
 
     },
-
 
     stickyHandler: () => {
 
@@ -106,7 +109,7 @@ module.exports = {
 
         if(module.exports.settings.updatePos = true) {
 
-            $(".sticky-parent").animate({
+            $("#panel-main").animate({
                 top: action,
             }, 150, function () {
                 module.exports.settings.updatePos = false;
