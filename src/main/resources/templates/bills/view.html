@@ -86,7 +86,7 @@
                         <th:block th:each="bill : ${bills}">
                             <tr class="bill"  th:data-id="${bill.id}">
                                 <td class="big-icon pl-4"><i th:class="${bill.category.icon}"></i></td>
-                                <td><p><a href="#" th:text="${bill.merchant.name}"></a></p>
+                                <td><p><a th:href="@{~/bill/view/} + ${bill.id}" th:text="${bill.merchant.name}"></a></p>
                                     <span class="text-muted" th:text="'Since ' + ${#temporals.format(bill.createdAt, 'MM/dd/yyyy ')} ">Since 05/01/2012</span>
                                 </td>
                                 <td><span class="badge badge-primary">Late</span></td>

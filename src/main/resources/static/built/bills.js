@@ -231,7 +231,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n.bill-analysis {\n    list-style-type: none;\n    padding: 0;\n    margin: 0;\n    text-align: center;\n\n}\n\n.bill-analysis .amt {\n    font-size: 25px;\n\n}\n\n.bill-analysis .desc {\n    font-size: 12px;\n}\n", ""]);
+exports.push([module.i, ".table {\n    margin-bottom: 0;\n}\n\n.bill-analysis {\n    list-style-type: none;\n    padding: 0;\n    margin: 0;\n    text-align: center;\n\n}\n\n.bill-analysis .amt {\n    font-size: 25px;\n\n}\n\n.bill-analysis .desc {\n    font-size: 12px;\n}\n", ""]);
 
 // exports
 

@@ -3,8 +3,6 @@ package com.faiyt.pennywise.controllers.api;
 
 import com.faiyt.pennywise.models.Response;
 import com.faiyt.pennywise.models.ResponseError;
-import com.faiyt.pennywise.services.AddressService;
-import com.faiyt.pennywise.services.BillService;
 import com.faiyt.pennywise.services.IncomeService;
 import com.faiyt.pennywise.services.user.UserService;
 import com.faiyt.pennywise.util.StringToObject;

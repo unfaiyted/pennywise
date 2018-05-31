@@ -48,6 +48,15 @@ body {
 
 }
 
+
+.text-truncate {
+    text-overflow: ellipsis;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+
+}
+
 .navbar {
     padding-top: 12px;
     padding-bottom: 10px;

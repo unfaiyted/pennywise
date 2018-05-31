@@ -1,10 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="partials/layout :: header">
+    <meta charset="UTF-8" />
+    <title>Home</title>
 </head>
 <body>
 
+<div th:replace="partials/layout :: navbar" />
+
+<div class="panel-container">
+    <span class="overlay"></span>
+    <div class="container">
+        <div th:replace="partials/panel :: left-panel" />
+
+        <div class="row">
+
+            <div class="text-left col-md-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Dane Miller</a></li>
+                    <li class="breadcrumb-item"><a href="#">Bills</a></li>
+                    <li class="breadcrumb-item active" th:text="${bill.merchant.name}"></li>
+                </ol>
+            </div>
+
+            <div class="col-md-6 text-right">
+                <button class="btn btn-secondary" data-toggle="modal" data-target="#pay-modal"> Pay </button>
+                <button class="btn btn-primary delete-btn"  th:data-id="${bill.id}"> Delete </button></td>
+            </div>
+
+
+        </div>
+
+
+        <div class="row pt-3">
+
+            <div class="col-md-6 pb-4">
+
+                <div class="card bill "  th:data-id="${bill.id}">
+                    <div class="card-header"  >
+
+                       <div class="row">
+                    <div class="big-icon col-2 pl-4"><i th:class="${bill.category.icon}"></i>
+                    </div>
+                        <div class="pl-4 col-8 pt-3 mx-auto">
+                        <h1 class="text-truncate " th:text="${bill.merchant.name}"></h1>
+                    </div>
+
+                    <div class="text-right col-2 ml-auto pr-3"><span class="badge badge-primary">Late</span></div>
+
+                           </div>
+                </div>
+
+
+
+                    <div class="card-body">
+
+                  <div>
+                      <span class="text-muted" th:text="'Since ' + ${#temporals.format(bill.createdAt, 'MM/dd/yyyy ')} ">Since 05/01/2012</span>
+                  </div>
+
+                    <div><span th:text="'$' + ${#numbers.formatDecimal(bill.payment, 0, 'COMMA', 2, 'POINT')}">$114.00</span> (<span th:text="${bill.frequency.name}">Monthly</span>)</div>
+
+                        <span th:text="${bill.frequency.name}"></span>
+
+                        <span th:text=" ${#temporals.format(bill.firstDueDate, 'M/dd/yyyy ')}"></span>
+
+                     <span th:text="${bill.interestRate}"></span>
+                         <span th:text="${bill.interestType}"></span>
+
+                         <span th:text="${bill.merchant.address.street}"></span>
+                        <div>
+
+
+                        </div>
+
+
+                    </div>
+                    </div>
+
+            </div>
+
+
+            <div class="col-md-6">
+
+            <div class="card">
+                TADA!
+            </div>
+
+             </div>
+
+
+
+    </div>
+</div>
+</div>
+<div th:replace="partials/layout :: footer" />
+
+<div th:replace="bills/payPanel :: modal" />
+<script th:src="@{~/built/bills.js}"></script>
 </body>
 </html>
