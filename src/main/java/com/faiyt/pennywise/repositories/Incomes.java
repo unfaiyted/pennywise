@@ -17,9 +17,10 @@ public interface Incomes extends CrudRepository<Income, Long> {
     @Query("select p  from PayFrequency p")
     List<PayFrequency> getPayFrequencies();
 
-
     @Query("select i from Income i where i.owner = ?1")
     List<Income> findAllByOwner(User owner);
+
+
 
 
 }

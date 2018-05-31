@@ -5,6 +5,7 @@ import com.faiyt.pennywise.models.finance.Bill;
 import com.faiyt.pennywise.models.finance.BillCategory;
 import com.faiyt.pennywise.models.user.User;
 import com.faiyt.pennywise.repositories.Bills;
+import com.faiyt.pennywise.util.Calculation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -89,18 +90,8 @@ public class BillService {
     private Double monthlyTotalByBill(Bill bill) {
         String frequency  = bill.getFrequency().getName();
 
-        if (frequency.equalsIgnoreCase("Weekly")) {
-            return (bill.getPayment()*4);
-        } else if (frequency.equalsIgnoreCase("Monthly")) {
-            return (bill.getPayment());
-        } else if (frequency.equalsIgnoreCase("Yearly")) {
-            return  (bill.getPayment()/12);
-        } else if (frequency.equalsIgnoreCase("Twice a Month") || frequency.equalsIgnoreCase("Bi-Weekly")) {
-            return (bill.getPayment()*2);
-        }
+        return Calculation.getMonthlyDollar(frequency, bill.getPayment());
 
-        // If none of these skip.
-        return 0D;
     }
     //total monthly
     //total ccs

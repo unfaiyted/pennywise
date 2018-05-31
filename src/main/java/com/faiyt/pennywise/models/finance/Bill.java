@@ -1,6 +1,7 @@
 package com.faiyt.pennywise.models.finance;
 
 import com.faiyt.pennywise.models.user.User;
+import com.faiyt.pennywise.util.Calculation;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -163,6 +164,11 @@ public class Bill {
 
     public void setFrequency(PayFrequency frequency) {
         this.frequency = frequency;
+    }
+
+    public Double getEstimatedAnnual() {
+        String frequency  = this.frequency.getName();
+        return Calculation.getYearlyDollar(frequency, this.payment);
     }
 
     @Override

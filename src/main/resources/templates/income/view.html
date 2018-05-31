@@ -42,7 +42,7 @@
                             </div>
                             <input type="text" class="form-control" th:field="*{name}" placeholder="Company Name" aria-label="company-name" aria-describedby="company-name">
                         </div>
-                        <label>Amount</label>
+                        <label>Amount (pre tax)</label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">$</span>
@@ -94,7 +94,7 @@
                                         </div>
 
                                         <div class="col-4">
-                                            <span class="text-muted">Since 06/2016</span>
+                                            <span class="text-muted" th:text="'Since ' + ${#temporals.format(income.createdAt, 'MM/yyyy ')} ">>Since 06/2016</span>
                                         </div>
                                     </div>
 
@@ -117,10 +117,11 @@
                                 <div class="col-md-8">
                                     <div class="row">
                                     <div class="p-1 text-left">
-                                        <span class="ml-2">Estimated annual: </span> <span class="font-weight-bold">$65,000</span>
+                                        <span class="ml-2">Estimated annual: </span> <span class="font-weight-bold"
+                                                                                           th:text="'$' + ${#numbers.formatDecimal(income.getEstimatedAnnual(), 0, 'COMMA', 2, 'POINT')}">$65,000</span>
                                     </div>
                                     <div class="p-1 text-left">
-                                        <span class="ml-2">Last 12 months: </span><span class="font-weight-bold">$62,000</span>
+                                        <span class="ml-2">Last 12 months: </span><span class="font-weight-bold">Not recorded</span>
                                     </div>
                                     </div>
                                 </div>
