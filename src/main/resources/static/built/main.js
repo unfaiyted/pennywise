@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 128);
+/******/ 	return __webpack_require__(__webpack_require__.s = 131);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -148,17 +148,17 @@ function toComment(sourceMap) {
 
 /***/ }),
 
-/***/ 128:
+/***/ 131:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(129);
-__webpack_require__(133);
-module.exports = __webpack_require__(134);
+__webpack_require__(132);
+__webpack_require__(136);
+module.exports = __webpack_require__(137);
 
 
 /***/ }),
 
-/***/ 129:
+/***/ 132:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(setImmediate) {(function (root) {
@@ -395,11 +395,11 @@ module.exports = __webpack_require__(134);
 
 })(this);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(130).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(133).setImmediate))
 
 /***/ }),
 
-/***/ 130:
+/***/ 133:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -455,7 +455,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(131);
+__webpack_require__(134);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -466,11 +466,11 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ }),
 
-/***/ 131:
+/***/ 134:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -660,11 +660,11 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(132)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7), __webpack_require__(135)))
 
 /***/ }),
 
-/***/ 132:
+/***/ 135:
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -855,7 +855,7 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 133:
+/***/ 136:
 /***/ (function(module, exports) {
 
 (function(self) {
@@ -1328,24 +1328,24 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 134:
+/***/ 137:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _global = __webpack_require__(135);
+var _global = __webpack_require__(138);
 
 var _global2 = _interopRequireDefault(_global);
 
-var _hover = __webpack_require__(140);
+var _hover = __webpack_require__(143);
 
 var _hover2 = _interopRequireDefault(_hover);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var panel = __webpack_require__(142);
-var chart = __webpack_require__(161);
+var panel = __webpack_require__(145);
+var chart = __webpack_require__(148);
 
 (function ($) {
     // Default page
@@ -1356,11 +1356,11 @@ panel.init();
 
 /***/ }),
 
-/***/ 135:
+/***/ 138:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(136);
+var content = __webpack_require__(139);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -1407,23 +1407,23 @@ if(false) {
 
 /***/ }),
 
-/***/ 136:
+/***/ 139:
 /***/ (function(module, exports, __webpack_require__) {
 
-var escape = __webpack_require__(137);
+var escape = __webpack_require__(140);
 exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
 // module
-exports.push([module.i, "/*\nMain StyleSheet\n*/\n\n/* PRELOADER START */\nbody {\n    overflow: hidden;\n    background: #F5F5F5;\n\n}\n\n.container {\n    padding-bottom: 80px;\n    padding-top: 10px;\n    min-height: 100vh;\n}\n\n/* Preloader */\n#preloader {\n    position: fixed;\n    top:0;\n    left:0;\n    right:0;\n    bottom:0;\n    background-color: #262626; /* change if the mask should have another color then white */\n    z-index:99999; /* makes sure it stays on top */\n}\n\n#status {\n    width:200px;\n    height:200px;\n    position:absolute;\n    left:50%; /* centers the loading animation horizontally one the screen */\n    top:50%; /* centers the loading animation vertically one the screen */\n    background-image:url(" + escape(__webpack_require__(138)) + "); /* path to your loading animation */\n    background-repeat:no-repeat;\n    background-position:center;\n    margin:-100px 0 0 -100px; /* is width and height divided by two */\n}\n\n.splash-container {\n    position: relative;\n    width: 100%;\n    height: calc(100vh - 77px);\n    background: url(" + escape(__webpack_require__(139)) + ");\n    background-size: cover;\n    background-position:center;\n\n}\n\n.navbar {\n    padding-top: 12px;\n    padding-bottom: 10px;\n    border: 0;\n}\n\n\n.bg-dark {\n    background-color: #343a4096 !important;\n}\n.navbar-footer {\n    padding: 10px;\n}\n\n.navbar-header {\n\n    background: #00B4DB;  /* fallback for old browsers */\n    background: -webkit-linear-gradient(to top, #0083B0, #00B4DB);  /* Chrome 10-25, Safari 5.1-6 */\n    background: linear-gradient(to top, #0083B0, #00B4DB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */\n\n    box-shadow: 0 9px 23px rgba(0, 0, 0, 0.09), 0 5px 5px rgba(0, 0, 0, 0.06) !important;\n    -webkit-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -moz-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -o-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n\n}\n\n.header-action-icon {\n    font-size: 22px;\n    color: #fff;\n}\n\n.btn-primary a {\n    color: #fff;\n    font-size: 12px;\n}\n\n\n.btn-sm, .btn-group-sm>.btn {\n    padding-left: 10px;\n}\n\n\n.ripple {\n    background-position: center;\n    transition: background 0.8s;\n}\n.ripple:hover {\n    background: #47a7f5 radial-gradient(circle, transparent 1%, #47a7f5 1%) center/15000%;\n}\n.ripple:active {\n    background-color: #6eb9f7;\n    background-size: 100%;\n    transition: background 0s;\n}\n\n\n\nbutton .btn-primary {\n    padding-bottom: 35px;\n}\n\n\n.badge-alert {\n    position: relative;\n    font-size: 10px;\n    top: -17px;\n    left: 34px;\n}\n\n\n.card {\n    height: 100%;\n    box-shadow: 0 9px 23px rgba(0, 0, 0, 0.09), 0 5px 5px rgba(0, 0, 0, 0.06) !important;\n    -webkit-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -moz-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -o-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -webkit-border-radius: 0.4167rem;\n    -moz-border-radius: 0.4167rem;\n    -ms-border-radius: 0.4167rem;\n    -o-border-radius: 0.4167rem;\n    border-radius: 0.4167rem;\n\n    border: 0;\n}\n\n.card:hover{\n    box-shadow: 0 9px 23px rgba(0, 0, 0, 0.19), 0 5px 5px rgba(0, 0, 0, 0.13) !important;\n    -webkit-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -moz-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -o-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n}\n\n\n\n.dropdown-menu .icon{\n    font-size: 40px;\n    color: rgb(218, 45, 26);\n}\n.dropdown-menu p  {\n    margin-bottom: 2px;\n}\n\n.dropdown-menu .title {\n    color: black;\n    font-weight: bold;\n}\n\n\n.dropdown-menu .time {\n    color: #912320;\n}\n\n\n.notification a {\n    text-decoration: none;\n}\n\n.notification li:nth-child(even) {\n    background-color: #f7f7f7;\n\n}\n\n.notification li:hover {\n    background-color: #ebebeb;\n\n}\n\n.bg-dark-gradient {\n background: linear-gradient(135deg, #4f5b60 0%, #97a9b2 100%);\n}\n\n.bg-blue-gradient {\n    background: linear-gradient(135deg, #07a7e3 0%, #32dac3 100%);\n}\n\n.bg-green-gradient {\n    background: linear-gradient(135deg, #28C76F 0%, #81FBB8 100%);\n}\n\n.bg-amber-gradient {\n    background: linear-gradient(135deg, #EA5455 0%, #FC9131 100%);\n}\n\n.bg-red-gradient {\n    background: #ED213A;  /* fallback for old browsers */\n    background: -webkit-linear-gradient(to right, #93291E, #ED213A);  /* Chrome 10-25, Safari 5.1-6 */\n    background: linear-gradient(to right, #93291E, #ED213A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */\n\n}\n\n.big-icon {\n  font-size:  50px;\n}\n\n.card-text-amount {\n    font-size: 25px;\n    display: block;\n\n}\n\n\nelement.style {\n}\n.dropdown-menu-right {\n    right: 0;\n    left: auto;\n}\n.dropdown-menu {\n    padding: 0;\n}\n\n.dropdown-menu .list-group-item {\n    border: 0px;\n}\n\n.tag-button {\n    background-color: rgba(133, 4, 0, 0.72);\n    border: 3px solid #fff;\n    color: #fff;\n    border-radius: 25px;\n    width: 250px;\n    height:50px;\n    line-height: 40px;\n    -webkit-box-shadow: -1px -1px 44px -6px rgba(255,255,255,1);\n    -moz-box-shadow: -1px -1px 44px -6px rgba(255,255,255,1);\n    box-shadow: -1px -1px 44px -6px rgba(255,255,255,1);\n}\n\n.tag-button:hover {\n    background-color: rgba(200,0,0,0.75);\n    -webkit-box-shadow: -1px -1px 44px -6px rgba(255,0,0,1);\n    -moz-box-shadow: -1px -1px 44px -6px rgba(255,0,0,1);\n    box-shadow: -1px -1px 44px -6px rgba(255,0,0,1);\n    cursor: pointer;\n\n}\n\n.tag-button a {\n    color: #fff;\n    text-decoration: none;\n}\n\n.table thead {\n    background-color: #EAECEF;\n    font-weight:bold;\n}\n\n.table th, .table td{\n    vertical-align: middle;\n}\n\n", ""]);
+exports.push([module.i, "/*\nMain StyleSheet\n*/\n\n/* PRELOADER START */\nbody {\n    overflow: hidden;\n    background: #F5F5F5;\n\n}\n\n.container {\n    padding-bottom: 80px;\n    padding-top: 10px;\n    min-height: 100vh;\n}\n\n/* Preloader */\n#preloader {\n    position: fixed;\n    top:0;\n    left:0;\n    right:0;\n    bottom:0;\n    background-color: #262626; /* change if the mask should have another color then white */\n    z-index:99999; /* makes sure it stays on top */\n}\n\n#status {\n    width:200px;\n    height:200px;\n    position:absolute;\n    left:50%; /* centers the loading animation horizontally one the screen */\n    top:50%; /* centers the loading animation vertically one the screen */\n    background-image:url(" + escape(__webpack_require__(141)) + "); /* path to your loading animation */\n    background-repeat:no-repeat;\n    background-position:center;\n    margin:-100px 0 0 -100px; /* is width and height divided by two */\n}\n\n.splash-container {\n    position: relative;\n    width: 100%;\n    height: calc(100vh - 77px);\n    background: url(" + escape(__webpack_require__(142)) + ");\n    background-size: cover;\n    background-position:center;\n\n}\n\n.navbar {\n    padding-top: 12px;\n    padding-bottom: 10px;\n    border: 0;\n}\n\n\n.bg-dark {\n    background-color: #343a4096 !important;\n}\n.navbar-footer {\n    padding: 10px;\n}\n\n.navbar-header {\n\n    background: #00B4DB;  /* fallback for old browsers */\n    background: -webkit-linear-gradient(to top, #0083B0, #00B4DB);  /* Chrome 10-25, Safari 5.1-6 */\n    background: linear-gradient(to top, #0083B0, #00B4DB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */\n\n    box-shadow: 0 9px 23px rgba(0, 0, 0, 0.09), 0 5px 5px rgba(0, 0, 0, 0.06) !important;\n    -webkit-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -moz-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -o-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n\n}\n\n.header-action-icon {\n    font-size: 22px;\n    color: #fff;\n}\n\n.btn-primary a {\n    color: #fff;\n    font-size: 12px;\n}\n\n\n.btn-sm, .btn-group-sm>.btn {\n    padding-left: 10px;\n}\n\n\n.ripple {\n    background-position: center;\n    transition: background 0.8s;\n}\n.ripple:hover {\n    background: #47a7f5 radial-gradient(circle, transparent 1%, #47a7f5 1%) center/15000%;\n}\n.ripple:active {\n    background-color: #6eb9f7;\n    background-size: 100%;\n    transition: background 0s;\n}\n\n\n\nbutton .btn-primary {\n    padding-bottom: 35px;\n}\n\n\n.badge-alert {\n    position: relative;\n    font-size: 10px;\n    top: -17px;\n    left: 34px;\n}\n\n\n.card {\n    height: 100%;\n    box-shadow: 0 9px 23px rgba(0, 0, 0, 0.09), 0 5px 5px rgba(0, 0, 0, 0.06) !important;\n    -webkit-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -moz-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -o-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -webkit-border-radius: 0.4167rem;\n    -moz-border-radius: 0.4167rem;\n    -ms-border-radius: 0.4167rem;\n    -o-border-radius: 0.4167rem;\n    border-radius: 0.4167rem;\n\n    border: 0;\n}\n\n.card:hover{\n    box-shadow: 0 9px 23px rgba(0, 0, 0, 0.19), 0 5px 5px rgba(0, 0, 0, 0.13) !important;\n    -webkit-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -moz-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -o-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n}\n\n\n\n.dropdown-menu .icon{\n    font-size: 40px;\n    color: rgb(218, 45, 26);\n}\n.dropdown-menu p  {\n    margin-bottom: 2px;\n}\n\n.dropdown-menu .title {\n    color: black;\n    font-weight: bold;\n}\n\n\n.dropdown-menu .time {\n    color: #912320;\n}\n\n\n.notification a {\n    text-decoration: none;\n}\n\n.notification li:nth-child(even) {\n    background-color: #f7f7f7;\n\n}\n\n.notification li:hover {\n    background-color: #ebebeb;\n\n}\n\n.bg-dark-gradient {\n background: linear-gradient(135deg, #4f5b60 0%, #97a9b2 100%);\n}\n\n.bg-blue-gradient {\n    background: linear-gradient(135deg, #07a7e3 0%, #32dac3 100%);\n}\n\n.bg-green-gradient {\n    background: linear-gradient(135deg, #28C76F 0%, #81FBB8 100%);\n}\n\n.bg-amber-gradient {\n    background: linear-gradient(135deg, #EA5455 0%, #FC9131 100%);\n}\n\n.bg-red-gradient {\n    background: #ED213A;  /* fallback for old browsers */\n    background: -webkit-linear-gradient(to right, #93291E, #ED213A);  /* Chrome 10-25, Safari 5.1-6 */\n    background: linear-gradient(to right, #93291E, #ED213A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */\n\n}\n\n.big-icon {\n  font-size:  50px;\n}\n\n.card-text-amount {\n    font-size: 25px;\n    display: block;\n\n}\n\n\nelement.style {\n}\n.dropdown-menu-right {\n    right: 0;\n    left: auto;\n}\n.dropdown-menu {\n    padding: 0;\n}\n\n.dropdown-menu .list-group-item {\n    border: 0px;\n}\n\n.tag-button {\n    background-color: rgba(133, 4, 0, 0.72);\n    border: 3px solid #fff;\n    color: #fff;\n    border-radius: 25px;\n    width: 250px;\n    height:50px;\n    line-height: 40px;\n    -webkit-box-shadow: -1px -1px 44px -6px rgba(255,255,255,1);\n    -moz-box-shadow: -1px -1px 44px -6px rgba(255,255,255,1);\n    box-shadow: -1px -1px 44px -6px rgba(255,255,255,1);\n}\n\n.tag-button:hover {\n    background-color: rgba(200,0,0,0.75);\n    -webkit-box-shadow: -1px -1px 44px -6px rgba(255,0,0,1);\n    -moz-box-shadow: -1px -1px 44px -6px rgba(255,0,0,1);\n    box-shadow: -1px -1px 44px -6px rgba(255,0,0,1);\n    cursor: pointer;\n\n}\n\n.tag-button a {\n    color: #fff;\n    text-decoration: none;\n}\n\n.table thead {\n    background-color: #EAECEF;\n    font-weight:bold;\n}\n\n.table th, .table td{\n    vertical-align: middle;\n}\n\n", ""]);
 
 // exports
 
 
 /***/ }),
 
-/***/ 137:
+/***/ 140:
 /***/ (function(module, exports) {
 
 module.exports = function escape(url) {
@@ -1446,25 +1446,25 @@ module.exports = function escape(url) {
 
 /***/ }),
 
-/***/ 138:
+/***/ 141:
 /***/ (function(module, exports) {
 
 module.exports = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwcHgiICBoZWlnaHQ9IjIwMHB4IiAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQiIGNsYXNzPSJsZHMtcmlwcGxlIiBzdHlsZT0iYmFja2dyb3VuZDogbm9uZTsiPjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjEzLjY0NDIiIGZpbGw9Im5vbmUiIG5nLWF0dHItc3Ryb2tlPSJ7e2NvbmZpZy5jMX19IiBuZy1hdHRyLXN0cm9rZS13aWR0aD0ie3tjb25maWcud2lkdGh9fSIgc3Ryb2tlPSIjOGNkMGU1IiBzdHJva2Utd2lkdGg9IjIiPjxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9InIiIGNhbGNNb2RlPSJzcGxpbmUiIHZhbHVlcz0iMDs0MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxLjYiIGtleVNwbGluZXM9IjAgMC4yIDAuOCAxIiBiZWdpbj0iLTAuOHMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIj48L2FuaW1hdGU+PGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ib3BhY2l0eSIgY2FsY01vZGU9InNwbGluZSIgdmFsdWVzPSIxOzAiIGtleVRpbWVzPSIwOzEiIGR1cj0iMS42IiBrZXlTcGxpbmVzPSIwLjIgMCAwLjggMSIgYmVnaW49Ii0wLjhzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSI+PC9hbmltYXRlPjwvY2lyY2xlPjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjMzLjIyMjgiIGZpbGw9Im5vbmUiIG5nLWF0dHItc3Ryb2tlPSJ7e2NvbmZpZy5jMn19IiBuZy1hdHRyLXN0cm9rZS13aWR0aD0ie3tjb25maWcud2lkdGh9fSIgc3Ryb2tlPSIjMzc2ODg4IiBzdHJva2Utd2lkdGg9IjIiPjxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9InIiIGNhbGNNb2RlPSJzcGxpbmUiIHZhbHVlcz0iMDs0MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxLjYiIGtleVNwbGluZXM9IjAgMC4yIDAuOCAxIiBiZWdpbj0iMHMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIj48L2FuaW1hdGU+PGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ib3BhY2l0eSIgY2FsY01vZGU9InNwbGluZSIgdmFsdWVzPSIxOzAiIGtleVRpbWVzPSIwOzEiIGR1cj0iMS42IiBrZXlTcGxpbmVzPSIwLjIgMCAwLjggMSIgYmVnaW49IjBzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSI+PC9hbmltYXRlPjwvY2lyY2xlPjwvc3ZnPg=="
 
 /***/ }),
 
-/***/ 139:
+/***/ 142:
 /***/ (function(module, exports) {
 
 module.exports = "built/src/main/resources/static/img/header.jpg";
 
 /***/ }),
 
-/***/ 140:
+/***/ 143:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(141);
+var content = __webpack_require__(144);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -1511,7 +1511,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 141:
+/***/ 144:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -1526,13 +1526,13 @@ exports.push([module.i, "/*!\r\n * Hover.css (http://ianlunn.github.io/Hover/)\r
 
 /***/ }),
 
-/***/ 142:
+/***/ 145:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _panel = __webpack_require__(143);
+var _panel = __webpack_require__(146);
 
 var _panel2 = _interopRequireDefault(_panel);
 
@@ -1655,11 +1655,11 @@ module.exports = {
 
 /***/ }),
 
-/***/ 143:
+/***/ 146:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(144);
+var content = __webpack_require__(147);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -1706,7 +1706,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 144:
+/***/ 147:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -1721,82 +1721,20 @@ exports.push([module.i, "#panel-main {\n    background-color: #212529;\n    bord
 
 /***/ }),
 
-/***/ 157:
+/***/ 148:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-// Functions for local json file interactions
-module.exports = {
-
-    settings: { //settings
-        url: "/api/",
-        rateLimit: 5,
-        token: $("meta[name='_csrf']").attr("content"),
-        header: $("meta[name='_csrf_header']").attr("content")
-    },
-
-    //Inserts data into server
-    addData: function addData(location, data) {
-        location = typeof location !== 'undefined' ? location : "";
-        return fetch(location, {
-            method: "post",
-            credentials: "same-origin",
-            headers: {
-                "X-CSRF-Token": module.exports.settings.token,
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        }).then(function (response) {
-            return response.json();
-        });
-    },
-
-    deleteData: function deleteData(location, data) {
-        return module.exports.addData(location, data);
-    },
-
-    // query for post data
-    // parameter for url info
-    // ex: players/Name+Last/?post=3 type/parameter/query
-    getData: function getData(type, parameter, query) {
-        parameter = typeof parameter !== 'undefined' ? parameter : "";
-        query = typeof query !== 'undefined' ? query : "";
-
-        return fetch(module.exports.settings.url + type + "/" + parameter + query, {
-            method: 'GET',
-            credentials: 'same-origin',
-            redirect: 'follow',
-            agent: null,
-            headers: {
-                "Content-Type": "text/plain",
-                'Authorization': 'Basic ' + btoa('username:password')
-
-            }
-        }).then(function (response) {
-            return response.json();
-        });
-    }
-};
-
-/***/ }),
-
-/***/ 161:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _chartist = __webpack_require__(162);
+var _chartist = __webpack_require__(149);
 
 var _chartist2 = _interopRequireDefault(_chartist);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Chartist = __webpack_require__(164);
-var lib = __webpack_require__(157);
+var Chartist = __webpack_require__(151);
+var lib = __webpack_require__(4);
 
 module.exports = {
 
@@ -1900,11 +1838,11 @@ if ($(".ct-chart")[0]) {
 
 /***/ }),
 
-/***/ 162:
+/***/ 149:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(163);
+var content = __webpack_require__(150);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -1951,7 +1889,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 163:
+/***/ 150:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -1966,7 +1904,7 @@ exports.push([module.i, ".ct-label {\n  fill: rgba(0, 0, 0, 0.4);\n  color: rgba
 
 /***/ }),
 
-/***/ 164:
+/***/ 151:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (root, factory) {
@@ -6946,6 +6884,68 @@ module.exports = function (css) {
 /***/ }),
 
 /***/ 4:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// Functions for local json file interactions
+module.exports = {
+
+    settings: { //settings
+        url: "/api/",
+        rateLimit: 5,
+        token: $("meta[name='_csrf']").attr("content"),
+        header: $("meta[name='_csrf_header']").attr("content")
+    },
+
+    //Inserts data into server
+    addData: function addData(location, data) {
+        location = typeof location !== 'undefined' ? location : "";
+        return fetch(location, {
+            method: "post",
+            credentials: "same-origin",
+            headers: {
+                "X-CSRF-Token": module.exports.settings.token,
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        }).then(function (response) {
+            return response.json();
+        });
+    },
+
+    deleteData: function deleteData(location, data) {
+        return module.exports.addData(location, data);
+    },
+
+    // query for post data
+    // parameter for url info
+    // ex: players/Name+Last/?post=3 type/parameter/query
+    getData: function getData(type, parameter, query) {
+        parameter = typeof parameter !== 'undefined' ? parameter : "";
+        query = typeof query !== 'undefined' ? query : "";
+
+        return fetch(module.exports.settings.url + type + "/" + parameter + query, {
+            method: 'GET',
+            credentials: 'same-origin',
+            redirect: 'follow',
+            agent: null,
+            headers: {
+                "Content-Type": "text/plain",
+                'Authorization': 'Basic ' + btoa('username:password')
+
+            }
+        }).then(function (response) {
+            return response.json();
+        });
+    }
+};
+
+/***/ }),
+
+/***/ 7:
 /***/ (function(module, exports) {
 
 var g;

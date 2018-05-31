@@ -3,6 +3,7 @@ package com.faiyt.pennywise.models.finance;
 import com.faiyt.pennywise.models.user.User;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table
@@ -15,6 +16,9 @@ public class Income {
     @Column
     private String name;
 
+    @Column
+    private LocalDateTime createdAt = LocalDateTime.now();
+
     @ManyToOne
     private PayFrequency payFrequency;
 
@@ -23,6 +27,11 @@ public class Income {
 
     @ManyToOne
     private User owner;
+
+    public Income() {
+        payFrequency = new PayFrequency();
+
+    }
 
     public Income(Long id, String name, PayFrequency payFrequency, Double amount, User owner) {
         this.id = id;
@@ -70,6 +79,14 @@ public class Income {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Double getEstimatedAnnual() {

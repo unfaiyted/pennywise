@@ -32,7 +32,8 @@
 
     </div>
 
-    <div class="d-flex flew-row flex-wrap justify-content-left">
+    <div class="d-flex flew-row flex-wrap justify-content-center">
+
 
         <div class="card bg-green-gradient text-white mb-3 m-2 p-2">
             <div class="card-body">
@@ -58,7 +59,7 @@
                     </div>
                     <div class="p-1 text-right">
                         <span class="card-text-amount">$1955.11</span>
-                        <span class="">monthly expenditures</span>
+                        <span class="">monthly </span>
                     </div>
 
                 </div>
@@ -101,7 +102,7 @@
 
 
 
-        <div class="col-md-8 mb-4">
+        <div class="col-lg-8 mb-4">
             <div class="card bg-secondary mt-3">
                 <div class="card-header">Bills by Category Distribution</div>
                 <div class="card-body">
@@ -118,10 +119,12 @@
 
             <div class="row">
                 <div class="card text-white bg-warning m-3" >
-                    <div class="card-header">Header</div>
+                    <div class="card-header">Did you know...</div>
                     <div class="card-body">
-                        <h4 class="card-title">Warning card title</h4>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <h4 class="card-title">Income to Debt</h4>
+                        <p class="card-text">Can impact your credit score. It can reduce your chance
+                            to be approved for new lines of credit. </p>
+
                     </div>
                 </div>
 
@@ -155,33 +158,6 @@
             </div>
         </div>
 
-
-        <div class="col-6">
-        <div class="card text-white bg-success m-3 ">
-            <div class="card-header">Header</div>
-            <div class="card-body ">
-                <h4 class="card-title">Warning card title</h4>
-
-                <div class="ct-chart-b ct-perfect-fourth"></div>
-              </div>
-        </div>
-        </div>
-
-        <div class="card bg-secondary m-3">
-            <div class="card-header">Header</div>
-            <div class="card-body">
-                <h4 class="card-title">Secondary card title</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-        </div>
-
-
-
-        <div sec:authorize="isAuthenticated()">
-            This content is only shown to authenticated users.
-            User ID: <span th:text="${#authentication.principal.id}" />
-            Username: <span th:text="${#authentication.principal.username}" />
-        </div>
 
     </div>
 

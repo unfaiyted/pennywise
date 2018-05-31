@@ -10,7 +10,8 @@ module.exports = {
         main: ['promise-polyfill', 'whatwg-fetch', './src/main/resources/static/js/global.js'],
         user: './src/main/resources/static/js/user.js',
         form: './src/main/resources/static/js/form.js',
-        bills: './src/main/resources/static/js/bills.js'
+        bills: './src/main/resources/static/js/bills.js',
+        income: './src/main/resources/static/js/income.js'
 
     },
     // where to put the transpiled javascript
