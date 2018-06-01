@@ -272,3 +272,11 @@ element.style {
     vertical-align: middle;
 }
 
+
+/*// Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+    .container {
+        max-width: 900px;
+    }
+
+}

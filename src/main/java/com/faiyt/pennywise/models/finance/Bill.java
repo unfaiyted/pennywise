@@ -1,15 +1,17 @@
 package com.faiyt.pennywise.models.finance;
 
 import com.faiyt.pennywise.models.user.User;
-import com.faiyt.pennywise.util.Calculation;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+
 @Entity
 @Table
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="bill_type",
+        discriminatorType = DiscriminatorType.STRING)
 public class Bill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,23 +21,25 @@ public class Bill {
 
     @Column
     private LocalDateTime createdAt = LocalDateTime.now();
-    @Column
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate firstDueDate;
+
     @Column
     private Double interestRate;
     @Column
     private String interestType;
-
     @Column
     private Double payment;
     @Column
     private Double totalOwed;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate dueDate;
+
+    @Column
+    private boolean active = true;
+
     @ManyToOne
     private BillCategory category;
-    @ManyToOne
-    private PayFrequency frequency;
+
     @ManyToOne(cascade = CascadeType.ALL)
     private Merchant merchant;
     @ManyToOne
@@ -48,22 +52,16 @@ public class Bill {
         this.category = new BillCategory();
     }
 
-    public Bill(Long id, User owner, LocalDate firstDueDate) {
-        this.id = id;
-        this.owner = owner;
-        this.firstDueDate = firstDueDate;
-    }
-
-    public Bill(String nickname, PayFrequency frequency, LocalDateTime createdAt, LocalDate firstDueDate, Double interestRate, String interestType, BillCategory category, Merchant merchant, User owner) {
+    public Bill(String nickname, LocalDateTime createdAt, LocalDate dueDate, Double interestRate, String interestType, BillCategory category, Merchant merchant, User owner) {
         this.nickname = nickname;
         this.createdAt = createdAt;
-        this.firstDueDate = firstDueDate;
+        this.dueDate = dueDate;
         this.interestRate = interestRate;
         this.interestType = interestType;
         this.category = category;
         this.merchant = merchant;
         this.owner = owner;
-        this.frequency = frequency;
+
     }
 
     public Long getId() {
@@ -74,7 +72,6 @@ public class Bill {
         this.id = id;
     }
 
-
     public User getOwner() {
         return owner;
     }
@@ -82,7 +79,6 @@ public class Bill {
     public void setOwner(User owner) {
         this.owner = owner;
     }
-
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
@@ -92,14 +88,6 @@ public class Bill {
         this.createdAt = createdAt;
     }
 
-    public LocalDate getFirstDueDate() {
-        return firstDueDate;
-    }
-
-    public void setFirstDueDate(LocalDate firstDueDate) {
-        this.firstDueDate = firstDueDate;
-    }
-
     public String getNickname() {
         return nickname;
     }
@@ -107,7 +95,6 @@ public class Bill {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
-
 
     public Double getInterestRate() {
         return interestRate;
@@ -149,7 +136,6 @@ public class Bill {
         this.payment = payment;
     }
 
-
     public Double getTotalOwed() {
         return totalOwed;
     }
@@ -158,17 +144,20 @@ public class Bill {
         this.totalOwed = totalOwed;
     }
 
-    public PayFrequency getFrequency() {
-        return frequency;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setFrequency(PayFrequency frequency) {
-        this.frequency = frequency;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
-    public Double getEstimatedAnnual() {
-        String frequency  = this.frequency.getName();
-        return Calculation.getYearlyDollar(frequency, this.payment);
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
     }
 
     @Override
@@ -177,7 +166,6 @@ public class Bill {
                 "id=" + id +
                 ", nickname='" + nickname + '\'' +
                 ", createdAt=" + createdAt +
-                ", firstDueDate=" + firstDueDate +
                 ", interestRate=" + interestRate +
                 ", interestType='" + interestType + '\'' +
                 ", payment=" + payment +

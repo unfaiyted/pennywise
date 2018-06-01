@@ -13,9 +13,11 @@ import java.util.List;
 @Repository
 public interface Bills extends CrudRepository<Bill, Long> {
 
-
     @Query("select p  from PayFrequency p")
     List<PayFrequency> getPayFrequencies();
+
+    @Query("select p  from PayFrequency p where p.id = ?1")
+    PayFrequency getPayFrequencyById(Long id);
 
     @Query("select c  from BillCategory c")
     List<BillCategory> getCategories();

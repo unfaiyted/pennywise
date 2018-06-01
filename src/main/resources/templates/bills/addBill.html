@@ -50,17 +50,14 @@
                             <input type="text" class="form-control"  th:field="*{payment}">
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="frequency">Pay Frequency</label>
-                            <select id="frequency" class="form-control">
-                                <th:block th:each="freq : ${payFreq}">
-
-                                    <option th:value="${freq.id}" th:text="${freq.name}"></option>
-                                </th:block>
+                            <label th:for="*{frequency.id}">Pay Frequency</label>
+                            <select th:field="*{frequency.id}" class="form-control">
+                                <option th:each="f : ${payFreq}" th:value="${f.id}" th:text="${f.name}">frequency</option>
                             </select>
                         </div>
                         <div class="form-group col-md-4">
-                            <label  th:for="*{firstDueDate}">Next due date</label>
-                            <input type="text" class="form-control"  th:field="*{firstDueDate}">
+                            <label  th:for="*{dueDate}">Next due date</label>
+                            <input type="text" class="form-control"  th:field="*{dueDate}">
                         </div>
                     </div>
 
@@ -233,7 +230,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 font-weight-bold">Total Owed:</div>
-                            <div class="col-md-6"><span id="bill-totalOwed">$11,545.02</div>
+                            <div class="col-md-6"><span id="bill-totalOwed">$11,545.02</span></div>
                         </div>
 
                     </div>

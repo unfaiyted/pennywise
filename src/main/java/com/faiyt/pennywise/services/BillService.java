@@ -3,6 +3,8 @@ package com.faiyt.pennywise.services;
 import com.faiyt.pennywise.models.Chart;
 import com.faiyt.pennywise.models.finance.Bill;
 import com.faiyt.pennywise.models.finance.BillCategory;
+import com.faiyt.pennywise.models.finance.OneTimeBill;
+import com.faiyt.pennywise.models.finance.RecurringBill;
 import com.faiyt.pennywise.models.user.User;
 import com.faiyt.pennywise.repositories.Bills;
 import com.faiyt.pennywise.util.Calculation;
@@ -32,11 +34,26 @@ public class BillService {
         Double total = 0D;
 
         for(Bill bill : bills) {
-           total += monthlyTotalByBill(bill);
+            if(bill instanceof RecurringBill) {
+                total += monthlyTotalByBill((RecurringBill) bill);
+            }
         }
 
         return total;
     }
+
+
+    public Bill saveBill(Bill bill) {
+        return getBills().save(bill);
+    }
+    public RecurringBill saveBill(RecurringBill bill) {
+        return getBills().save(bill);
+    }
+
+    public OneTimeBill saveBill(OneTimeBill bill) {
+        return getBills().save(bill);
+    }
+
 
 
 
@@ -79,7 +96,9 @@ public class BillService {
         Double total = 0D;
 
         for(Bill bill : bills) {
-            total += monthlyTotalByBill(bill);
+            if(bill instanceof RecurringBill) {
+                total += monthlyTotalByBill((RecurringBill) bill);
+            }
         }
 
         return total;
@@ -87,7 +106,7 @@ public class BillService {
     }
 
 
-    private Double monthlyTotalByBill(Bill bill) {
+    private Double monthlyTotalByBill(RecurringBill bill) {
         String frequency  = bill.getFrequency().getName();
 
         return Calculation.getMonthlyDollar(frequency, bill.getPayment());

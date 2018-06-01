@@ -2,8 +2,7 @@ package com.faiyt.pennywise.controllers;
 
 
 import com.faiyt.pennywise.models.Response;
-import com.faiyt.pennywise.models.finance.Bill;
-import com.faiyt.pennywise.models.finance.BillCategory;
+import com.faiyt.pennywise.models.finance.*;
 import com.faiyt.pennywise.models.user.User;
 import com.faiyt.pennywise.services.AddressService;
 import com.faiyt.pennywise.services.BillService;
@@ -35,18 +34,38 @@ public class BillController {
         model.addAttribute("payFreq", billDao.getBills().getPayFrequencies());
         model.addAttribute("categories", billDao.getBills().getCategories());
 
-        model.addAttribute("bill", new Bill());
+        model.addAttribute("bill", new RecurringBill());
         return "bills/addBill";
     }
 
 
     @PostMapping("/add")
-    public String saveNewBill(@ModelAttribute Bill bill) {
+    public String saveNewBill(@ModelAttribute RecurringBill bill) {
 
         bill.setOwner(userDao.getLoggedInUser());
+
+        // Gets freq name with Id, not passed with model
+        Long freqId = bill.getFrequency().getId();
+        PayFrequency frequency = billDao.getBills().getPayFrequencyById(freqId);
+        bill.setFrequency(frequency);
+
+        System.out.println(bill.toString());
+
+        // Change Recurring bill to OneTimeBill
+        if(bill.getFrequency().getName().equalsIgnoreCase("One-Time")) { //1 = One time
+            OneTimeBill oneTimeBill = new OneTimeBill(bill);
+            billDao.getBills().save(oneTimeBill);
+            return "redirect:/bill/view";
+        }
+
+        //bill = billDao.saveBill(bill);
+
+       // System.out.println(bill.toString());
+
+       bill.generateDueDatesList();
+
         billDao.getBills().save(bill);
 
-       // model.addAttribute("bill", bill);
         return "redirect:/bill/view";
 
     }

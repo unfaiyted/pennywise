@@ -1,6 +1,6 @@
 package com.faiyt.pennywise.util;
 
-import com.faiyt.pennywise.models.finance.Bill;
+import java.time.LocalDate;
 
 public class Calculation {
 
@@ -24,6 +24,24 @@ public class Calculation {
 
     public static Double getYearlyDollar(String frequency, Double payment) {
         return getMonthlyDollar(frequency,payment)*12;
+    }
+
+
+    public static LocalDate nextFrequencyDate(String frequency, LocalDate date) {
+
+        if (frequency.equalsIgnoreCase("Weekly")) {
+            return date.plusDays(7);
+        } else if (frequency.equalsIgnoreCase("Monthly")) {
+            return date.plusMonths(1);
+        } else if (frequency.equalsIgnoreCase("Yearly")) {
+            return date.plusYears(1);
+        } else if (frequency.equalsIgnoreCase("Bi-Weekly")) {
+            return date.plusWeeks(2);
+        } else if (frequency.equalsIgnoreCase("Twice a Month")) {
+            return date.plusWeeks(2);
+        }
+
+        return LocalDate.now();
     }
 
 

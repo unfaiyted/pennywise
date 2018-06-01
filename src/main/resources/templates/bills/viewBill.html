@@ -26,8 +26,8 @@
             </div>
 
             <div class="col-md-6 text-right">
-                <button class="btn btn-secondary" data-toggle="modal" data-target="#pay-modal"> Pay </button>
-                <button class="btn btn-primary delete-btn"  th:data-id="${bill.id}"> Delete </button></td>
+                <button class="btn btn-secondary" data-toggle="modal" data-target="#pay-modal">Edit details </button>
+                <button class="btn btn-primary delete-btn"  th:data-id="${bill.id}"> Delete Bill </button></td>
             </div>
 
 
@@ -39,39 +39,99 @@
             <div class="col-md-6 pb-4">
 
                 <div class="card bill "  th:data-id="${bill.id}">
-                    <div class="card-header"  >
+                    <div class="card-header">
 
                        <div class="row">
                     <div class="big-icon col-2 pl-4"><i th:class="${bill.category.icon}"></i>
                     </div>
                         <div class="pl-4 col-8 pt-3 mx-auto">
                         <h1 class="text-truncate " th:text="${bill.merchant.name}"></h1>
+                            <span class="text-muted" th:text="'Since ' + ${#temporals.format(bill.createdAt, 'MM/dd/yyyy ')} ">Since 05/01/2012</span>
                     </div>
 
                     <div class="text-right col-2 ml-auto pr-3"><span class="badge badge-primary">Late</span></div>
 
+
+
                            </div>
                 </div>
 
-
-
                     <div class="card-body">
 
-                  <div>
-                      <span class="text-muted" th:text="'Since ' + ${#temporals.format(bill.createdAt, 'MM/dd/yyyy ')} ">Since 05/01/2012</span>
-                  </div>
-
-                    <div><span th:text="'$' + ${#numbers.formatDecimal(bill.payment, 0, 'COMMA', 2, 'POINT')}">$114.00</span> (<span th:text="${bill.frequency.name}">Monthly</span>)</div>
-
-                        <span th:text="${bill.frequency.name}"></span>
-
-                        <span th:text=" ${#temporals.format(bill.firstDueDate, 'M/dd/yyyy ')}"></span>
-
-                     <span th:text="${bill.interestRate}"></span>
-                         <span th:text="${bill.interestType}"></span>
-
-                         <span th:text="${bill.merchant.address.street}"></span>
+                         <span ></span>
                         <div>
+
+                            <div class="pb-3">
+                                <h4>Basics</h4>
+
+                                <div class="row">
+                                    <div class="col-md-6 font-weight-bold">Merchant:</div>
+                                    <div class="col-md-6" id="merchant-name">Merchant Name</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 font-weight-bold">  Payment Info:</div>
+                                    <div class="col-md-6"><span id="payment-amount" th:text="'$' + ${#numbers.formatDecimal(bill.payment, 0, 'COMMA', 2, 'POINT')}">$156.56</span>
+                                        (<span id="payment-freq" th:text="${bill.frequency.name}">Twice a Month</span>)</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 font-weight-bold">Next Due Date:</div>
+                                    <div class="col-md-6" id="due-date" th:text=" ${#temporals.format(bill.dueDate, 'M/dd/yyyy ')}">Nov 3rd 2018</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 font-weight-bold" >Category</div>
+                                    <div class="col-md-6" id="payment-category">Other</div>
+                                </div>
+
+
+                            </div>
+                            <div class="pb-3">
+                                <h4>Address Info</h4>
+
+                                <div class="row">
+                                    <div class="col-md-6 font-weight-bold">Address:</div>
+
+                                    <div class="col-md-6">
+
+                                        <div class="col-md-12 p-0" id="address" th:text="${bill.merchant.address.street}">7822 Misty Fried Dr</div>
+                                        <div class="col-md-12 p-0"><span id="city">San Antonio</span>, <span id="state">Texas</span>
+                                            <span class="zip-code">78209-2203</span></div>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="pb-3">
+
+                                <h4>Details</h4>
+
+
+                                <div class="row">
+                                    <div class="col-md-6 font-weight-bold">Website:</div>
+                                    <div class="col-md-6" id="website">http://website.com/login</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 font-weight-bold">Website Username:</div>
+                                    <div class="col-md-6" id="webUsername">bestGurl101</div>
+                                </div>
+                                <hr>
+
+                                <div class="row">
+                                    <div class="col-md-6 font-weight-bold">Interest:</div>
+                                    <div class="col-md-6"><span id="bill-interestRate" th:text="${bill.interestRate}">11.2%</span> (<span id="bill-interestType" th:text="${bill.interestType}">Compound</span>)</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 font-weight-bold">Total Owed:</div>
+                                    <div class="col-md-6"><span id="bill-totalOwed">$11,545.02</span></div>
+                                </div>
+
+                            </div>
+
+
 
 
                         </div>
@@ -86,7 +146,63 @@
             <div class="col-md-6">
 
             <div class="card">
-                TADA!
+
+
+                <div class="card-header">
+                    <div class="row">
+                        <div class="text-left pl-2 pt-2">
+                        Merchant History
+                        </div>
+                        <div class="ml-auto text-right">
+                            <button class="btn btn-primary">
+                                Add Payment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!--END CARD HEADER-->
+
+                <div class="card-table">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <td>Date</td>
+                            <td>Status on Payment</td>
+                            <td>Amount Paid</td>
+                            <td>Action</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <th:block th:each="dueDate,iterStat : ${bill.dueDates}" th:if="${iterStat.index}<6">
+
+                            <tr>
+                                <td class="font-weight-bold" th:text="${dueDate.date}">07/11/2015</td>
+                                <td><span class="badge badge-primary">Late</span></td>
+                                <td>$250.00</td>
+                                <td class="text-right"><i class="fas fa-edit pr-2"></i> <i class="fas fa-times"></i></td>
+                            </tr>
+
+                            <!--<tr>-->
+
+                                <!--<td class="font-weight-bold">08/11/2015</td>-->
+                                <!--<td><span class="badge badge-secondary">On time</span></td>-->
+                                <!--<td>$250.00</td>-->
+                                <!--<td class="text-right"><i class="fas fa-edit pr-2">-->
+                                <!--</i> <i class="fas fa-times"></i>-->
+
+                                <!--</td>-->
+
+                            <!--</tr>-->
+
+                        </th:block>
+
+
+
+                        </tbody>
+                    </table>
+
+                </div>
             </div>
 
              </div>

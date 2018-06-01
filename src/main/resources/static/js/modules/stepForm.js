@@ -119,7 +119,7 @@ module.exports = {
         $(`#merchant-name`).text( $(`#merchant\\.name`).val());
         $(`#payment-amount`).text( $(`#payment`).val());
         $(`#payment-freq`).text( $(`#frequency`).find('option:selected').text());
-        $(`#due-date`).text( $(`#firstDueDate`).val());
+        $(`#due-date`).text( $(`#dueDate`).val());
         $(`#payment-category`).text( $(`#category`).find('option:selected').text());
 
         // Page 2 - Address Info

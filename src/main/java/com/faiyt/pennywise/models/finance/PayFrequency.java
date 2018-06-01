@@ -55,4 +55,12 @@ public class PayFrequency {
         // TODO: calculate when the next payment will be given the lastpay date
         return LocalDateTime.now();
     }
+
+    @Override
+    public String toString() {
+        return "PayFrequency{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

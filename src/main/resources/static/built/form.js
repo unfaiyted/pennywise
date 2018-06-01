@@ -17028,7 +17028,7 @@ var Pikaday = __webpack_require__(156);
 var stepForm = __webpack_require__(159);
 
 var picker = new Pikaday({
-    field: document.getElementById('firstDueDate'),
+    field: document.getElementById('dueDate'),
     //T10:15:30
     format: 'YYYY-MM-DD'
 });
@@ -18772,7 +18772,7 @@ module.exports = {
         $("#merchant-name").text($("#merchant\\.name").val());
         $("#payment-amount").text($("#payment").val());
         $("#payment-freq").text($("#frequency").find('option:selected').text());
-        $("#due-date").text($("#firstDueDate").val());
+        $("#due-date").text($("#dueDate").val());
         $("#payment-category").text($("#category").find('option:selected').text());
 
         // Page 2 - Address Info

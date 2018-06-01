@@ -6,7 +6,7 @@ const stepForm = require('./modules/stepForm');
 
 
 var picker = new Pikaday({
-    field: document.getElementById('firstDueDate'),
+    field: document.getElementById('dueDate'),
 //T10:15:30
     format: 'YYYY-MM-DD',
 });
