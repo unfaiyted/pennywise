@@ -161,6 +161,7 @@ var _bills2 = _interopRequireDefault(_bills);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var deleteBill = __webpack_require__(5);
+var cal = __webpack_require__(173);
 
 // Deletes a bill from the list of bills
 deleteBill.init({
@@ -169,6 +170,8 @@ deleteBill.init({
     displayClass: "bill",
     deleteMsg: "Are you sure you want to delete this bill?"
 });
+
+cal.init();
 
 /***/ }),
 
@@ -232,6 +235,506 @@ exports = module.exports = __webpack_require__(1)(false);
 
 // module
 exports.push([module.i, ".table {\n    margin-bottom: 0;\n}\n\n.bill-analysis {\n    list-style-type: none;\n    padding: 0;\n    margin: 0;\n    text-align: center;\n\n}\n\n.bill-analysis .amt {\n    font-size: 25px;\n\n}\n\n.bill-analysis .desc {\n    font-size: 12px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ 165:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var InvalidMonthError = __webpack_require__(166);
+var InvalidMonthsError = __webpack_require__(167);
+var InvalidMonthsAbbrError = __webpack_require__(168);
+
+var InvalidWeekdayError = __webpack_require__(169);
+var InvalidWeekdaysError = __webpack_require__(170);
+var InvalidWeekdaysAbbrError = __webpack_require__(171);
+
+var MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
+var WEEKDAYS = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+];
+
+function generateAbbr(arr, len) {
+  return arr.map(function(item) {
+    return item.slice(0, len || 3);
+  });
+}
+
+function createArray(length) {
+  var a = [];
+
+  for (var i = 0; i < length; i++) {
+    a.push(1);
+  }
+
+  return a;
+}
+
+function calendar(config) {
+  var abbrLengthWeek =
+    config && !isNaN(config.abbrWeek) && config.abbrWeek > 0
+      ? config.abbrWeek
+      : 3;
+  var abbrLengthMonth =
+    config && !isNaN(config.abbrMonth) && config.abbrMonth > 0
+      ? config.abbrMonth
+      : 3;
+
+  var _months = MONTHS;
+  var _monthsAbbr = generateAbbr(MONTHS, abbrLengthMonth);
+  var _weekdays = WEEKDAYS;
+  var _weekdaysAbbr = generateAbbr(WEEKDAYS, abbrLengthWeek);
+
+  if (config && config.months) {
+    if (!Array.isArray(config.months) || config.months.length !== 12) {
+      throw new InvalidMonthsError('Months array must have 12 values');
+    }
+
+    _months = config.months;
+    _monthsAbbr = generateAbbr(config.months, abbrLengthMonth);
+  }
+
+  if (config && config.monthsAbbr) {
+    if (!Array.isArray(config.monthsAbbr) || config.monthsAbbr.length !== 12) {
+      throw new InvalidMonthsAbbrError('Months array must have 12 values');
+    }
+
+    _monthsAbbr = config.monthsAbbr;
+  }
+
+  if (config && config.weekdays) {
+    if (!Array.isArray(config.weekdays) || config.weekdays.length !== 7) {
+      throw new InvalidWeekdaysError('Weekdays array must have 7 values');
+    }
+
+    _weekdays = config.weekdays;
+    _weekdaysAbbr = generateAbbr(config.weekdays, abbrLengthWeek);
+  }
+
+  if (config && config.weekdaysAbbr) {
+    if (
+      !Array.isArray(config.weekdaysAbbr) ||
+      config.weekdaysAbbr.length !== 7
+    ) {
+      throw new InvalidWeekdaysAbbrError('Weekdays array must have 7 values');
+    }
+
+    _weekdaysAbbr = config.weekdaysAbbr;
+  }
+
+  return {
+    months: function() {
+      return _months;
+    },
+
+    monthsAbbr: function() {
+      return _monthsAbbr;
+    },
+
+    years: function(from, to) {
+      if (from > to) {
+        throw new RangeError(
+          'The first year argument cannot be greater than the second'
+        );
+      }
+
+      var years = [from.toString()];
+      var totalYears = to - from + 1;
+
+      while (years.length < totalYears) {
+        var year = parseInt(years[years.length - 1], 10) + 1;
+
+        years.push(year.toString());
+      }
+
+      return years;
+    },
+
+    yearsAbbr: function(from, to) {
+      var years = this.years(from, to).map(function(year) {
+        return year.toString().substring(2);
+      });
+
+      return years.length > 1 ? years : years[0];
+    },
+
+    weekdays: function() {
+      return _weekdays;
+    },
+
+    weekdaysAbbr: function() {
+      return _weekdaysAbbr;
+    },
+
+    generateCalendar: function(
+      year,
+      month,
+      numberOfDays,
+      firstWeekday,
+      lastWeekday,
+      dayTransformer,
+      cbData
+    ) {
+      var calendar = [];
+      var totalWeeks = Math.ceil((numberOfDays + firstWeekday) / 7);
+      var totalDaysOnWeek = 7;
+      var lastWeek = totalWeeks - 1;
+      var execCb = typeof dayTransformer === 'function';
+
+      var lastDay = firstWeekday * -1;
+      var weeks = [];
+
+      createArray(totalWeeks).forEach(function(_, week) {
+        createArray(totalDaysOnWeek).forEach(function(_, day) {
+          lastDay++;
+
+          var date = new Date(year, month, lastDay);
+
+          var data = {
+            date: date,
+            day: date.getDate(),
+            isInPrimaryMonth: date.getMonth() === month,
+            isInLastWeekOfPrimaryMonth: week === lastWeek,
+            index: {
+              day: day,
+              week: week,
+            },
+          };
+
+          if (execCb) {
+            var result = dayTransformer(data, cbData);
+
+            if (result !== undefined) {
+              data = result;
+            }
+          }
+
+          weeks.push(data);
+        });
+
+        calendar.push(weeks);
+
+        weeks = [];
+      });
+
+      return calendar;
+    },
+
+    of: function(year, month, transformer) {
+      var data = this.detailed(year, month, function(data) {
+        return data.isInPrimaryMonth ? data.day : 0;
+      });
+
+      if (typeof transformer === 'function') {
+        return transformer(data);
+      }
+
+      return data;
+    },
+
+    detailed: function(year, month, dayTransformer) {
+      if (month < 0 || month > 11) {
+        throw new InvalidMonthError('Month should be beetwen 0 and 11');
+      }
+
+      if (typeof year !== 'number' || typeof month !== 'number') {
+        throw new Error('Arguments should be numbers');
+      }
+
+      var numberOfDays = new Date(year, month + 1, 0).getDate();
+      var firstWeekday = new Date(year, month, 1).getDay();
+      var lastWeekday = new Date(year, month, numberOfDays).getDay();
+
+      var data = {
+        year: year.toString(),
+        yearAbbr: this.yearsAbbr(year),
+        month: this.months()[month],
+        monthAbbr: this.monthsAbbr()[month],
+        weekdays: this.weekdays(),
+        weekdaysAbbr: this.weekdaysAbbr(),
+        days: numberOfDays,
+        firstWeekday: firstWeekday,
+        lastWeekday: lastWeekday,
+      };
+
+      var calendar = this.generateCalendar(
+        year,
+        month,
+        numberOfDays,
+        firstWeekday,
+        lastWeekday,
+        dayTransformer,
+        data
+      );
+
+      data.calendar = calendar;
+
+      return data;
+    },
+
+    validate: function(year, month, day) {
+      var date = new Date(year, month, day);
+
+      return (
+        date.getFullYear() === year &&
+        date.getMonth() === month &&
+        date.getDate() === day
+      );
+    },
+  };
+}
+
+module.exports = calendar;
+
+
+/***/ }),
+
+/***/ 166:
+/***/ (function(module, exports) {
+
+module.exports = function InvalidMonthError(message) {
+  this.message = message;
+  this.name = 'InvalidMonthError';
+};
+
+
+/***/ }),
+
+/***/ 167:
+/***/ (function(module, exports) {
+
+module.exports = function InvalidMonthsError(message) {
+  this.message = message;
+  this.name = 'InvalidMonthsError';
+};
+
+
+/***/ }),
+
+/***/ 168:
+/***/ (function(module, exports) {
+
+module.exports = function InvalidMonthsAbbrError(message) {
+  this.message = message;
+  this.name = 'InvalidMonthsAbbrError';
+};
+
+
+/***/ }),
+
+/***/ 169:
+/***/ (function(module, exports) {
+
+module.exports = function InvalidMonthError(message) {
+  this.message = message;
+  this.name = 'InvalidWeekdayError';
+};
+
+
+/***/ }),
+
+/***/ 170:
+/***/ (function(module, exports) {
+
+module.exports = function InvalidMonthsError(message) {
+  this.message = message;
+  this.name = 'InvalidWeekdaysError';
+};
+
+
+/***/ }),
+
+/***/ 171:
+/***/ (function(module, exports) {
+
+module.exports = function InvalidMonthsAbbrError(message) {
+  this.message = message;
+  this.name = 'InvalidWeekdaysAbbrError';
+};
+
+
+/***/ }),
+
+/***/ 173:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _calendar = __webpack_require__(174);
+
+var _calendar2 = _interopRequireDefault(_calendar);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var calendar = __webpack_require__(165);
+
+module.exports = {
+
+    settings: {
+        currMonth: 0,
+        currYear: 2018
+    },
+
+    init: function init() {
+        //get current month date
+        var d = new Date();
+        module.exports.settings.currMonth = d.getMonth();
+        module.exports.settings.currYear = d.getFullYear();
+
+        module.exports.initHandlers();
+    },
+
+    initHandlers: function initHandlers() {
+
+        $('.next-month').click(function () {
+            module.exports.changeMonth("forward");
+        });
+
+        $('.prev-month').click(function () {
+            module.exports.changeMonth("back");
+        });
+    },
+
+    changeMonth: function changeMonth(direction) {
+
+        if (module.exports.settings.currMonth === 11 && direction === "forward") {
+            module.exports.settings.currMonth = -1;
+            module.exports.settings.currYear++;
+        }
+
+        if (module.exports.settings.currMonth === 0 && direction === "back") {
+            module.exports.settings.currMonth = 12;
+            module.exports.settings.currYear--;
+        }
+
+        if (direction === "forward") {
+            module.exports.settings.currMonth++;
+        } else {
+            module.exports.settings.currMonth--;
+        }
+
+        module.exports.renderMonth();
+    },
+
+    renderMonth: function renderMonth() {
+        var cal = calendar().of(module.exports.settings.currYear, module.exports.settings.currMonth);
+
+        $('.calendar-body').empty();
+
+        $('.cal-title-text').text(cal.month + ' - ' + cal.year);
+
+        var calHTML = '\n         <div class="row cal-row cal-header">\n                                <div class="cal-1">Sun</div>\n                                <div class="cal-1">Mon</div>\n                                <div class="cal-1">Tue</div>\n                                <div class="cal-1">Wed</div>\n                                <div class="cal-1">Thu</div>\n                                <div class="cal-1">Fri</div>\n                                <div class="cal-1">Sat</div>\n                            </div>';
+
+        for (var i = 0; i < cal.calendar.length; i++) {
+
+            calHTML += '               \n               <div class="row cal-row">';
+
+            for (var j = 0; j < 7; j++) {
+                if (cal.calendar[i][j] === 0) {
+                    calHTML += '<div class="cal-1"> </div>';
+                } else {
+                    calHTML += '<div class="cal-1">' + cal.calendar[i][j] + '</div>';
+                }
+            }
+            calHTML += '</div>';
+        }
+
+        $('.calendar-body').append(calHTML);
+    }
+
+};
+
+console.log(calendar().of(2016, 0));
+
+/***/ }),
+
+/***/ 174:
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(175);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(2)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {
+	module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!./calendar.css", function() {
+		var newContent = require("!!../../../../../../node_modules/css-loader/index.js!./calendar.css");
+
+		if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+
+		var locals = (function(a, b) {
+			var key, idx = 0;
+
+			for(key in a) {
+				if(!b || a[key] !== b[key]) return false;
+				idx++;
+			}
+
+			for(key in b) idx--;
+
+			return idx === 0;
+		}(content.locals, newContent.locals));
+
+		if(!locals) throw new Error('Aborting CSS HMR due to changed css-modules locals.');
+
+		update(newContent);
+	});
+
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 175:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.cal-1 {\n    width: 14.28%;\n    border-right: 1px solid #a7a3a7;\n    border-top: 1px solid #b8b6b8;\n    text-align: right;\n    height: 50px;\n    line-height: 6;\n    padding-right: 9px;\n}\n\n.cal-1:hover {\n    background-color: #e6e6e6;\n}\n\n.next-month, .prev-month {\n    cursor: pointer;\n}\n\n.next-month:hover, .prev-month:hover {\n    cursor: pointer;\n    color: #00B4DB;\n}\n.cal-title {\n    font-weight: bold;\n}\n\n.cal-header {\n   background-color: #eaecef;\n    padding: 0px;\n\n}\n\n.cal-row .cal-1:last-child {\n    border-right: 0;\n}\n\n\n.calendar-body {\n    margin-left:15px;\n    margin-right:15px;\n}\n\n.calendar-body .cal-row:last-child {\n    border-bottom: 0;\n}", ""]);
 
 // exports
 

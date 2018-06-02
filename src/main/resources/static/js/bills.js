@@ -1,6 +1,7 @@
 import styles from '../css/module/bills.css'
 
 const deleteBill = require('./lib/remove.js');
+const cal = require('./modules/cal.js');
 
 // Deletes a bill from the list of bills
 deleteBill.init({
@@ -11,3 +12,4 @@ deleteBill.init({
 });
 
 
+cal.init();
