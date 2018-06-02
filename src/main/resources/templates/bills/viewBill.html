@@ -36,7 +36,7 @@
 
         <div class="row pt-3">
 
-            <div class="col-md-6 pb-4">
+            <div class="col-md-6">
 
                 <div class="card bill "  th:data-id="${bill.id}">
                     <div class="card-header">
@@ -145,8 +145,10 @@
 
             <div class="col-md-6">
 
-                <div id="calendar">
-                    <div class="card mb-4">
+
+
+                <div id="calendar" th:data-due-dates="${bill.dueDatesAsString()}">
+                    <div class="card mb-4 ml-4 mr-4 ">
                         <div class="card-header">
                             <div class="row cal-title">
                                 <div class="text-left ml-2">
@@ -267,18 +269,6 @@
                                 <td>$250.00</td>
                                 <td class="text-right"><i class="fas fa-edit pr-2"></i> <i class="fas fa-times"></i></td>
                             </tr>
-
-                            <!--<tr>-->
-
-                                <!--<td class="font-weight-bold">08/11/2015</td>-->
-                                <!--<td><span class="badge badge-secondary">On time</span></td>-->
-                                <!--<td>$250.00</td>-->
-                                <!--<td class="text-right"><i class="fas fa-edit pr-2">-->
-                                <!--</i> <i class="fas fa-times"></i>-->
-
-                                <!--</td>-->
-
-                            <!--</tr>-->
 
                         </th:block>
 

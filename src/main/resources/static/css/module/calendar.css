@@ -4,8 +4,8 @@
     border-right: 1px solid #a7a3a7;
     border-top: 1px solid #b8b6b8;
     text-align: right;
-    height: 50px;
-    line-height: 6;
+    height: 35px;
+    line-height: 4;
     padding-right: 9px;
 }
 
@@ -27,7 +27,8 @@
 
 .cal-header {
    background-color: #eaecef;
-    padding: 0px;
+    padding: 0;
+    font-weight: bold;
 
 }
 
@@ -43,4 +44,11 @@
 
 .calendar-body .cal-row:last-child {
     border-bottom: 0;
+}
+
+.cal-due-date {
+    cursor: pointer;
+    color: #db3b42;
+    font-weight: bold;
+    background-color: #2312120f;
 }

@@ -1,6 +1,4 @@
 import calStyle from '../../css/module/calendar.css'
-
-
 const calendar = require('calendar-js');
 
 
@@ -8,7 +6,8 @@ module.exports = {
 
     settings: {
         currMonth: 0,
-        currYear: 2018
+        currYear: 2018,
+        dueDates: []
     },
 
     init: () => {
@@ -16,8 +15,11 @@ module.exports = {
         let d = new Date();
         module.exports.settings.currMonth = d.getMonth();
         module.exports.settings.currYear = d.getFullYear();
+        module.exports.settings.dueDates =  $('#calendar').data("due-dates");
+
 
         module.exports.initHandlers();
+        module.exports.renderMonth();
     },
 
     initHandlers: () => {
@@ -83,7 +85,13 @@ module.exports = {
                         if(cal.calendar[i][j] === 0) {
                             calHTML += `<div class="cal-1"> </div>`
                         } else {
-                            calHTML += `<div class="cal-1">${cal.calendar[i][j]}</div>`
+
+                            console.log("test");
+                            if (module.exports.isDueDate(cal.calendar[i][j])) {
+                                calHTML += `<div class="cal-1 cal-due-date">${cal.calendar[i][j]}</div>`
+                            } else {
+                                calHTML += `<div class="cal-1">${cal.calendar[i][j]}</div>`
+                            }
                         }
                     }
                     calHTML += `</div>`;
@@ -91,6 +99,29 @@ module.exports = {
 
         $('.calendar-body').append(calHTML);
 
+    },
+
+    isDueDate: (day) => {
+
+        if(day < 10) {
+            day = "0" + day;
+        }
+
+        let month = module.exports.settings.currMonth;
+        if (month < 10) {
+            month = "0" + month;
+        }
+
+        let d = module.exports.settings.currYear + "-" +
+                  month + "-"+ day;
+
+        console.log(d);
+
+        if(module.exports.settings.dueDates.includes(d)) {
+            return true;
+        }
+
+        return false;
     }
 
 
@@ -99,5 +130,3 @@ module.exports = {
 
 };
 
-
-console.log(calendar().of(2016, 0));

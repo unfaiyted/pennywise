@@ -82,6 +82,23 @@ public class RecurringBill  extends Bill {
     }
 
 
+    public String dueDatesAsString() {
+
+        String s = "[";
+
+        for(BillDueDate date : this.dueDates) {
+            s += "\"" + date.getDate().toString() + "\", ";
+        }
+
+        s = s.substring(0, s.length() - 2 );
+
+        s += "]";
+
+        return s;
+
+    }
+
+
     @Override
     public String toString() {
         return "RecurringBill{" +
