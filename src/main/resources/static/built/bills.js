@@ -324,12 +324,7 @@ module.exports = {
                     calHTML += '<div class="cal-1"> </div>';
                 } else {
 
-                    console.log("test");
-                    if (module.exports.isDueDate(cal.calendar[i][j])) {
-                        calHTML += '<div class="cal-1 cal-due-date cal-popover" data-container="body"\n                         data-toggle="popover" data-trigger="hover"  data-placement="top" data-content="Bill due date."\n                            >' + cal.calendar[i][j] + '</div>';
-                    } else {
-                        calHTML += '<div class="cal-1">' + cal.calendar[i][j] + '</div>';
-                    }
+                    calHTML += module.exports.isDueDate(cal.calendar[i][j]);
                 }
             }
             calHTML += '</div>';
@@ -343,6 +338,10 @@ module.exports = {
     },
 
     isDueDate: function isDueDate(day) {
+
+        var oDay = day;
+
+        var today = new Date().toISOString().slice(0, 10);
 
         if (day < 10) {
             day = "0" + day;
@@ -358,11 +357,13 @@ module.exports = {
 
         console.log(d);
 
+        var isToday = d === today ? 'cal-today' : ' ';
+
         if (module.exports.settings.dueDates.includes(d)) {
-            return true;
+            return '<div class="cal-1 cal-due-date cal-popover ' + isToday + '" data-container="body"\n                         data-toggle="popover" data-trigger="hover"  data-placement="top" data-content="Bill due date."\n                            >' + oDay + '</div>';
         }
 
-        return false;
+        return '<div class="cal-1  ' + isToday + '">' + oDay + '</div>';
     }
 
 };
@@ -428,7 +429,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\r\n.cal-1 {\r\n    width: 14.28%;\r\n    border-right: 1px solid #a7a3a7;\r\n    border-top: 1px solid #b8b6b8;\r\n    text-align: right;\r\n    height: 35px;\r\n    line-height: 3;\r\n    padding-right: 9px;\r\n}\r\n\r\n.cal-1:hover {\r\n    background-color: #e6e6e6;\r\n}\r\n\r\n.next-month, .prev-month {\r\n    cursor: pointer;\r\n}\r\n\r\n.next-month:hover, .prev-month:hover {\r\n    cursor: pointer;\r\n    color: #00B4DB;\r\n}\r\n.cal-title {\r\n    font-weight: bold;\r\n}\r\n\r\n.cal-header {\r\n   background-color: #eaecef;\r\n    padding: 0;\r\n    font-weight: bold;\r\n\r\n}\r\n\r\n.cal-row .cal-1:last-child {\r\n    border-right: 0;\r\n}\r\n\r\n\r\n.calendar-body {\r\n    margin-left:15px;\r\n    margin-right:15px;\r\n}\r\n\r\n.calendar-body .cal-row:last-child {\r\n    border-bottom: 0;\r\n}\r\n\r\n.cal-due-date {\r\n    cursor: pointer;\r\n    color: #db3b42;\r\n    font-weight: bold;\r\n    background-color: #2312120f;\r\n}", ""]);
+exports.push([module.i, "\r\n.cal-1 {\r\n    width: 14.28%;\r\n    border-right: 1px solid #a7a3a7;\r\n    border-top: 1px solid #b8b6b8;\r\n    text-align: right;\r\n    height: 35px;\r\n    line-height: 3;\r\n    padding-right: 9px;\r\n}\r\n\r\n.cal-1:hover {\r\n    background-color: #e6e6e6;\r\n}\r\n\r\n.next-month, .prev-month {\r\n    cursor: pointer;\r\n}\r\n\r\n.next-month:hover, .prev-month:hover {\r\n    cursor: pointer;\r\n    color: #00B4DB;\r\n}\r\n.cal-title {\r\n    font-weight: bold;\r\n}\r\n\r\n.cal-header {\r\n   background-color: #eaecef;\r\n    padding: 0;\r\n    font-weight: bold;\r\n\r\n}\r\n\r\n.cal-row .cal-1:last-child {\r\n    border-right: 0;\r\n}\r\n\r\n\r\n.calendar-body {\r\n    margin-left:15px;\r\n    margin-right:15px;\r\n}\r\n\r\n.calendar-body .cal-row:last-child {\r\n    border-bottom: 0;\r\n}\r\n\r\n.cal-due-date {\r\n    cursor: pointer;\r\n    color: #db3b42;\r\n    font-weight: bold;\r\n    background-color: #2312120f;\r\n}\r\n\r\n.cal-today {\r\n    font-weight: bold;\r\n    background: #c0fdfb;\r\n}", ""]);
 
 // exports
 

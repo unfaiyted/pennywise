@@ -90,15 +90,9 @@ module.exports = {
                             calHTML += `<div class="cal-1"> </div>`
                         } else {
 
-                            console.log("test");
-                            if (module.exports.isDueDate(cal.calendar[i][j])) {
-                                calHTML += `<div class="cal-1 cal-due-date cal-popover" data-container="body"
-                         data-toggle="popover" data-trigger="hover"  data-placement="top" data-content="Bill due date."
-                            >${cal.calendar[i][j]}</div>`;
+                            calHTML += module.exports.isDueDate(cal.calendar[i][j])
 
-                            } else {
-                                calHTML += `<div class="cal-1">${cal.calendar[i][j]}</div>`;
-                            }
+
                         }
                     }
                     calHTML += `</div>`;
@@ -113,6 +107,10 @@ module.exports = {
     },
 
     isDueDate: (day) => {
+
+        let oDay = day;
+
+        let today = new Date().toISOString().slice(0,10);
 
         if(day < 10) {
             day = "0" + day;
@@ -129,11 +127,15 @@ module.exports = {
 
         console.log(d);
 
+        let isToday = (d === today) ? 'cal-today' : ' ';
+
         if(module.exports.settings.dueDates.includes(d)) {
-            return true;
+            return `<div class="cal-1 cal-due-date cal-popover ${isToday}" data-container="body"
+                         data-toggle="popover" data-trigger="hover"  data-placement="top" data-content="Bill due date."
+                            >${oDay}</div>`;
         }
 
-        return false;
+        return `<div class="cal-1  ${isToday}">${oDay}</div>`;
     }
 
 
