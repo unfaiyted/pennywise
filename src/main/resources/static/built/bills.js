@@ -313,7 +313,7 @@ module.exports = {
 
         $('.cal-title-text').text(cal.month + ' - ' + cal.year);
 
-        var calHTML = '\n         <div class="row cal-row cal-header">\n                                <div class="cal-1">Sun</div>\n                                <div class="cal-1">Mon</div>\n                                <div class="cal-1">Tue</div>\n                                <div class="cal-1">Wed</div>\n                                <div class="cal-1">Thu</div>\n                                <div class="cal-1">Fri</div>\n                                <div class="cal-1">Sat</div>\n                            </div>';
+        var calHTML = '\n         <div class="row cal-row cal-header">\n                                <div class="cal-1 text-truncate">Sun</div>\n                                <div class="cal-1 text-truncate">Mon</div>\n                                <div class="cal-1 text-truncate">Tue</div>\n                                <div class="cal-1 text-truncate">Wed</div>\n                                <div class="cal-1 text-truncate">Thu</div>\n                                <div class="cal-1 text-truncate">Fri</div>\n                                <div class="cal-1 text-truncate">Sat</div>\n                            </div>';
 
         for (var i = 0; i < cal.calendar.length; i++) {
 
@@ -326,7 +326,7 @@ module.exports = {
 
                     console.log("test");
                     if (module.exports.isDueDate(cal.calendar[i][j])) {
-                        calHTML += '<div class="cal-1 cal-due-date">' + cal.calendar[i][j] + '</div>';
+                        calHTML += '<div class="cal-1 cal-due-date cal-popover" data-container="body"\n                         data-toggle="popover" data-trigger="hover"  data-placement="top" data-content="Bill due date."\n                            >' + cal.calendar[i][j] + '</div>';
                     } else {
                         calHTML += '<div class="cal-1">' + cal.calendar[i][j] + '</div>';
                     }
@@ -336,6 +336,10 @@ module.exports = {
         }
 
         $('.calendar-body').append(calHTML);
+
+        $('.cal-popover').popover({
+            container: 'body'
+        });
     },
 
     isDueDate: function isDueDate(day) {
@@ -344,7 +348,8 @@ module.exports = {
             day = "0" + day;
         }
 
-        var month = module.exports.settings.currMonth;
+        // starts at zero offset
+        var month = module.exports.settings.currMonth + 1;
         if (month < 10) {
             month = "0" + month;
         }
@@ -423,7 +428,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.cal-1 {\n    width: 14.28%;\n    border-right: 1px solid #a7a3a7;\n    border-top: 1px solid #b8b6b8;\n    text-align: right;\n    height: 35px;\n    line-height: 4;\n    padding-right: 9px;\n}\n\n.cal-1:hover {\n    background-color: #e6e6e6;\n}\n\n.next-month, .prev-month {\n    cursor: pointer;\n}\n\n.next-month:hover, .prev-month:hover {\n    cursor: pointer;\n    color: #00B4DB;\n}\n.cal-title {\n    font-weight: bold;\n}\n\n.cal-header {\n   background-color: #eaecef;\n    padding: 0;\n    font-weight: bold;\n\n}\n\n.cal-row .cal-1:last-child {\n    border-right: 0;\n}\n\n\n.calendar-body {\n    margin-left:15px;\n    margin-right:15px;\n}\n\n.calendar-body .cal-row:last-child {\n    border-bottom: 0;\n}\n\n.cal-due-date {\n    cursor: pointer;\n    color: #db3b42;\n    font-weight: bold;\n    background-color: #2312120f;\n}", ""]);
+exports.push([module.i, "\n.cal-1 {\n    width: 14.28%;\n    border-right: 1px solid #a7a3a7;\n    border-top: 1px solid #b8b6b8;\n    text-align: right;\n    height: 35px;\n    line-height: 3;\n    padding-right: 9px;\n}\n\n.cal-1:hover {\n    background-color: #e6e6e6;\n}\n\n.next-month, .prev-month {\n    cursor: pointer;\n}\n\n.next-month:hover, .prev-month:hover {\n    cursor: pointer;\n    color: #00B4DB;\n}\n.cal-title {\n    font-weight: bold;\n}\n\n.cal-header {\n   background-color: #eaecef;\n    padding: 0;\n    font-weight: bold;\n\n}\n\n.cal-row .cal-1:last-child {\n    border-right: 0;\n}\n\n\n.calendar-body {\n    margin-left:15px;\n    margin-right:15px;\n}\n\n.calendar-body .cal-row:last-child {\n    border-bottom: 0;\n}\n\n.cal-due-date {\n    cursor: pointer;\n    color: #db3b42;\n    font-weight: bold;\n    background-color: #2312120f;\n}", ""]);
 
 // exports
 

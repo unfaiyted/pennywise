@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,6 +97,26 @@ public class RecurringBill  extends Bill {
 
         return s;
 
+    }
+
+
+    public BillDueDate nextDueDate() {
+
+        LocalDate today = LocalDate.now();
+        BillDueDate closest = new BillDueDate(LocalDate.now());
+        Integer daysBewtween = 0;
+        // Period period = Period.between(LocalDate.now(), LocalDate.now());
+        Long p = 365L;
+
+        for (BillDueDate date : dueDates) {
+            Long p2 = ChronoUnit.DAYS.between(date.getDate(), today);
+            if (date.getDate().isAfter(today) && p2 < p) {
+                p = p2;
+                closest = date;
+            }
+        }
+
+        return closest;
     }
 
 

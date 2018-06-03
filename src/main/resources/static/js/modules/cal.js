@@ -29,6 +29,8 @@ module.exports = {
         });
 
 
+
+
         $('.prev-month').click(function () {
             module.exports.changeMonth("back");
 
@@ -59,7 +61,9 @@ module.exports = {
     },
 
     renderMonth: () => {
-        let cal = calendar().of(module.exports.settings.currYear, module.exports.settings.currMonth)
+        let cal = calendar().of(module.exports.settings.currYear, module.exports.settings.currMonth);
+
+
 
         $('.calendar-body').empty();
 
@@ -67,13 +71,13 @@ module.exports = {
 
         let calHTML = `
          <div class="row cal-row cal-header">
-                                <div class="cal-1">Sun</div>
-                                <div class="cal-1">Mon</div>
-                                <div class="cal-1">Tue</div>
-                                <div class="cal-1">Wed</div>
-                                <div class="cal-1">Thu</div>
-                                <div class="cal-1">Fri</div>
-                                <div class="cal-1">Sat</div>
+                                <div class="cal-1 text-truncate">Sun</div>
+                                <div class="cal-1 text-truncate">Mon</div>
+                                <div class="cal-1 text-truncate">Tue</div>
+                                <div class="cal-1 text-truncate">Wed</div>
+                                <div class="cal-1 text-truncate">Thu</div>
+                                <div class="cal-1 text-truncate">Fri</div>
+                                <div class="cal-1 text-truncate">Sat</div>
                             </div>`;
 
             for(var i = 0; i < cal.calendar.length; i++) {
@@ -88,9 +92,12 @@ module.exports = {
 
                             console.log("test");
                             if (module.exports.isDueDate(cal.calendar[i][j])) {
-                                calHTML += `<div class="cal-1 cal-due-date">${cal.calendar[i][j]}</div>`
+                                calHTML += `<div class="cal-1 cal-due-date cal-popover" data-container="body"
+                         data-toggle="popover" data-trigger="hover"  data-placement="top" data-content="Bill due date."
+                            >${cal.calendar[i][j]}</div>`;
+
                             } else {
-                                calHTML += `<div class="cal-1">${cal.calendar[i][j]}</div>`
+                                calHTML += `<div class="cal-1">${cal.calendar[i][j]}</div>`;
                             }
                         }
                     }
@@ -98,6 +105,10 @@ module.exports = {
             }
 
         $('.calendar-body').append(calHTML);
+
+        $('.cal-popover').popover({
+            container: 'body'
+        });
 
     },
 
@@ -107,7 +118,8 @@ module.exports = {
             day = "0" + day;
         }
 
-        let month = module.exports.settings.currMonth;
+        // starts at zero offset
+        let month = module.exports.settings.currMonth+1;
         if (month < 10) {
             month = "0" + month;
         }

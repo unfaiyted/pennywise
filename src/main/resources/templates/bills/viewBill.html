@@ -26,7 +26,7 @@
             </div>
 
             <div class="col-md-6 text-right">
-                <button class="btn btn-secondary" data-toggle="modal" data-target="#pay-modal">Edit details </button>
+
                 <button class="btn btn-primary delete-btn"  th:data-id="${bill.id}"> Delete Bill </button></td>
             </div>
 
@@ -36,9 +36,9 @@
 
         <div class="row pt-3">
 
-            <div class="col-md-6">
+            <div class="col-md-6 mb-4">
 
-                <div class="card bill "  th:data-id="${bill.id}">
+                <div class="card bill"  th:data-id="${bill.id}">
                     <div class="card-header">
 
                        <div class="row">
@@ -145,10 +145,10 @@
 
             <div class="col-md-6">
 
+                <div class="row">
 
-
-                <div id="calendar" th:data-due-dates="${bill.dueDatesAsString()}">
-                    <div class="card mb-4 ml-4 mr-4 ">
+                <div id="calendar" th:data-due-dates="${bill.dueDatesAsString()}" class="col-12 mb-4">
+                    <div class="card ml-4 mr-4 ">
                         <div class="card-header">
                             <div class="row cal-title">
                                 <div class="text-left ml-2">
@@ -234,16 +234,20 @@
                     </div>
                 </div>
 
-            <div class="card">
+
+                </div>
+
+                <div class="row">
+
+            <div class="card mx-auto">
                 <div class="card-header">
                     <div class="row">
                         <div class="text-left pl-2 pt-2">
                         Merchant History
                         </div>
                         <div class="ml-auto text-right">
-                            <button class="btn btn-primary">
-                                Add Payment
-                            </button>
+
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#pay-modal">Add payment</button>
                         </div>
                     </div>
                 </div>
@@ -281,7 +285,7 @@
             </div>
 
              </div>
-
+            </div>
 
 
     </div>
