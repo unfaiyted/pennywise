@@ -1,10 +1,7 @@
 package com.faiyt.pennywise.services;
 
 import com.faiyt.pennywise.models.Chart;
-import com.faiyt.pennywise.models.finance.Bill;
-import com.faiyt.pennywise.models.finance.BillCategory;
-import com.faiyt.pennywise.models.finance.OneTimeBill;
-import com.faiyt.pennywise.models.finance.RecurringBill;
+import com.faiyt.pennywise.models.finance.*;
 import com.faiyt.pennywise.models.user.User;
 import com.faiyt.pennywise.repositories.Bills;
 import com.faiyt.pennywise.util.Calculation;
@@ -42,20 +39,15 @@ public class BillService {
         return total;
     }
 
-
     public Bill saveBill(Bill bill) {
         return getBills().save(bill);
     }
     public RecurringBill saveBill(RecurringBill bill) {
         return getBills().save(bill);
     }
-
     public OneTimeBill saveBill(OneTimeBill bill) {
         return getBills().save(bill);
     }
-
-
-
 
     public Chart categoryTotalsAsChartData(User owner) {
 
@@ -88,7 +80,6 @@ public class BillService {
         return new Chart(categoryNames, series);
     }
 
-
     public Double getUserBillsByCategory(User owner, BillCategory category) {
 
         List<Bill> bills =  getBills().findAllByOwnerAndAndCategory(owner, category);
@@ -105,16 +96,34 @@ public class BillService {
 
     }
 
-
     private Double monthlyTotalByBill(RecurringBill bill) {
         String frequency  = bill.getFrequency().getName();
 
         return Calculation.getMonthlyDollar(frequency, bill.getPayment());
 
     }
-    //total monthly
-    //total ccs
-    // est interest
+
+    public void updateBillStatusesByOwner(User owner) {
+        List<BillStatus> statuses = getBills().getStatuses();
+        List<Bill> bills = getBills().findAllByOwner(owner);
+
+        for(Bill bill : bills) {
+            for(BillStatus status : statuses) {
+
+                if(!status.getName().equalsIgnoreCase("None")) {
+                    System.out.println(status.getName());
+                    if(status.getMaxDays() >= bill.daysTillDue() && status.getMinDays() <= bill.daysTillDue()) {
+                      bill.setStatus(status);
+                    }
+                }
+            }
+        }
+        //save updated bills
+        getBills().saveAll(bills);
+    }
+
+
+
 
 
 }

@@ -24,6 +24,7 @@ public class RecurringBill  extends Bill {
     private List<BillDueDate> dueDates;
 
 
+
     public RecurringBill() {
         this.frequency = new PayFrequency();
     }

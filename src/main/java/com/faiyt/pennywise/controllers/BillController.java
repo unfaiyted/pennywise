@@ -75,8 +75,10 @@ public class BillController {
     public String viewBills(Model model) {
 
         User user = userDao.getLoggedInUser();
-        BillCategory category = billDao.getBills().getCategoryByName("Credit Card");
 
+        billDao.updateBillStatusesByOwner(user);
+
+        BillCategory category = billDao.getBills().getCategoryByName("Credit Card");
         model.addAttribute("bills",
                 billDao.getBills().findAllByOwner(user));
         model.addAttribute("total",

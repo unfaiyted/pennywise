@@ -11,3 +11,4 @@ VALUES
   ('Rent'),
   ('Savings'),
   ('Other')
+

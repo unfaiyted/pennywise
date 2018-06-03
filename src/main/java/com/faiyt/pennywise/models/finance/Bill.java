@@ -5,6 +5,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 
 
 @Entity
@@ -38,13 +40,15 @@ public class Bill {
     private boolean active = true;
 
     @ManyToOne
+    private BillStatus status;
+
+    @ManyToOne
     private BillCategory category;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Merchant merchant;
     @ManyToOne
     private User owner;
-
 
     public Bill() {
         this.merchant = new Merchant();
@@ -156,8 +160,21 @@ public class Bill {
         return dueDate;
     }
 
+    public Integer daysTillDue() {
+        return (int) ChronoUnit.DAYS.between(LocalDate.now(), dueDate);
+    }
+
+
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public BillStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(BillStatus status) {
+        this.status = status;
     }
 
     @Override
@@ -175,4 +192,6 @@ public class Bill {
                 ", owner=" + owner +
                 '}';
     }
+
+
 }

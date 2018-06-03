@@ -9,4 +9,3 @@ VALUES
   ('Monthly'),
   ('Yearly'),
   ('Twice a Month'),
-  ('Other')
