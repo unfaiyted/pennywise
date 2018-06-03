@@ -41,18 +41,15 @@
                 <div class="card bill"  th:data-id="${bill.id}">
                     <div class="card-header">
 
-                       <div class="row">
-                    <div class="big-icon col-2 pl-4"><i th:class="${bill.category.icon}"></i>
-                    </div>
-                        <div class="pl-4 col-8 pt-3 mx-auto">
-                        <h1 class="text-truncate " th:text="${bill.merchant.name}"></h1>
-                            <span class="text-muted" th:text="'Since ' + ${#temporals.format(bill.createdAt, 'MM/dd/yyyy ')} ">Since 05/01/2012</span>
-                    </div>
+                       <div class="row pr-3">
+                            <div class="big-icon col-2 pl-4"><i th:class="${bill.category.icon}"></i>
+                            </div>
+                                <div class="pl-4 col-8 pt-3 mx-auto">
+                                <h1 class="text-truncate " th:text="${bill.merchant.name}"></h1>
+                                    <span class="text-muted" th:text="'Since ' + ${#temporals.format(bill.createdAt, 'MM/dd/yyyy ')} ">Since 05/01/2012</span>
+                            </div>
 
-                    <div class="text-right col-2 ml-auto pr-3"><span class="badge badge-primary">Late</span></div>
-
-
-
+                            <div class="text-right col-2 ml-auto"><span th:class="'badge badge-'+${bill?.status?.color}" th:text="${bill?.status?.name}">Late</span></div>
                            </div>
                 </div>
 
