@@ -125,7 +125,6 @@ module.exports = {
         let d = module.exports.settings.currYear + "-" +
                   month + "-"+ day;
 
-        console.log(d);
 
         let isToday = (d === today) ? 'cal-today' : ' ';
 

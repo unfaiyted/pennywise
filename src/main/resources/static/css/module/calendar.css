@@ -10,7 +10,7 @@
 }
 
 .cal-1:hover {
-    background-color: #e6e6e6;
+    background-color: #ececec;
 }
 
 .next-month, .prev-month {
@@ -55,5 +55,5 @@
 
 .cal-today {
     font-weight: bold;
-    background: #c0fdfb;
+    background: rgba(217, 15, 15, 0.07);
 }

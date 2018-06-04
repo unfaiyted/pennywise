@@ -3,6 +3,7 @@ package com.faiyt.pennywise.controllers.api;
 import com.faiyt.pennywise.models.Chart;
 import com.faiyt.pennywise.models.Response;
 import com.faiyt.pennywise.models.ResponseError;
+import com.faiyt.pennywise.models.finance.Bill;
 import com.faiyt.pennywise.models.user.User;
 import com.faiyt.pennywise.services.AddressService;
 import com.faiyt.pennywise.services.BillService;
@@ -27,6 +28,20 @@ public class ApiBillController {
         this.billDao = billDao;
         this.addressDao = addressDao;
         this.userDao = userDao;
+    }
+
+
+    //@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
+    @GetMapping("/{id}")
+    public Bill getBill(@PathVariable Long id) {
+
+        User owner = userDao.getLoggedInUser();
+        Bill bill = billDao.getBills().findById(id).get();
+
+        if(bill.getOwner().equals(owner)) {
+            return bill;
+        }
+        return null;
     }
 
     @RequestMapping(

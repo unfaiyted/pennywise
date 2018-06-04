@@ -2,6 +2,8 @@ import styles from '../css/module/bills.css'
 
 const deleteBill = require('./lib/remove.js');
 const cal = require('./modules/cal.js');
+const payBill = require('./modules/bill-payment.js');
+
 
 // Deletes a bill from the list of bills
 deleteBill.init({
@@ -12,4 +14,13 @@ deleteBill.init({
 });
 
 
-cal.init();
+
+if ($("#calendar")[0]){
+    // Do something if class exists
+    cal.init();
+}
+
+
+
+payBill.init();
+

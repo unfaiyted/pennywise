@@ -162,6 +162,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var deleteBill = __webpack_require__(5);
 var cal = __webpack_require__(165);
+var payBill = __webpack_require__(176);
 
 // Deletes a bill from the list of bills
 deleteBill.init({
@@ -171,7 +172,12 @@ deleteBill.init({
     deleteMsg: "Are you sure you want to delete this bill?"
 });
 
-cal.init();
+if ($("#calendar")[0]) {
+    // Do something if class exists
+    cal.init();
+}
+
+payBill.init();
 
 /***/ }),
 
@@ -234,7 +240,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".table {\r\n    margin-bottom: 0;\r\n}\r\n\r\n.bill-analysis {\r\n    list-style-type: none;\r\n    padding: 0;\r\n    margin: 0;\r\n    text-align: center;\r\n\r\n}\r\n\r\n.bill-analysis .amt {\r\n    font-size: 25px;\r\n\r\n}\r\n\r\n.bill-analysis .desc {\r\n    font-size: 12px;\r\n}\r\n", ""]);
+exports.push([module.i, ".table {\n    margin-bottom: 0;\n}\n\n.bill-analysis {\n    list-style-type: none;\n    padding: 0;\n    margin: 0;\n    text-align: center;\n\n}\n\n.bill-analysis .amt {\n    font-size: 25px;\n\n}\n\n.bill-analysis .desc {\n    font-size: 12px;\n}\n", ""]);
 
 // exports
 
@@ -355,8 +361,6 @@ module.exports = {
 
         var d = module.exports.settings.currYear + "-" + month + "-" + day;
 
-        console.log(d);
-
         var isToday = d === today ? 'cal-today' : ' ';
 
         if (module.exports.settings.dueDates.includes(d)) {
@@ -429,7 +433,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\r\n.cal-1 {\r\n    width: 14.28%;\r\n    border-right: 1px solid #a7a3a7;\r\n    border-top: 1px solid #b8b6b8;\r\n    text-align: right;\r\n    height: 35px;\r\n    line-height: 3;\r\n    padding-right: 9px;\r\n}\r\n\r\n.cal-1:hover {\r\n    background-color: #e6e6e6;\r\n}\r\n\r\n.next-month, .prev-month {\r\n    cursor: pointer;\r\n}\r\n\r\n.next-month:hover, .prev-month:hover {\r\n    cursor: pointer;\r\n    color: #00B4DB;\r\n}\r\n.cal-title {\r\n    font-weight: bold;\r\n}\r\n\r\n.cal-header {\r\n   background-color: #eaecef;\r\n    padding: 0;\r\n    font-weight: bold;\r\n\r\n}\r\n\r\n.cal-row .cal-1:last-child {\r\n    border-right: 0;\r\n}\r\n\r\n\r\n.calendar-body {\r\n    margin-left:15px;\r\n    margin-right:15px;\r\n}\r\n\r\n.calendar-body .cal-row:last-child {\r\n    border-bottom: 0;\r\n}\r\n\r\n.cal-due-date {\r\n    cursor: pointer;\r\n    color: #db3b42;\r\n    font-weight: bold;\r\n    background-color: #2312120f;\r\n}\r\n\r\n.cal-today {\r\n    font-weight: bold;\r\n    background: #c0fdfb;\r\n}", ""]);
+exports.push([module.i, "\n.cal-1 {\n    width: 14.28%;\n    border-right: 1px solid #a7a3a7;\n    border-top: 1px solid #b8b6b8;\n    text-align: right;\n    height: 35px;\n    line-height: 3;\n    padding-right: 9px;\n}\n\n.cal-1:hover {\n    background-color: #ececec;\n}\n\n.next-month, .prev-month {\n    cursor: pointer;\n}\n\n.next-month:hover, .prev-month:hover {\n    cursor: pointer;\n    color: #00B4DB;\n}\n.cal-title {\n    font-weight: bold;\n}\n\n.cal-header {\n   background-color: #eaecef;\n    padding: 0;\n    font-weight: bold;\n\n}\n\n.cal-row .cal-1:last-child {\n    border-right: 0;\n}\n\n\n.calendar-body {\n    margin-left:15px;\n    margin-right:15px;\n}\n\n.calendar-body .cal-row:last-child {\n    border-bottom: 0;\n}\n\n.cal-due-date {\n    cursor: pointer;\n    color: #db3b42;\n    font-weight: bold;\n    background-color: #2312120f;\n}\n\n.cal-today {\n    font-weight: bold;\n    background: rgba(217, 15, 15, 0.07);\n}", ""]);
 
 // exports
 
@@ -773,6 +777,50 @@ module.exports = function InvalidMonthsAbbrError(message) {
   this.name = 'InvalidWeekdaysAbbrError';
 };
 
+
+/***/ }),
+
+/***/ 176:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var api = __webpack_require__(4);
+
+module.exports = {
+
+    init: function init() {
+        module.exports.initHandlers();
+    },
+
+    initHandlers: function initHandlers() {
+
+        $('[data-target=\'#pay-modal\']').click(function () {
+            console.log("yo");
+
+            $('.modal-content').hide();
+
+            $('.status').fadeIn(); // will first fade out the loading animation
+            $('.preloader').fadeIn();
+
+            console.log($(this).data('id'));
+            console.log($(this).data('web'));
+            console.log($(this).data('name'));
+
+            // $(`#pay-modal-website`).attr('href', $(this).data('web'));
+            // $(`#pay-modal-user`).text($(this).data('name'));
+
+            api.getData('bill/' + $(this).data('id')).then(function (data) {
+                console.log(data);
+                $('.status').fadeOut(); // will first fade out the loading animation
+                $('.preloader').delay(1200).fadeOut('slow'); // will fade out the white DIV that covers the website.
+                $('.modal-content').delay(1200).show();
+            });
+        });
+    }
+
+};
 
 /***/ }),
 

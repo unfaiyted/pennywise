@@ -230,6 +230,10 @@ button .btn-primary {
     background-color: #ede033;
 }
 
+.badge-orange {
+    color: #fff;
+    background-color: #ed621c;
+}
 .big-icon {
   font-size:  50px;
 }
@@ -392,3 +396,31 @@ element.style {
 .btn-yahoo.disabled,.btn-yahoo[disabled],fieldset[disabled] .btn-yahoo,.btn-yahoo.disabled:hover,.btn-yahoo[disabled]:hover,fieldset[disabled] .btn-yahoo:hover,.btn-yahoo.disabled:focus,.btn-yahoo[disabled]:focus,fieldset[disabled] .btn-yahoo:focus,.btn-yahoo.disabled:active,.btn-yahoo[disabled]:active,fieldset[disabled] .btn-yahoo:active,.btn-yahoo.disabled.active,.btn-yahoo[disabled].active,fieldset[disabled] .btn-yahoo.active{background-color:#720e9e;border-color:rgba(0,0,0,0.2)}
 .btn-yahoo .badge{color:#720e9e;background-color:#fff}
 
+
+
+/* Preloader */
+.preloader {
+    position: fixed;
+    top:25%;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color: #f5f5f5; /* change if the mask should have another color then white */
+    z-index:99999; /* makes sure it stays on top */
+    width: 100%;
+    height: 50%;
+    border-radius: 5px;
+
+}
+
+.status {
+    position:fixed;
+    width: 100px;
+    height: 100px;
+    left:50%; /* centers the loading animation horizontally one the screen */
+    top:50%; /* centers the loading animation vertically one the screen */
+    background-image:url("../img/loader.svg"); /* path to your loading animation */
+    background-repeat:no-repeat;
+    background-position:center;
+    margin:-100px 0 0 -100px; /* is width and height divided by two */
+}

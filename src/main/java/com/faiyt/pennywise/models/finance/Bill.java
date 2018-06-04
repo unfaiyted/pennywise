@@ -1,6 +1,7 @@
 package com.faiyt.pennywise.models.finance;
 
 import com.faiyt.pennywise.models.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -48,6 +49,7 @@ public class Bill {
     @ManyToOne(cascade = CascadeType.ALL)
     private Merchant merchant;
     @ManyToOne
+    @JsonBackReference
     private User owner;
 
     public Bill() {

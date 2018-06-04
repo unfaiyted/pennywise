@@ -15,6 +15,11 @@
     <!-- Modal -->
     <div class="modal fade" id="pay-modal" tabindex="-1" role="dialog" aria-labelledby="pay-modal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
+
+            <div class="preloader">
+                <div class="status">&nbsp;</div>
+            </div>
+
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Pay <span id="pay-bill-name">Capital One</span></h5>
@@ -24,10 +29,11 @@
                 </div>
                 <div class="modal-body">
 
-                    <a href="http://www.capitalone.com" class="btn btn-primary" target="_blank">
+
+                    <a href="http://www.capitalone.com" class="btn btn-primary" target="_blank" id="pay-modal-website">
                         Go to Merchant Website
                     </a>
-                    <span class="ml-3 text-muted">  Your username is <strong>unfaiyted</strong> </span>
+                    <span class="ml-3 text-muted">  Your username is <strong id="pay-modal-user">unfaiyted</strong> </span>
                     <hr>
 
                     <label for="pay-amount">How much did you pay?</label>
@@ -40,6 +46,9 @@
 
                 </div>
                 <div class="modal-footer">
+
+
+
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-primary">Mark Paid!</button>
                 </div>

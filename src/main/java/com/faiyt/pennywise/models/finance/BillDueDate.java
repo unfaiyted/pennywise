@@ -1,5 +1,7 @@
 package com.faiyt.pennywise.models.finance;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -9,6 +11,7 @@ import java.time.LocalDate;
 public class BillDueDate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
 
     @Column
