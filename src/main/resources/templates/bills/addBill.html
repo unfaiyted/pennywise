@@ -67,14 +67,14 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label th:for="*{merchant.name}">
-                            <p>Merchant</p>
+                            <p>Bill name (Merchant)</p>
                         </label>
-                        <input type="text" class="form-control" th:field="*{merchant.name}" placeholder="Bill Me Merchant">
+                        <input type="text" class="form-control" th:field="*{merchant.name}" placeholder="BillMe Merchant">
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label  th:for="*{payment}">Payment Amount</label>
-                            <input type="text" class="form-control"  th:field="*{payment}">
+                            <input type="number" class="form-control"  th:field="*{payment}">
                         </div>
                         <div class="form-group col-md-4">
                             <label th:for="*{frequency.id}">Pay Frequency</label>
@@ -97,6 +97,8 @@
                         </div>
                     </div>
                     <div class="text-center">
+                        <input type="button" name="previous" class=" btn btn-primary restart action-button-restart" value="Start Over"/>
+
                         <input type="button" name="next" class=" btn btn-primary next action-button" value="Next"/>
                     </div>
                 </div>

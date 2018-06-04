@@ -111,7 +111,6 @@ public class BillService {
             for(BillStatus status : statuses) {
 
                 if(!status.getName().equalsIgnoreCase("None")) {
-                    System.out.println(status.getName());
                     if(status.getMaxDays() >= bill.daysTillDue() && status.getMinDays() <= bill.daysTillDue()) {
                       bill.setStatus(status);
                     }

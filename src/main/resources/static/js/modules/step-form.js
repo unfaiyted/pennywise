@@ -36,13 +36,35 @@ module.exports = {
             e.preventDefault();
 
 
-            let paymentType = $(this).children().first();
+            let paymentType = $(this).children().first().clone();
 
             $('.payment-type-icon').empty().html(paymentType);
+
+            $('#step-zero').removeClass('animated fadeOut slideOutDown slideInUp');
+            $('#bill-add-form-main').removeClass('animated slideInUp slideOutDown');
 
             //show main form
             $('#step-zero').addClass('animated fadeOut').hide();
             $('#bill-add-form-main').show().addClass('animated slideInUp');
+
+        });
+
+
+
+        $('.restart').click(function(e) {
+            e.preventDefault();
+
+            $('#step-zero').removeClass('animated slideInUp');
+            $('#bill-add-form-main').removeClass('animated slideOutDown');
+
+
+            //show main form
+            $('#bill-add-form-main').addClass('animated slideOutDown');
+            $('#step-zero').addClass('animated slideInUp').show();
+
+
+
+
 
         });
 

@@ -31,17 +31,18 @@ public class ApiBillController {
     }
 
 
-    //@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
-    @GetMapping("/{id}")
-    public Bill getBill(@PathVariable Long id) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
+    //@GetMapping("/{id}")
+    public Bill getBill(@PathVariable Long id) throws IllegalAccessException {
 
         User owner = userDao.getLoggedInUser();
         Bill bill = billDao.getBills().findById(id).get();
 
-        if(bill.getOwner().equals(owner)) {
+        if(bill.getOwner().getId().equals(owner.getId())) {
             return bill;
+        } else {
+            throw new IllegalAccessException("User does not have access to this");
         }
-        return null;
     }
 
     @RequestMapping(
