@@ -22,16 +22,25 @@
 
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Pay <span id="pay-bill-name">Capital One</span></h5>
+                    <h5 class="modal-title" id="pay-title-name"><i class="fas fa-envelope-square" id="pay-icon"></i> Pay <span id="pay-bill-name">Capital One</span></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <a href="http://www.capitalone.com" class="btn btn-primary" target="_blank" id="pay-modal-website">
-                        Go to Merchant Website
-                    </a>
-                    <span class="ml-3 text-muted">  Your username is <strong id="pay-modal-user">unfaiyted</strong> </span>
+
+
+                    <div id="pay-bill-action">
+
+                        <a href="http://www.capitalone.com" class="btn btn-primary" target="_blank" id="pay-modal-website">
+                            Go to Merchant Website
+                        </a>
+                        <span class="ml-3 text-muted">  Your username is <strong id="pay-modal-user">unfaiyted</strong> </span>
+
+
+                    </div>
+
+
                     <hr>
 
                     <label for="pay-amount">How much did you pay?</label>
@@ -39,7 +48,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">$</span>
                         </div>
-                        <input type="text"  id="pay-amount" class="form-control" placeholder="1.00" aria-label="pay-amount" aria-describedby="amount-paid">
+                        <input type="number"  required id="pay-amount" class="form-control" placeholder="1.00" aria-label="pay-amount" aria-describedby="amount-paid">
                     </div>
 
                 </div>
@@ -48,7 +57,7 @@
 
 
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Mark Paid!</button>
+                    <button type="button" class="btn btn-primary" id="pay-submit-form">Mark Paid!</button>
                 </div>
             </div>
         </div>

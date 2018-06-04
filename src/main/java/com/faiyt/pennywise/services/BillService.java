@@ -3,11 +3,13 @@ package com.faiyt.pennywise.services;
 import com.faiyt.pennywise.models.Chart;
 import com.faiyt.pennywise.models.finance.*;
 import com.faiyt.pennywise.models.user.User;
+import com.faiyt.pennywise.repositories.BillPayments;
 import com.faiyt.pennywise.repositories.Bills;
 import com.faiyt.pennywise.util.Calculation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +17,12 @@ import java.util.List;
 @Service
 public class BillService {
     private Bills bills;
+    private BillPayments payments;
 
     @Autowired
-    public BillService(Bills bills) {
+    public BillService(Bills bills, BillPayments payments) {
         this.bills = bills;
+        this.payments = payments;
     }
 
     public Bills getBills() {
@@ -100,6 +104,19 @@ public class BillService {
         String frequency  = bill.getFrequency().getName();
 
         return Calculation.getMonthlyDollar(frequency, bill.getPayment());
+
+    }
+
+
+    public BillPayment addBillPayment(Bill bill, Double amount) {
+
+        BillPayment payment =
+               new BillPayment(bill.getStatus(),
+                        LocalDate.now(),  amount, bill);
+
+        payments.save(payment);
+
+        return payment;
 
     }
 

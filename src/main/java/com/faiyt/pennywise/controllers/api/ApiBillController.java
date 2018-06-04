@@ -30,7 +30,6 @@ public class ApiBillController {
         this.userDao = userDao;
     }
 
-
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
     //@GetMapping("/{id}")
     public Bill getBill(@PathVariable Long id) throws IllegalAccessException {
@@ -62,6 +61,37 @@ public class ApiBillController {
             Long billId = idNode.asLong();
 
             billDao.getBills().deleteById(billId);
+
+        } catch (IOException err) {
+            // fill map with errors here
+            return new ResponseError();
+        }
+
+        Response res = new Response();
+        res.setSuccess(true);
+        return res;
+
+    }
+
+
+    @RequestMapping(
+            value = "/pay",
+            method= RequestMethod.POST,
+            headers = "Accept=*/*",
+            produces = "application/json",
+            consumes="application/json")
+    @ResponseBody
+    public Response addPayment (@RequestBody String jsonStr) throws IOException {
+        try {
+
+            JsonNode jsonObj =  StringToObject.toJsonNode(jsonStr);
+
+            Long billId = jsonObj.path("billId").asLong();
+            Double payAmount =  jsonObj.path("payAmount").asDouble();
+
+            Bill bill = billDao.getBills().findById(billId).get();
+
+            billDao.addBillPayment(bill, payAmount);
 
         } catch (IOException err) {
             // fill map with errors here

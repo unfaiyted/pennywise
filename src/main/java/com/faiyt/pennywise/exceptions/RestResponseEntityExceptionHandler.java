@@ -1,6 +1,7 @@
 package com.faiyt.pennywise.exceptions;
 
 
+import org.hibernate.TransientObjectException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +47,9 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         final String bodyOfResponse = "Access denied to this data.";
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
+
+
+
 
 
 

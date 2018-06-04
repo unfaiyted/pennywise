@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 162);
+/******/ 	return __webpack_require__(__webpack_require__.s = 164);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -148,21 +148,21 @@ function toComment(sourceMap) {
 
 /***/ }),
 
-/***/ 162:
+/***/ 164:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _bills = __webpack_require__(163);
+var _bills = __webpack_require__(165);
 
 var _bills2 = _interopRequireDefault(_bills);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var deleteBill = __webpack_require__(5);
-var cal = __webpack_require__(165);
-var payBill = __webpack_require__(175);
+var cal = __webpack_require__(167);
+var payBill = __webpack_require__(177);
 
 // Deletes a bill from the list of bills
 deleteBill.init({
@@ -181,11 +181,11 @@ payBill.init();
 
 /***/ }),
 
-/***/ 163:
+/***/ 165:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(164);
+var content = __webpack_require__(166);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -232,7 +232,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 164:
+/***/ 166:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -247,19 +247,19 @@ exports.push([module.i, ".table {\n    margin-bottom: 0;\n}\n\n.bill-analysis {\
 
 /***/ }),
 
-/***/ 165:
+/***/ 167:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _calendar = __webpack_require__(166);
+var _calendar = __webpack_require__(168);
 
 var _calendar2 = _interopRequireDefault(_calendar);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var calendar = __webpack_require__(168);
+var calendar = __webpack_require__(170);
 
 module.exports = {
 
@@ -374,11 +374,11 @@ module.exports = {
 
 /***/ }),
 
-/***/ 166:
+/***/ 168:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(167);
+var content = __webpack_require__(169);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -425,7 +425,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 167:
+/***/ 169:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -440,19 +440,19 @@ exports.push([module.i, "\n.cal-1 {\n    width: 14.28%;\n    border-right: 1px s
 
 /***/ }),
 
-/***/ 168:
+/***/ 170:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var InvalidMonthError = __webpack_require__(169);
-var InvalidMonthsError = __webpack_require__(170);
-var InvalidMonthsAbbrError = __webpack_require__(171);
+var InvalidMonthError = __webpack_require__(171);
+var InvalidMonthsError = __webpack_require__(172);
+var InvalidMonthsAbbrError = __webpack_require__(173);
 
-var InvalidWeekdayError = __webpack_require__(172);
-var InvalidWeekdaysError = __webpack_require__(173);
-var InvalidWeekdaysAbbrError = __webpack_require__(174);
+var InvalidWeekdayError = __webpack_require__(174);
+var InvalidWeekdaysError = __webpack_require__(175);
+var InvalidWeekdaysAbbrError = __webpack_require__(176);
 
 var MONTHS = [
   'January',
@@ -714,7 +714,7 @@ module.exports = calendar;
 
 /***/ }),
 
-/***/ 169:
+/***/ 171:
 /***/ (function(module, exports) {
 
 module.exports = function InvalidMonthError(message) {
@@ -725,7 +725,7 @@ module.exports = function InvalidMonthError(message) {
 
 /***/ }),
 
-/***/ 170:
+/***/ 172:
 /***/ (function(module, exports) {
 
 module.exports = function InvalidMonthsError(message) {
@@ -736,7 +736,7 @@ module.exports = function InvalidMonthsError(message) {
 
 /***/ }),
 
-/***/ 171:
+/***/ 173:
 /***/ (function(module, exports) {
 
 module.exports = function InvalidMonthsAbbrError(message) {
@@ -747,7 +747,7 @@ module.exports = function InvalidMonthsAbbrError(message) {
 
 /***/ }),
 
-/***/ 172:
+/***/ 174:
 /***/ (function(module, exports) {
 
 module.exports = function InvalidMonthError(message) {
@@ -758,7 +758,7 @@ module.exports = function InvalidMonthError(message) {
 
 /***/ }),
 
-/***/ 173:
+/***/ 175:
 /***/ (function(module, exports) {
 
 module.exports = function InvalidMonthsError(message) {
@@ -769,7 +769,7 @@ module.exports = function InvalidMonthsError(message) {
 
 /***/ }),
 
-/***/ 174:
+/***/ 176:
 /***/ (function(module, exports) {
 
 module.exports = function InvalidMonthsAbbrError(message) {
@@ -780,15 +780,19 @@ module.exports = function InvalidMonthsAbbrError(message) {
 
 /***/ }),
 
-/***/ 175:
+/***/ 177:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var api = __webpack_require__(3);
-
+var alerts = __webpack_require__(6);
 module.exports = {
+
+    settings: {
+        data: null
+    },
 
     init: function init() {
         module.exports.initHandlers();
@@ -797,27 +801,97 @@ module.exports = {
     initHandlers: function initHandlers() {
 
         $('[data-target=\'#pay-modal\']').click(function () {
-            console.log("yo");
 
             $('.modal-content').hide();
 
             $('.status').fadeIn(); // will first fade out the loading animation
             $('.preloader').fadeIn();
 
-            console.log($(this).data('id'));
-            console.log($(this).data('web'));
-            console.log($(this).data('name'));
-
             // $(`#pay-modal-website`).attr('href', $(this).data('web'));
             // $(`#pay-modal-user`).text($(this).data('name'));
 
             api.getData('bill/' + $(this).data('id')).then(function (data) {
-                console.log(data);
-                $('.status').fadeOut(); // will first fade out the loading animation
-                $('.preloader').delay(1200).fadeOut('slow'); // will fade out the white DIV that covers the website.
-                $('.modal-content').delay(1200).show();
+                module.exports.settings.data = data;
+                module.exports.updateModal(data);
             });
         });
+
+        $('#pay-submit-form').click(function (e) {
+            e.preventDefault();
+            console.log("submit-form");
+
+            if ($.isNumeric($('#pay-amount').val())) {
+                module.exports.confirmPayment();
+            } else {
+                return alerts.displayPopUpAlert('Input value is not valid number.', 'danger');
+            }
+        });
+    },
+
+    confirmPayment: function confirmPayment() {
+        alerts.confirmPopUp("Are you sure you sure you want to complete this payment?").then(function () {
+            module.exports.updateServer().then(alerts.displayPopUpAlert("Done!", "primary")).catch(function () {
+                alerts.displayPopUpAlert("Error bill unable to add item", "danger");
+            });
+        }, //promise resolved
+        function () {
+            console.log('You clicked cancel');
+        } //promise rejected
+
+        );
+    },
+
+    updateModal: function updateModal(data) {
+
+        var merchantName = data.merchant.name;
+        var method = data.method.name;
+
+        //sets icon for header
+        $('#pay-icon').removeAttr('class').addClass(data.method.icon);
+
+        $('#pay-bill-name').text(merchantName);
+        module.exports.updateBillMethod(method);
+
+        $('.status').fadeOut(); // will first fade out the loading animation
+        $('.preloader').delay(1200).fadeOut('slow'); // will fade out the white DIV that covers the website.
+        $('.modal-content').delay(1200).show();
+    },
+
+    updateBillMethod: function updateBillMethod(method) {
+        $("#pay-bill-action").empty();
+
+        var data = module.exports.settings.data;
+        var childHTML = '';
+
+        if (method === 'Mail') {
+
+            childHTML += '\n            <p>Please mail your payment to this following address:</p>\n            <span>' + data.merchant.address.title + '</span>\n            <span>' + data.merchant.address.street + '</span>\n            <span>' + data.merchant.address.city + '</span>\n             <span>' + data.merchant.address.zipcode + '</span>\n              <span>' + data.merchant.address.state.abbr + '</span>';
+        } else if (method === 'In-Person') {
+            childHTML += '<p>Plase Give the payment in person.</p>';
+        } else if (method.includes('Pay') || method === 'Website') {
+
+            var webAddress = method === 'Website' ? data.merchant.website : data.method.link;
+            var payMethodName = method;
+            var webUsername = data.merchant.websiteUsername;
+
+            childHTML += '<a href="' + webAddress + '" class="mx-auto btn btn-primary" target="_blank" id="pay-modal-website">\n            Go to ' + payMethodName + ' </a>';
+
+            if (webUsername !== '') {
+                childHTML += '<span class="ml-3 text-muted">  Your username is <strong id="pay-modal-user">' + webUsername + '</strong> </span>\n            ';
+            }
+        }
+
+        $("#pay-bill-action").append(childHTML);
+    },
+
+    updateServer: function updateServer() {
+
+        var data = {
+            billId: module.exports.settings.data.id,
+            payAmount: $('#pay-amount').val()
+        };
+
+        return api.addData('../api/bill/pay', JSON.stringify(data));
     }
 
 };
