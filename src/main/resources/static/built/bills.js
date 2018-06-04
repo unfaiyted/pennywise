@@ -853,8 +853,8 @@ module.exports = {
         module.exports.updateBillMethod(method);
 
         $('.status').fadeOut(); // will first fade out the loading animation
-        $('.preloader').delay(1200).fadeOut('slow'); // will fade out the white DIV that covers the website.
-        $('.modal-content').delay(1200).show();
+        $('.preloader').delay(500).fadeOut('slow'); // will fade out the white DIV that covers the website.
+        $('.modal-content').delay(500).show();
     },
 
     updateBillMethod: function updateBillMethod(method) {
@@ -891,7 +891,7 @@ module.exports = {
             payAmount: $('#pay-amount').val()
         };
 
-        return api.addData('../api/bill/pay', JSON.stringify(data));
+        return api.addData('bill/pay', JSON.stringify(data));
     }
 
 };
@@ -1295,7 +1295,7 @@ function updateLink (link, options, obj) {
 module.exports = {
 
     settings: { //settings
-        url: "/api/",
+        url: window.location.origin + "/api/",
         rateLimit: 5,
         token: $("meta[name='_csrf']").attr("content"),
         header: $("meta[name='_csrf_header']").attr("content")
@@ -1304,7 +1304,7 @@ module.exports = {
     //Inserts data into server
     addData: function addData(location, data) {
         location = typeof location !== 'undefined' ? location : "";
-        return fetch(location, {
+        return fetch(module.exports.settings.url + location, {
             method: "post",
             credentials: "same-origin",
             headers: {

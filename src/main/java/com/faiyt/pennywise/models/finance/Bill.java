@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -31,6 +33,8 @@ public class Bill {
     private String interestType;
     @Column
     private Double payment;
+
+
     @Column
     private Double totalOwed;
 
@@ -53,6 +57,8 @@ public class Bill {
     @ManyToOne
     private PaymentMethod method;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Payment> payments = new ArrayList<>();
 
     @ManyToOne
     @JsonBackReference
@@ -190,6 +196,18 @@ public class Bill {
 
     public void setMethod(PaymentMethod method) {
         this.method = method;
+    }
+
+    public List<Payment> getPayments() {
+        return payments;
+    }
+
+    public void addPayment(Payment payment) {
+        this.payments.add(payment);
+    }
+
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
     }
 
     @Override

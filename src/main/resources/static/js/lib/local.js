@@ -2,7 +2,7 @@
 module.exports = {
 
     settings: { //settings
-        url: "/api/",
+        url: window.location.origin + "/api/",
         rateLimit: 5,
         token: $("meta[name='_csrf']").attr("content"),
         header: $("meta[name='_csrf_header']").attr("content")
@@ -11,7 +11,7 @@ module.exports = {
     //Inserts data into server
     addData: (location, data) => {
         location = typeof location !== 'undefined' ? location : "";
-        return fetch(location, {
+        return fetch(module.exports.settings.url + location, {
             method: "post",
             credentials: "same-origin",
             headers: {

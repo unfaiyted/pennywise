@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 @Table
 @Entity
-public class BillPayment {
+public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,16 +20,12 @@ public class BillPayment {
     @Column
     private Double paidAmount;
 
-    @ManyToOne
-    private Bill bill;
+    public  Payment() {}
 
-    public  BillPayment() {}
-
-    public BillPayment(BillStatus statusOnPayment, LocalDate datePaid, Double paidAmount, Bill bill) {
+    public Payment(BillStatus statusOnPayment, LocalDate datePaid, Double paidAmount) {
         this.statusOnPayment = statusOnPayment;
         this.datePaid = datePaid;
         this.paidAmount = paidAmount;
-        this.bill = bill;
     }
 
     public Long getId() {
@@ -64,11 +60,4 @@ public class BillPayment {
         this.paidAmount = paidAmount;
     }
 
-    public Bill getBill() {
-        return bill;
-    }
-
-    public void setBill(Bill bill) {
-        this.bill = bill;
-    }
 }

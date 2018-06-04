@@ -41,9 +41,10 @@
         <div class="btn-group header-button text-right">
             <button class="btn btn-primary btn-sm header-button" type="button">
                 <div sec:authorize="isAuthenticated()">
-                    <span th:text="${#authentication?.principal?.profile?.firstName}"/>
+                    <a th:href="@{~/dashboard}" th:text="${#authentication?.principal?.profile?.firstName}">
+                   </a>
                     <th:block th:if="${currentUserConnection == null}" >
-                        <!--<span th:text="${#authentication.principal.username}"/>-->
+
                     </th:block>
 
                     <th:block th:unless="${currentUserConnection == null}" >
@@ -73,8 +74,9 @@
             </button>
             <div class="dropdown-menu dropdown-menu-right">
                 <a class="dropdown-item" th:href="@{~/profile}">Profile</a>
-                <a class="dropdown-item" th:href="@{~/static/view}">Add bill</a>
-                <a class="dropdown-item" th:href="@{~/static/view}">Settings</a>
+                <a class="dropdown-item" th:href="@{~/bill/add}">Add bill</a>
+                <a class="dropdown-item" th:href="@{~/about/}">About</a>
+                <a class="dropdown-item" th:href="@{~/help}">Help</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" th:href="@{~/logout}">Logout</a>
             </div>

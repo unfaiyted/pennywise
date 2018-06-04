@@ -71,8 +71,8 @@ module.exports = {
             module.exports.updateBillMethod(method);
 
         $('.status').fadeOut(); // will first fade out the loading animation
-        $('.preloader').delay(1200).fadeOut('slow'); // will fade out the white DIV that covers the website.
-        $('.modal-content').delay(1200).show();
+        $('.preloader').delay(500).fadeOut('slow'); // will fade out the white DIV that covers the website.
+        $('.modal-content').delay(500).show();
 
     },
 
@@ -124,7 +124,7 @@ module.exports = {
             payAmount: $('#pay-amount').val()
         };
 
-        return api.addData('../api/bill/pay', JSON.stringify(data));
+        return api.addData('bill/pay', JSON.stringify(data));
 
     }
 

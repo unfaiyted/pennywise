@@ -243,7 +243,7 @@
                         </div>
                         <div class="ml-auto text-right">
 
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#pay-modal">Add payment</button>
+                            <button class="btn btn-primary" data-toggle="modal" th:data-id="${bill.id}" data-target="#pay-modal">Add payment</button>
                         </div>
                     </div>
                 </div>
@@ -261,10 +261,10 @@
                         </thead>
                         <tbody>
 
-                        <th:block th:each="dueDate,iterStat : ${bill.dueDates}" th:if="${iterStat.index}<6">
+                        <th:block th:each="payment,iterStat : ${bill.payments}" th:if="${iterStat.index}<6">
 
                             <tr>
-                                <td class="font-weight-bold" th:text="${dueDate.date}">07/11/2015</td>
+                                <td class="font-weight-bold" th:text="${payment.datePaid}">07/11/2015</td>
                                 <td><span class="badge badge-primary">Late</span></td>
                                 <td>$250.00</td>
                                 <td class="text-right"><i class="fas fa-edit pr-2"></i> <i class="fas fa-times"></i></td>
