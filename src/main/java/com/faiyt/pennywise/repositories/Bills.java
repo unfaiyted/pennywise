@@ -1,9 +1,6 @@
 package com.faiyt.pennywise.repositories;
 
-import com.faiyt.pennywise.models.finance.Bill;
-import com.faiyt.pennywise.models.finance.BillCategory;
-import com.faiyt.pennywise.models.finance.BillStatus;
-import com.faiyt.pennywise.models.finance.PayFrequency;
+import com.faiyt.pennywise.models.finance.*;
 import com.faiyt.pennywise.models.user.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -19,6 +16,10 @@ public interface Bills extends CrudRepository<Bill, Long> {
 
     @Query("select p  from PayFrequency p where p.id = ?1")
     PayFrequency getPayFrequencyById(Long id);
+
+
+    @Query("select p from PaymentMethod p")
+    List<PaymentMethod> getPaymentMethods();
 
     @Query("select s from BillStatus s")
     List<BillStatus> getStatuses();

@@ -1,5 +1,9 @@
 import styles from '../../css/module/progressBar.css'
 
+// css annimations
+
+import animate from 'animate.css';
+
 
 module.exports = {
 
@@ -16,12 +20,31 @@ module.exports = {
     },
 
     init: () => {
+
+        // hide main form
+        $('#bill-add-form-main').hide();
+        //Hide mainForm
         module.exports.initHandlers();
     },
 
 
     initHandlers: () => {
         //jQuery time
+
+
+        $('.select-payment-type').click(function (e) {
+            e.preventDefault();
+
+
+            let paymentType = $(this).children().first();
+
+            $('.payment-type-icon').empty().html(paymentType);
+
+            //show main form
+            $('#step-zero').addClass('animated fadeOut').hide();
+            $('#bill-add-form-main').show().addClass('animated slideInUp');
+
+        });
 
 
         $(".next").click(function(){

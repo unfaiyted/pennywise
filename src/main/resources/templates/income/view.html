@@ -9,10 +9,9 @@
 
 <div th:replace="partials/layout :: navbar" />
 
-<div class="panel-container">
+
     <span class="overlay"></span>
     <div class="container mx-auto">
-        <div th:replace="partials/panel :: left-panel" />
 
         <div class="row">
 
@@ -160,7 +159,6 @@
         </div>
 
 
-    </div>
 
     <div th:replace="partials/layout :: footer" />
     <script th:src="@{~/built/income.js}"></script>

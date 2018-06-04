@@ -33,6 +33,7 @@ public class BillController {
         model.addAttribute("states", addressDao.getAddresses().getStates());
         model.addAttribute("payFreq", billDao.getBills().getPayFrequencies());
         model.addAttribute("categories", billDao.getBills().getCategories());
+        model.addAttribute("paymentMethods", billDao.getBills().getPaymentMethods());
 
         model.addAttribute("bill", new RecurringBill());
         return "bills/addBill";

@@ -48,6 +48,12 @@ public class Bill {
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Merchant merchant;
+
+
+    @ManyToOne
+    private PaymentMethod method;
+
+
     @ManyToOne
     @JsonBackReference
     private User owner;
@@ -166,7 +172,6 @@ public class Bill {
         return (int) ChronoUnit.DAYS.between(LocalDate.now(), dueDate);
     }
 
-
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
@@ -177,6 +182,14 @@ public class Bill {
 
     public void setStatus(BillStatus status) {
         this.status = status;
+    }
+
+    public PaymentMethod getMethod() {
+        return method;
+    }
+
+    public void setMethod(PaymentMethod method) {
+        this.method = method;
     }
 
     @Override

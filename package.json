@@ -4,6 +4,7 @@
   "description": "A finance tracking application for the avg user.",
   "main": "index.js",
   "dependencies": {
+    "animate.css": "^3.6.1",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
     "babel-preset-env": "^1.5.2",

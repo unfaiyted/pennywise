@@ -162,7 +162,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var deleteBill = __webpack_require__(5);
 var cal = __webpack_require__(165);
-var payBill = __webpack_require__(176);
+var payBill = __webpack_require__(175);
 
 // Deletes a bill from the list of bills
 deleteBill.init({
@@ -780,13 +780,13 @@ module.exports = function InvalidMonthsAbbrError(message) {
 
 /***/ }),
 
-/***/ 176:
+/***/ 175:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var api = __webpack_require__(4);
+var api = __webpack_require__(3);
 
 module.exports = {
 
@@ -890,7 +890,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(3);
+var	fixUrls = __webpack_require__(4);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -1212,6 +1212,68 @@ function updateLink (link, options, obj) {
 /***/ }),
 
 /***/ 3:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// Functions for local json file interactions
+module.exports = {
+
+    settings: { //settings
+        url: "/api/",
+        rateLimit: 5,
+        token: $("meta[name='_csrf']").attr("content"),
+        header: $("meta[name='_csrf_header']").attr("content")
+    },
+
+    //Inserts data into server
+    addData: function addData(location, data) {
+        location = typeof location !== 'undefined' ? location : "";
+        return fetch(location, {
+            method: "post",
+            credentials: "same-origin",
+            headers: {
+                "X-CSRF-Token": module.exports.settings.token,
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        }).then(function (response) {
+            return response.json();
+        });
+    },
+
+    deleteData: function deleteData(location, data) {
+        return module.exports.addData(location, data);
+    },
+
+    // query for post data
+    // parameter for url info
+    // ex: players/Name+Last/?post=3 type/parameter/query
+    getData: function getData(type, parameter, query) {
+        parameter = typeof parameter !== 'undefined' ? parameter : "";
+        query = typeof query !== 'undefined' ? query : "";
+
+        return fetch(module.exports.settings.url + type + "/" + parameter + query, {
+            method: 'GET',
+            credentials: 'same-origin',
+            redirect: 'follow',
+            agent: null,
+            headers: {
+                "Content-Type": "text/plain",
+                'Authorization': 'Basic ' + btoa('username:password')
+
+            }
+        }).then(function (response) {
+            return response.json();
+        });
+    }
+};
+
+/***/ }),
+
+/***/ 4:
 /***/ (function(module, exports) {
 
 
@@ -1307,75 +1369,13 @@ module.exports = function (css) {
 
 /***/ }),
 
-/***/ 4:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-// Functions for local json file interactions
-module.exports = {
-
-    settings: { //settings
-        url: "/api/",
-        rateLimit: 5,
-        token: $("meta[name='_csrf']").attr("content"),
-        header: $("meta[name='_csrf_header']").attr("content")
-    },
-
-    //Inserts data into server
-    addData: function addData(location, data) {
-        location = typeof location !== 'undefined' ? location : "";
-        return fetch(location, {
-            method: "post",
-            credentials: "same-origin",
-            headers: {
-                "X-CSRF-Token": module.exports.settings.token,
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        }).then(function (response) {
-            return response.json();
-        });
-    },
-
-    deleteData: function deleteData(location, data) {
-        return module.exports.addData(location, data);
-    },
-
-    // query for post data
-    // parameter for url info
-    // ex: players/Name+Last/?post=3 type/parameter/query
-    getData: function getData(type, parameter, query) {
-        parameter = typeof parameter !== 'undefined' ? parameter : "";
-        query = typeof query !== 'undefined' ? query : "";
-
-        return fetch(module.exports.settings.url + type + "/" + parameter + query, {
-            method: 'GET',
-            credentials: 'same-origin',
-            redirect: 'follow',
-            agent: null,
-            headers: {
-                "Content-Type": "text/plain",
-                'Authorization': 'Basic ' + btoa('username:password')
-
-            }
-        }).then(function (response) {
-            return response.json();
-        });
-    }
-};
-
-/***/ }),
-
 /***/ 5:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var api = __webpack_require__(4);
+var api = __webpack_require__(3);
 var alert = __webpack_require__(6);
 
 // Trigger on page to remove entries from page, settings need to be setup to delete

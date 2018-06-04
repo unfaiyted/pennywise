@@ -89,6 +89,11 @@
 
     <div class="footer-spacer"></div>
 
+
+    <div sec:authorize="isAuthenticated()">
+    <div th:replace="partials/panel :: left-panel" />
+    </div>
+
     <nav class="navbar navbar-dark bg-dark navbar-footer">
         <a class="navbar-brand" href="#">Pennywise</a>
     </nav>

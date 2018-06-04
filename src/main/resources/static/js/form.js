@@ -1,7 +1,7 @@
 import pickadayStyle from '../../../../../node_modules/pikaday/scss/pikaday.scss'
 var Pikaday = require('pikaday');
 
-const stepForm = require('./modules/stepForm');
+const stepForm = require('./modules/step-form');
 
 
 

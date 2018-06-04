@@ -77,3 +77,12 @@
 #bill-form .action-button:hover, #bill-form .action-button:focus {
     box-shadow: 0 0 0 2px white, 0 0 0 3px #5c58bf;
 }
+
+.payment-method {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.payment-type-icon {
+ font-size: 20px;
+}
