@@ -31,8 +31,6 @@ public class RecurringBill  extends Bill {
 
     public RecurringBill(String nickname,  LocalDateTime createdAt, LocalDate firstDueDate, Double interestRate, String interestType, BillCategory category, Merchant merchant, User owner) {
         super(nickname, createdAt, firstDueDate, interestRate, interestType, category, merchant, owner);
-
-        generateDueDatesList();
     }
 
     public Double getEstimatedAnnual() {

@@ -154,6 +154,13 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!--Allows to FAKE Data for testing -->
+		<dependency>
+			<groupId>com.github.javafaker</groupId>
+			<artifactId>javafaker</artifactId>
+			<version>0.15</version>
+		</dependency>
+
 
 	</dependencies>
 

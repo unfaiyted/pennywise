@@ -50,8 +50,6 @@ public class BillController {
         PayFrequency frequency = billDao.getBills().getPayFrequencyById(freqId);
         bill.setFrequency(frequency);
 
-        System.out.println(bill.toString());
-
         // Change Recurring bill to OneTimeBill
         if(bill.getFrequency().getName().equalsIgnoreCase("One-Time")) { //1 = One time
             OneTimeBill oneTimeBill = new OneTimeBill(bill);

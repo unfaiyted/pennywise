@@ -71,7 +71,7 @@
 "use strict";
 
 
-var deleteIncome = __webpack_require__(5);
+var deleteIncome = __webpack_require__(6);
 
 // Deletes a bill from the list of bills
 deleteIncome.init({
@@ -146,82 +146,6 @@ module.exports = {
 /***/ }),
 
 /***/ 5:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var api = __webpack_require__(3);
-var alert = __webpack_require__(6);
-
-// Trigger on page to remove entries from page, settings need to be setup to delete
-// both visual and database data from user.
-module.exports = {
-
-    settings: {
-        triggerClass: "delete-btn", // Associated class that will be picked up
-        displayClass: "object-display", //
-        dataSet: null, // The url location to send for deletion
-        deleteMsg: "Are you sure you'd like to delete this?" // Default Msg
-    },
-
-    init: function init(_ref) {
-        var dataSet = _ref.dataSet,
-            triggerClass = _ref.triggerClass,
-            displayClass = _ref.displayClass,
-            deleteMsg = _ref.deleteMsg;
-
-        module.exports.settings.dataSet = typeof dataSet !== 'undefined' ? dataSet : module.exports.settings.dataSet;
-        module.exports.settings.triggerClass = typeof triggerClass !== 'undefined' ? triggerClass : module.exports.settings.triggerClass;
-        module.exports.settings.displayClass = typeof displayClass !== 'undefined' ? displayClass : module.exports.settings.displayClass;
-        module.exports.settings.deleteMsg = typeof deleteMsg !== 'undefined' ? deleteMsg : module.exports.settings.deleteMsg;
-
-        if (module.exports.settings.dataSet != null) {
-            return module.exports.initHandlers();
-        }
-
-        console.log("Error: Init must contain a dataSet for deletion or be false");
-    },
-
-    initHandlers: function initHandlers() {
-
-        $('.' + module.exports.settings.triggerClass).click(function () {
-            var id = $(this).data("id");
-            module.exports.confirmRemove(id);
-        });
-    },
-
-    confirmRemove: function confirmRemove(id) {
-        alert.confirmPopUp(module.exports.settings.deleteMsg).then(function () {
-            module.exports.updateServer(id).then(module.exports.removeVisual(id)).catch(function (data) {
-                console.log(data);
-                alert.displayPopUpAlert("Error removing item", "danger");
-            });
-        }, //promise resolved
-        function () {
-            console.log('You clicked cancel');
-        } //promise rejected
-
-        );
-    },
-
-    removeVisual: function removeVisual(id) {
-        $('.' + module.exports.settings.displayClass + '[data-id="' + id + '"]').remove();
-    },
-
-    updateServer: function updateServer(id) {
-
-        console.log(module.exports.settings.dataSet);
-
-        var json = { identifier: id };
-        return api.deleteData(module.exports.settings.dataSet, JSON.stringify(json));
-    }
-
-};
-
-/***/ }),
-
-/***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -325,6 +249,82 @@ module.exports = {
 
         //create new alert if not...
         $('body').append($("<div class=\"modal fade\" id=\"alertModal\">").append($("<div class=\"modal-dialog\" role=\"document\">").append($(" <div class=\"modal-content\">").append($(" <div class=\"modal-content\">").append($(" <div class=\"alert alert-dismissible fade show\" role=\"alert\">").append($("<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">").append($(" <span aria-hidden=\"true\">").html("&times;")), $("<span id=\"alert-message\">").text("Alert Message")))))));
+    }
+
+};
+
+/***/ }),
+
+/***/ 6:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var api = __webpack_require__(3);
+var alert = __webpack_require__(5);
+
+// Trigger on page to remove entries from page, settings need to be setup to delete
+// both visual and database data from user.
+module.exports = {
+
+    settings: {
+        triggerClass: "delete-btn", // Associated class that will be picked up
+        displayClass: "object-display", //
+        dataSet: null, // The url location to send for deletion
+        deleteMsg: "Are you sure you'd like to delete this?" // Default Msg
+    },
+
+    init: function init(_ref) {
+        var dataSet = _ref.dataSet,
+            triggerClass = _ref.triggerClass,
+            displayClass = _ref.displayClass,
+            deleteMsg = _ref.deleteMsg;
+
+        module.exports.settings.dataSet = typeof dataSet !== 'undefined' ? dataSet : module.exports.settings.dataSet;
+        module.exports.settings.triggerClass = typeof triggerClass !== 'undefined' ? triggerClass : module.exports.settings.triggerClass;
+        module.exports.settings.displayClass = typeof displayClass !== 'undefined' ? displayClass : module.exports.settings.displayClass;
+        module.exports.settings.deleteMsg = typeof deleteMsg !== 'undefined' ? deleteMsg : module.exports.settings.deleteMsg;
+
+        if (module.exports.settings.dataSet != null) {
+            return module.exports.initHandlers();
+        }
+
+        console.log("Error: Init must contain a dataSet for deletion or be false");
+    },
+
+    initHandlers: function initHandlers() {
+
+        $('.' + module.exports.settings.triggerClass).click(function () {
+            var id = $(this).data("id");
+            module.exports.confirmRemove(id);
+        });
+    },
+
+    confirmRemove: function confirmRemove(id) {
+        alert.confirmPopUp(module.exports.settings.deleteMsg).then(function () {
+            module.exports.updateServer(id).then(module.exports.removeVisual(id)).catch(function (data) {
+                console.log(data);
+                alert.displayPopUpAlert("Error removing item", "danger");
+            });
+        }, //promise resolved
+        function () {
+            console.log('You clicked cancel');
+        } //promise rejected
+
+        );
+    },
+
+    removeVisual: function removeVisual(id) {
+        $('.' + module.exports.settings.displayClass + '[data-id="' + id + '"]').remove();
+    },
+
+    updateServer: function updateServer(id) {
+
+        console.log(module.exports.settings.dataSet);
+
+        var json = { identifier: id };
+        return api.deleteData(module.exports.settings.dataSet, JSON.stringify(json));
     }
 
 };

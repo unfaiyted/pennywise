@@ -36,6 +36,10 @@ public class Address {
         this.zipCode = zipCode;
     }
 
+    public Address(String title, String street, String city, State state, String zipCode) {
+
+    }
+
     public Long getId() {
         return id;
     }
