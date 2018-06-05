@@ -46,8 +46,9 @@ public class Calculation {
 
     public static String debtToIncomeRatio(Double debt, Double income) {
 
+        Double diff = Math.floor((debt / income)* 100);
 
-        return "50/100";
+        return  diff.intValue() + "/100";
     }
 
 
