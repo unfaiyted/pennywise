@@ -15,11 +15,14 @@
 
         <div class="text-left col-12">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Dane Miller</a></li>
+                <li class="breadcrumb-item"><a th:href="@{~/profile}">Home</a></li>
+                <li class="breadcrumb-item"><a  th:href="@{~/dashboard}">
+                    <span th:text="${#authentication?.principal?.profile?.name}"></span>
+                </a></li>
                 <li class="breadcrumb-item active">Bills</li>
             </ol>
         </div>
+
         </div>
 
             <div class="card bg-dark-gradient text-white mb-1 m-2">
@@ -29,7 +32,7 @@
                             <i class="fas fa-hand-holding-usd big-icon"></i>
                         </div>
                         <div class="p-1 text-right">
-                            <span class="card-text-amount" th:text="'$' + ${total}">$5500.00</span>
+                            <span class="card-text-amount" th:text="'$' + ${#numbers.formatDecimal(total, 0, 'COMMA', 2, 'POINT')}">$5500.00</span>
                             <span class="">total bills monthly</span>
                         </div>
 
@@ -39,13 +42,14 @@
                                    <div class="amt" th:text="${#lists.size(bills)}">14</div>
                                    <div class="desc">total bills</div> </li>
                                <li class="card bg-green-gradient mr-3 col-md-3  bill-analysis">
-                                   <div class="amt" th:text="'$' +${totalCC}">$3611.00</div>
+                                   <div class="amt" th:text="'$'
+                                   + ${#numbers.formatDecimal(totalCC, 0, 'COMMA', 2, 'POINT')}
+                                ">$3611.00</div>
                                    <div class="desc">in credit cards only</div>
                                </li>
                                <li class="card bg-green-gradient mr-3 col-md-3  bill-analysis">
                                    <div class="amt">$XXX.xx</div>
                                    <div class="desc">estimated monthly interest</div>
-
                                    </li>
                            </ul>
                         </div>
@@ -54,13 +58,13 @@
             </div>
 
 
-        <div class="row mx-auto">
+        <div class="row mx-auto mb-4">
 
             <div class="col-12 mt-4">
 
             <div class="card">
                 <div class="card-header">
-                    <h3>Dane's Bills</h3>
+                    <h3>Recurring Bills</h3>
                 </div>
 
                 <div class="card-table">
@@ -68,15 +72,17 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <td class="d-none d-sm-table-cell">Category</td>
-                            <td>Name</td>
-                            <td>Payment</td>
-                            <td>Action</td>
+                            <th class="d-none d-sm-table-cell sticky-header">Category</th>
+                            <th class="sticky-top">Name</th>
+                            <th class="sticky-top">Payment</th>
+                            <th class="sticky-top">Action</th>
                         </tr>
                         </thead>
                         <tbody>
 
                         <th:block th:each="bill : ${bills}">
+                            <th:block th:if="${bill.class.name == 'com.faiyt.pennywise.models.finance.RecurringBill'}">
+
                             <tr class="bill"  th:data-id="${bill.id}">
                                 <td class="big-icon pl-4 d-none d-sm-table-cell"><i th:class="${bill.category.icon}"></i></td>
                                 <td><p>
@@ -87,7 +93,10 @@
 
                                 <td ><span th:text="'$' + ${#numbers.formatDecimal(bill.payment, 0, 'COMMA', 2, 'POINT')}">$114.00</span>
 
-                                    <!--(<span th:text="${bill?.frequency?.name}">Monthly</span>)-->
+
+                                        (<span th:text="${bill?.frequency?.name}">Monthly</span>)
+
+
 
 
                                 </td>
@@ -97,7 +106,7 @@
                                     > Pay </button>
                                     <button class="btn btn-primary delete-btn"  th:data-id="${bill.id}"> Delete </button></td>
                             </tr>
-
+                            </th:block>
                         </th:block>
 
 
@@ -111,21 +120,80 @@
 
             </div>
 
+
+
+
         </div>
 
 
+    </div>
+
+
+        <div class="row">
+
+            <div class="col-12">
+
+            <div class="card">
+
+                <div class="card-header">
+                    <h3>One Time Bills</h3>
+                </div>
+
+                <div class="card-table">
+
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th class="d-none d-sm-table-cell">Category</th>
+                            <th>Name</th>
+                            <th>Payment</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+
+                        <th:block th:each="bill : ${bills}">
+                            <th:block th:if="${bill.class.name == 'com.faiyt.pennywise.models.finance.OneTimeBill'}">
+
+                                <tr class="bill"  th:data-id="${bill.id}">
+                                    <td class="big-icon pl-4 d-none d-sm-table-cell"><i th:class="${bill.category.icon}"></i></td>
+                                    <td><p>
+                                        <span th:class="'badge badge-'+${bill?.status?.color}" th:text="${bill?.status?.name}">Late</span>
+                                        <a th:href="@{~/bill/view/} + ${bill.id}" th:text="${bill.merchant.name}"></a></p>
+                                        <span class="text-muted" th:text="'Since ' + ${#temporals.format(bill.createdAt, 'MM/dd/yyyy ')} ">Since 05/01/2012</span>
+                                    </td>
+
+                                    <td ><span th:text="'$' + ${#numbers.formatDecimal(bill.payment, 0, 'COMMA', 2, 'POINT')}">$114.00</span>
+
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-secondary" data-toggle="modal" data-target="#pay-modal"
+                                                th:data-web="${bill.merchant.website}" th:data-name="${bill.merchant.websiteUsername}" th:data-id="${bill.id}"
+                                        > Pay </button>
+                                        <button class="btn btn-primary delete-btn"  th:data-id="${bill.id}"> Delete </button></td>
+                                </tr>
+                            </th:block>
+                        </th:block>
 
 
 
+                        </tbody>
+                    </table>
 
 
 
+                </div>
+
+            </div>
+            </div>
+
+        </div>
 
     </div>
-</div>
-<div th:replace="partials/layout :: footer" />
 
-<div th:replace="bills/payPanel :: modal" />
+
+
+        <div th:replace="bills/payPanel :: modal" />
+<div th:replace="partials/layout :: footer" />
 <script th:src="@{~/built/bills.js}"></script>
 </body>
 </html>

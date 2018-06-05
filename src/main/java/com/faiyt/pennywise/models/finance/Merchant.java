@@ -19,6 +19,7 @@ public class Merchant {
     private String websiteUsername;
     @Column
     private String phoneNumber;
+
     @ManyToOne(cascade = CascadeType.ALL)
     private Address address;
 

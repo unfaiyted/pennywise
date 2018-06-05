@@ -14,13 +14,15 @@ public class OneTimeBill extends Bill {
     public OneTimeBill() {
     }
 
-    public OneTimeBill(String nickname, LocalDateTime createdAt, LocalDate dueDate, Double interestRate, String interestType, BillCategory category, Merchant merchant, User owner) {
-        super(nickname, createdAt, dueDate, interestRate, interestType, category, merchant, owner);
+    public OneTimeBill(String nickname, LocalDateTime createdAt, LocalDate dueDate,
+                       Double interestRate, String interestType, BillCategory category,
+                       Merchant merchant, PaymentMethod method, User owner) {
+        super(nickname, createdAt, dueDate, interestRate, interestType, category, merchant, method, owner);
     }
 
     public OneTimeBill(RecurringBill bill) {
         super(bill.getNickname(), bill.getCreatedAt(), bill.getDueDate(),
                 bill.getInterestRate(), bill.getInterestType(),
-                bill.getCategory(), bill.getMerchant(), bill.getOwner());
+                bill.getCategory(), bill.getMerchant(), bill.getMethod(), bill.getOwner());
     }
 }

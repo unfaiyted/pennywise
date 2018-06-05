@@ -37,7 +37,11 @@ public class Address {
     }
 
     public Address(String title, String street, String city, State state, String zipCode) {
-
+        this.title = title;
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
     }
 
     public Long getId() {

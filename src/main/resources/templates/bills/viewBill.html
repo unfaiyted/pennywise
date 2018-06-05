@@ -41,7 +41,7 @@
                     <div class="card-header">
 
                        <div class="row pr-3">
-                            <div class="big-icon col-2 pl-4"><i th:class="${bill.category.icon}"></i>
+                            <div class="big-icon col-2 pl-4"><i th:class="${bill.category.icon}" alt="Other"></i>
                             </div>
                                 <div class="pl-4 col-8 pt-3 mx-auto">
                                 <h1 class="text-truncate " th:text="${bill.merchant.name}"></h1>
@@ -54,16 +54,10 @@
 
                     <div class="card-body">
 
-                         <span ></span>
                         <div>
 
                             <div class="pb-3">
                                 <h4>Basics</h4>
-
-                                <div class="row">
-                                    <div class="col-md-6 font-weight-bold">Merchant:</div>
-                                    <div class="col-md-6" id="merchant-name">Merchant Name</div>
-                                </div>
 
                                 <div class="row">
                                     <div class="col-md-6 font-weight-bold">  Payment Info:</div>
@@ -92,33 +86,34 @@
                                     <div class="col-md-6">
 
                                         <div class="col-md-12 p-0" id="address" th:text="${bill.merchant.address.street}">7822 Misty Fried Dr</div>
-                                        <div class="col-md-12 p-0"><span id="city">San Antonio</span>, <span id="state">Texas</span>
-                                            <span class="zip-code">78209-2203</span></div>
+                                        <div class="col-md-12 p-0"><span id="city" th:text="${bill.merchant.address.city}">San Antonio</span>, <span id="state" th:text="${bill.merchant.address?.state?.name}">Texas</span>
+                                            <span class="zip-code" th:text="${bill.merchant.address.zipCode}">78209-2203</span></div>
 
                                     </div>
                                 </div>
-
 
                             </div>
                             <div class="pb-3">
 
                                 <h4>Details</h4>
 
-
                                 <div class="row">
                                     <div class="col-md-6 font-weight-bold">Website:</div>
-                                    <div class="col-md-6" id="website">http://website.com/login</div>
+                                    <div class="col-md-6" id="website" >
+                                        <a th:href="${bill.merchant.website}" th:text="${bill.merchant.name}">
+                                        </a>
+                                       </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-6 font-weight-bold">Website Username:</div>
-                                    <div class="col-md-6" id="webUsername">bestGurl101</div>
+                                    <div class="col-md-6" id="webUsername" th:text="${bill.merchant.websiteUsername}">bestGurl101</div>
                                 </div>
                                 <hr>
 
                                 <div class="row">
                                     <div class="col-md-6 font-weight-bold">Interest:</div>
-                                    <div class="col-md-6"><span id="bill-interestRate" th:text="${bill.interestRate}">11.2%</span> (<span id="bill-interestType" th:text="${bill.interestType}">Compound</span>)</div>
+                                    <div class="col-md-6"><span id="bill-interestRate" th:text="${bill.interestRate*100} + '%' ">11.2%</span> (<span id="bill-interestType" th:text="${bill.interestType}">Compound</span>)</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 font-weight-bold">Total Owed:</div>
@@ -264,15 +259,13 @@
                         <th:block th:each="payment,iterStat : ${bill.payments}" th:if="${iterStat.index}<6">
 
                             <tr>
-                                <td class="font-weight-bold" th:text="${payment.datePaid}">07/11/2015</td>
-                                <td><span class="badge badge-primary">Late</span></td>
-                                <td>$250.00</td>
+                                <td class="font-weight-bold" th:text=" ${#temporals.format(payment.datePaid, 'M/dd/yyyy ')}">07/11/2015</td>
+                                <td><span th:class="'badge badge-'+${payment?.statusOnPayment?.color}" th:text="${payment?.statusOnPayment?.name}">Late</span></td>
+                                <td th:text="'$' + ${#numbers.formatDecimal(payment.paidAmount, 0, 'COMMA', 2, 'POINT')}">$250.00</td>
                                 <td class="text-right"><i class="fas fa-edit pr-2"></i> <i class="fas fa-times"></i></td>
                             </tr>
 
                         </th:block>
-
-
 
                         </tbody>
                     </table>

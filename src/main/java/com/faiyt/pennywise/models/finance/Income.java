@@ -2,6 +2,8 @@ package com.faiyt.pennywise.models.finance;
 
 import com.faiyt.pennywise.models.user.User;
 import com.faiyt.pennywise.util.Calculation;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -27,6 +29,7 @@ public class Income {
     private Double amount;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User owner;
 
     public Income() {
@@ -36,6 +39,13 @@ public class Income {
 
     public Income(Long id, String name, PayFrequency payFrequency, Double amount, User owner) {
         this.id = id;
+        this.name = name;
+        this.payFrequency = payFrequency;
+        this.amount = amount;
+        this.owner = owner;
+    }
+
+    public Income(String name, PayFrequency payFrequency, Double amount, User owner) {
         this.name = name;
         this.payFrequency = payFrequency;
         this.amount = amount;

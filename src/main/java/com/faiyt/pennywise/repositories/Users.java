@@ -16,8 +16,9 @@ public interface Users extends CrudRepository<User, Long> {
 
     User findByUsername(String username);
 
+    void deleteByUsername(String username);
 
-    @Query("select up from UserProfile up where up.user.id = ?1")
+    @Query("select u.profile from User u where u.id = ?1")
     UserProfile getUserProfile(Long userId);
 
     @Query("select up from UserProfile up where up.username = ?1")

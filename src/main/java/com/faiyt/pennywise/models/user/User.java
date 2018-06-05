@@ -91,7 +91,6 @@ public class User {
     }
 
     public void setProfile(UserProfile profile) {
-        profile.setUser(this);
         this.profile = profile;
     }
 

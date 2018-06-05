@@ -160,17 +160,40 @@ var _bills2 = _interopRequireDefault(_bills);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var deleteBill = __webpack_require__(6);
+var DeleteObj = __webpack_require__(6);
 var cal = __webpack_require__(167);
 var payBill = __webpack_require__(177);
+// Date Picker
 
-// Deletes a bill from the list of bills
-deleteBill.init({
-    dataSet: "../api/bill/delete",
+
+var deleteBill = new DeleteObj({
+    dataSet: "bill/delete",
     triggerClass: "delete-btn",
     displayClass: "bill",
     deleteMsg: "Are you sure you want to delete this bill?"
 });
+
+var deletePayment = new DeleteObj({
+    dataSet: "bill/payment/delete",
+    triggerClass: "delete-payment-btn",
+    displayClass: "bill-payment",
+    deleteMsg: "Are you sure you want to delete this payment?"
+});
+
+//
+// const deleteBill =  require('./lib/remove.js');
+// const deletePayment = require('./lib/remove.js');
+//
+// // Deletes a bill from the list of bills
+// deleteBill.init({
+//
+// // deletePayment.init({
+//     dataSet: "bill/payment/delete",
+//     triggerClass: "delete-payment-btn",
+//     displayClass: "bill-payment",
+//     deleteMsg: "Are you sure you want to delete this payment?"
+// // });
+
 
 if ($("#calendar")[0]) {
     // Do something if class exists
@@ -240,7 +263,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".table {\n    margin-bottom: 0;\n}\n\n.bill-analysis {\n    list-style-type: none;\n    padding: 0;\n    margin: 0;\n    text-align: center;\n\n}\n\n.bill-analysis .amt {\n    font-size: 25px;\n\n}\n\n.bill-analysis .desc {\n    font-size: 12px;\n}\n", ""]);
+exports.push([module.i, ".table {\n    margin-bottom: 0;\n}\n\n.bill-analysis {\n    list-style-type: none;\n    padding: 0;\n    margin: 0;\n    text-align: center;\n\n}\n\n.bill-analysis .amt {\n    font-size: 25px;\n\n}\n\n.bill-analysis .desc {\n    font-size: 12px;\n}\n\n/*// not working het*/\nth.sticky-header {\n    position: sticky;\n    top: 0;\n    z-index: 10;\n    /*#To not have transparent background;*/\n    /*#background-color: white;*/\n}\n\n", ""]);
 
 // exports
 
@@ -1564,68 +1587,60 @@ var alert = __webpack_require__(5);
 
 // Trigger on page to remove entries from page, settings need to be setup to delete
 // both visual and database data from user.
-module.exports = {
 
-    settings: {
-        triggerClass: "delete-btn", // Associated class that will be picked up
-        displayClass: "object-display", //
-        dataSet: null, // The url location to send for deletion
-        deleteMsg: "Are you sure you'd like to delete this?" // Default Msg
-    },
 
-    init: function init(_ref) {
-        var dataSet = _ref.dataSet,
-            triggerClass = _ref.triggerClass,
-            displayClass = _ref.displayClass,
-            deleteMsg = _ref.deleteMsg;
+//Constructor
+function DeleteObject(settings) {
+    // {dataSet, triggerClass, displayClass, deleteMsg}
+    this.settings = settings;
+    this.settings.triggerClass = typeof this.settings.triggerClass !== 'undefined' ? this.settings.triggerClass : 'delete-btn';
+    this.settings.displayClass = typeof this.settings.displayClass !== 'undefined' ? this.settings.displayClass : "object-display";
+    this.settings.deleteMsg = typeof this.settings.deleteMsg !== 'undefined' ? this.settings.deleteMsg : "Are you sure you'd like to delete this?";
 
-        module.exports.settings.dataSet = typeof dataSet !== 'undefined' ? dataSet : module.exports.settings.dataSet;
-        module.exports.settings.triggerClass = typeof triggerClass !== 'undefined' ? triggerClass : module.exports.settings.triggerClass;
-        module.exports.settings.displayClass = typeof displayClass !== 'undefined' ? displayClass : module.exports.settings.displayClass;
-        module.exports.settings.deleteMsg = typeof deleteMsg !== 'undefined' ? deleteMsg : module.exports.settings.deleteMsg;
-
-        if (module.exports.settings.dataSet != null) {
-            return module.exports.initHandlers();
-        }
-
-        console.log("Error: Init must contain a dataSet for deletion or be false");
-    },
-
-    initHandlers: function initHandlers() {
-
-        $('.' + module.exports.settings.triggerClass).click(function () {
-            var id = $(this).data("id");
-            module.exports.confirmRemove(id);
-        });
-    },
-
-    confirmRemove: function confirmRemove(id) {
-        alert.confirmPopUp(module.exports.settings.deleteMsg).then(function () {
-            module.exports.updateServer(id).then(module.exports.removeVisual(id)).catch(function (data) {
-                console.log(data);
-                alert.displayPopUpAlert("Error removing item", "danger");
-            });
-        }, //promise resolved
-        function () {
-            console.log('You clicked cancel');
-        } //promise rejected
-
-        );
-    },
-
-    removeVisual: function removeVisual(id) {
-        $('.' + module.exports.settings.displayClass + '[data-id="' + id + '"]').remove();
-    },
-
-    updateServer: function updateServer(id) {
-
-        console.log(module.exports.settings.dataSet);
-
-        var json = { identifier: id };
-        return api.deleteData(module.exports.settings.dataSet, JSON.stringify(json));
+    if (this.settings.dataSet !== null) {
+        this.initHandler();
     }
+}
 
+// Function of Delete Object
+DeleteObject.prototype.disp = function disp() {
+    console.log(this.settings);
 };
+
+DeleteObject.prototype.initHandler = function () {
+    var self = this;
+
+    $('.' + this.settings.triggerClass).click(function () {
+        var id = $(this).data("id");
+        self.confirmRemove(id);
+    });
+};
+
+DeleteObject.prototype.confirmRemove = function (id) {
+    var self = this;
+    alert.confirmPopUp(this.settings.deleteMsg).then(function () {
+        self.updateServer(id).then(self.removeVisual(id)).catch(function (data) {
+            alert.displayPopUpAlert("Error removing item", "danger");
+        });
+    }, //promise resolved
+    function () {
+        console.log('You clicked cancel');
+    } //promise rejected
+
+    );
+};
+
+DeleteObject.prototype.removeVisual = function (id) {
+    $('.' + this.settings.displayClass + '[data-id="' + id + '"]').remove();
+};
+
+DeleteObject.prototype.updateServer = function (id) {
+    var json = { identifier: id };
+    return api.deleteData(this.settings.dataSet, JSON.stringify(json));
+};
+
+//
+module.exports = DeleteObject;
 
 /***/ })
 

@@ -70,7 +70,9 @@ public class Bill {
         this.category = new BillCategory();
     }
 
-    public Bill(String nickname, LocalDateTime createdAt, LocalDate dueDate, Double interestRate, String interestType, BillCategory category, Merchant merchant, User owner) {
+    public Bill(String nickname, LocalDateTime createdAt, LocalDate dueDate,
+                Double interestRate, String interestType, BillCategory category, Merchant merchant,
+                PaymentMethod method, User owner) {
         this.nickname = nickname;
         this.createdAt = createdAt;
         this.dueDate = dueDate;
@@ -78,6 +80,7 @@ public class Bill {
         this.interestType = interestType;
         this.category = category;
         this.merchant = merchant;
+        this.method = method;
         this.owner = owner;
 
     }

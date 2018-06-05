@@ -20,14 +20,11 @@ public class UserProfile {
     @Column
     private  String username;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private User user;
 
     public UserProfile() {}
 
-    public UserProfile(Long id, User user, String name, String firstName, String lastName, String email, String username) {
+    public UserProfile(Long id, String name, String firstName, String lastName, String email, String username) {
         this.id = id;
-        this.user = user;
         this.name = name;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -36,8 +33,7 @@ public class UserProfile {
     }
 
 
-    public UserProfile(User user, String name, String firstName, String lastName, String email, String username) {
-        this.user = user;
+    public UserProfile(String name, String firstName, String lastName, String email, String username) {
         this.name = name;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -48,15 +44,6 @@ public class UserProfile {
     }
 
 
-    public UserProfile(User user, org.springframework.social.connect.UserProfile up) {
-        this.user = user;
-        this.name = up.getName();
-        this.firstName = up.getFirstName();
-        this.lastName = up.getLastName();
-        this.email = up.getEmail();
-        this.username = up.getUsername();
-    }
-
     public UserProfile(org.springframework.social.connect.UserProfile up) {
         this.name = up.getName();
         this.firstName = up.getFirstName();
@@ -64,6 +51,7 @@ public class UserProfile {
         this.email = up.getEmail();
         this.username = up.getUsername();
     }
+
 
     private void fixName() {
         // Is the name null?
@@ -116,9 +104,6 @@ public class UserProfile {
         this.name = name;
     }
 
-    public User getUser() {
-        return user;
-    }
 
     public String getName() {
         return name;
@@ -138,10 +123,6 @@ public class UserProfile {
 
     public String getUsername() {
         return username;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public void setFirstName(String firstName) {

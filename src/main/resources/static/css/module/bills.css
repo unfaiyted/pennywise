@@ -18,3 +18,13 @@
 .bill-analysis .desc {
     font-size: 12px;
 }
+
+/*// not working het*/
+th.sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    /*#To not have transparent background;*/
+    /*#background-color: white;*/
+}
+
