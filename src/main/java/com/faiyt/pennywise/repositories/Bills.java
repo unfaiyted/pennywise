@@ -2,9 +2,13 @@ package com.faiyt.pennywise.repositories;
 
 import com.faiyt.pennywise.models.finance.*;
 import com.faiyt.pennywise.models.user.User;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -37,8 +41,15 @@ public interface Bills extends CrudRepository<Bill, Long> {
     @Query("select b from Bill b where b.owner = ?1")
     List<Bill> findAllByOwner(User owner);
 
-
     List<Bill> findAllByOwnerAndAndCategory(User owner, BillCategory category);
+
+
+    @Modifying
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    @Query(value = "DELETE FROM bill_payments where payments_id =:payId"
+            , nativeQuery = true)
+    void deletePaymentById(@Param("payId") Long payId);
+
 
 
 

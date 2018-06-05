@@ -104,4 +104,8 @@ public class Income {
         String frequency  = this.payFrequency.getName();
         return Calculation.getYearlyDollar(frequency, this.amount);
     }
+
+    public Double getEstimatedMonthly() {
+        return getEstimatedAnnual()/12;
+    }
 }

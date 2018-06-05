@@ -61,10 +61,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/dashboard")
-    public String viewDashboard(Model model) {
-        return "users/dashboard";
-    }
+
 
 
     private void authenticate(User user) {

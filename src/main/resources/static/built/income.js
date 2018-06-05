@@ -71,10 +71,10 @@
 "use strict";
 
 
-var deleteIncome = __webpack_require__(6);
+var DeleteObj = __webpack_require__(6);
 
 // Deletes a bill from the list of bills
-deleteIncome.init({
+var deleteIncome = new DeleteObj({
     dataSet: "../api/income/delete",
     triggerClass: "delete-btn",
     displayClass: "income",

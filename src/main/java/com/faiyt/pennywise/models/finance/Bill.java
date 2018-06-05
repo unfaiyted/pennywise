@@ -2,6 +2,8 @@ package com.faiyt.pennywise.models.finance;
 
 import com.faiyt.pennywise.models.user.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -53,11 +55,11 @@ public class Bill {
     @ManyToOne(cascade = CascadeType.ALL)
     private Merchant merchant;
 
-
     @ManyToOne
     private PaymentMethod method;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Payment> payments = new ArrayList<>();
 
     @ManyToOne

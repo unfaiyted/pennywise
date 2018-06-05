@@ -48,7 +48,7 @@ module.exports = {
         alerts.confirmPopUp("Are you sure you sure you want to complete this payment?").then(
             function() {
                 module.exports.updateServer()
-                    .then(alerts.displayPopUpAlert("Done!","primary")).
+                    .then(location.reload()).
                 catch(function () {
                     alerts.displayPopUpAlert("Error bill unable to add item","danger")
                 });

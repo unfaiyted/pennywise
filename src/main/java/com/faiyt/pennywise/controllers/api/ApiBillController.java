@@ -104,6 +104,36 @@ public class ApiBillController {
 
     }
 
+
+    @RequestMapping(
+            value = "/payment/delete",
+            method= RequestMethod.POST,
+            headers = "Accept=*/*",
+            produces = "application/json",
+            consumes="application/json")
+    @ResponseBody
+    public Response deleteBillPayment (@RequestBody String jsonStr) throws IOException {
+        try {
+
+            //TODO: check if bill belongs to logged in user.
+
+            JsonNode jsonObj =  StringToObject.toJsonNode(jsonStr);
+            JsonNode idNode = jsonObj.path("identifier");
+            Long paymentId = idNode.asLong();
+
+            billDao.getBills().deletePaymentById(paymentId);
+
+        } catch (IOException err) {
+            // fill map with errors here
+            return new ResponseError();
+        }
+
+        Response res = new Response();
+        res.setSuccess(true);
+        return res;
+
+    }
+
     // package json node mapping from string
 
 

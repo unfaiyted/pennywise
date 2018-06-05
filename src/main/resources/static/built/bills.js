@@ -180,21 +180,6 @@ var deletePayment = new DeleteObj({
     deleteMsg: "Are you sure you want to delete this payment?"
 });
 
-//
-// const deleteBill =  require('./lib/remove.js');
-// const deletePayment = require('./lib/remove.js');
-//
-// // Deletes a bill from the list of bills
-// deleteBill.init({
-//
-// // deletePayment.init({
-//     dataSet: "bill/payment/delete",
-//     triggerClass: "delete-payment-btn",
-//     displayClass: "bill-payment",
-//     deleteMsg: "Are you sure you want to delete this payment?"
-// // });
-
-
 if ($("#calendar")[0]) {
     // Do something if class exists
     cal.init();
@@ -263,7 +248,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".table {\n    margin-bottom: 0;\n}\n\n.bill-analysis {\n    list-style-type: none;\n    padding: 0;\n    margin: 0;\n    text-align: center;\n\n}\n\n.bill-analysis .amt {\n    font-size: 25px;\n\n}\n\n.bill-analysis .desc {\n    font-size: 12px;\n}\n\n/*// not working het*/\nth.sticky-header {\n    position: sticky;\n    top: 0;\n    z-index: 10;\n    /*#To not have transparent background;*/\n    /*#background-color: white;*/\n}\n\n", ""]);
+exports.push([module.i, ".table {\n    margin-bottom: 0;\n}\n\n.bill-analysis {\n    list-style-type: none;\n    padding: 0;\n    margin: 0;\n    text-align: center;\n\n}\n\n.bill-analysis .amt {\n    font-size: 25px;\n\n}\n\n.bill-analysis .desc {\n    font-size: 12px;\n}\n\n\n\n.delete-payment-btn, .edit-payment-btn {\n     cursor: pointer;\n\n }\n\n.edit-payment-btn:hover {\n    cursor: pointer;\n    color: #00B4DB;\n\n}\n\n\n.delete-payment-btn:hover {\n    cursor: pointer;\n    color: #c52926;\n\n}", ""]);
 
 // exports
 
@@ -853,7 +838,7 @@ module.exports = {
 
     confirmPayment: function confirmPayment() {
         alerts.confirmPopUp("Are you sure you sure you want to complete this payment?").then(function () {
-            module.exports.updateServer().then(alerts.displayPopUpAlert("Done!", "primary")).catch(function () {
+            module.exports.updateServer().then(location.reload()).catch(function () {
                 alerts.displayPopUpAlert("Error bill unable to add item", "danger");
             });
         }, //promise resolved

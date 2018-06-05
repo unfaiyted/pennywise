@@ -23,30 +23,10 @@ let deletePayment = new DeleteObj({
 });
 
 
-
-//
-// const deleteBill =  require('./lib/remove.js');
-// const deletePayment = require('./lib/remove.js');
-//
-// // Deletes a bill from the list of bills
-// deleteBill.init({
-//
-// // deletePayment.init({
-//     dataSet: "bill/payment/delete",
-//     triggerClass: "delete-payment-btn",
-//     displayClass: "bill-payment",
-//     deleteMsg: "Are you sure you want to delete this payment?"
-// // });
-
-
 if ($("#calendar")[0]){
     // Do something if class exists
     cal.init();
 }
-
-
-
-
 
 payBill.init();
 

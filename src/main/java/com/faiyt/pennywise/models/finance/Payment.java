@@ -1,6 +1,9 @@
 package com.faiyt.pennywise.models.finance;
 
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 

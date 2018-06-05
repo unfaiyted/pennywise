@@ -44,6 +44,12 @@ public class Calculation {
         return LocalDate.now();
     }
 
+    public static String debtToIncomeRatio(Double debt, Double income) {
+
+
+        return "50/100";
+    }
+
 
 
 }
