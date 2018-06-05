@@ -29,7 +29,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class DataLoader implements ApplicationRunner {
 
     // will delete data and refresh test data
-    // probably can move to app props
+    // probably can move to app props or something...
     private static final boolean FRESHSTART = false;
 
     private UserService userDao;
@@ -92,6 +92,7 @@ public class DataLoader implements ApplicationRunner {
                     LocalDate dueDate = LocalDate.now().minusDays(5).plusDays(rand.nextInt(20));
                     Double interestRate = 0.15;
                     Double payment = ThreadLocalRandom.current().nextDouble(10, 600);
+                    Double totalOwed = payment * (ThreadLocalRandom.current().nextDouble(4, 60));
                     String interestType = interestTypes.get(rand.nextInt(interestTypes.size()));
                     PaymentMethod method = methods.get(rand.nextInt(methods.size()));
 
@@ -107,6 +108,8 @@ public class DataLoader implements ApplicationRunner {
                         RecurringBill bill = new RecurringBill(faker.rickAndMorty().location(), createdAt, dueDate, interestRate,
                                 interestType, randomCat, merchant, method, user);
 
+
+                        bill.setTotalOwed(totalOwed);
                         bill.setPayment(payment);
                         bill.setFrequency(frequency);
                         bill.generateDueDatesList();
@@ -159,7 +162,7 @@ public class DataLoader implements ApplicationRunner {
         Address address =  new Address( faker.app().name(),  faker.address().streetAddress(),
                 faker.address().cityName(),  state,  faker.address().zipCode());
 
-      return new Merchant( faker.app().name(),  faker.internet().domainName(),
+      return new Merchant( faker.app().name(),  "http://"+ faker.internet().domainName(),
                 faker.name().username(),  faker.phoneNumber().phoneNumber(),
                         address);
 
