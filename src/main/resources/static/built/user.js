@@ -284,6 +284,7 @@ CalendarObject.prototype.renderMonth = function () {
 
     var cal = calendar().of(self.currYear, self.currMonth);
 
+    $('.event-item, .event-item').off();
     $('.calendar-body').empty();
     $('.cal-title-text').text(cal.month + ' - ' + cal.year);
 
@@ -309,6 +310,10 @@ CalendarObject.prototype.renderMonth = function () {
         container: 'body'
     });
 
+    $('.event-item, .event-name').click(function () {
+        self.updatePanel($(this).attr("data-id"));
+    });
+
     this.panel();
 };
 
@@ -327,7 +332,7 @@ CalendarObject.prototype.createDay = function (day) {
 
             if (matchCount === 0) calendarDay += '<ul class="event-list text-left">';
 
-            calendarDay += '<li class="event-item toggle-event">\n                             <span class="event-name text-truncate toggle-event" data-id="' + event.id + '">\n\n' + event.bill.merchant.name + '\n<span class="badge badge-' + event.bill.status.color + '">' + event.bill.status.name + '</span>\n</span>\n                             \n                             \n                             </li>';
+            calendarDay += '<li class="event-item toggle-event" data-id="' + event.bill.id + '">\n                             <span class="event-name text-truncate toggle-event" data-id="' + event.bill.id + '">\n' + event.bill.merchant.name + '\n<span class="badge badge-' + event.bill.status.color + '">' + event.bill.status.name + '</span>\n</span>                \n                             </li>';
             matchCount++;
         }
     });
@@ -408,6 +413,7 @@ CalendarObject.prototype.asDate = function (day) {
 };
 
 CalendarObject.prototype.panel = function () {
+    var self = this;
 
     var panelEvent = $('#calendar-panel').scotchPanel({
         containerSelector: '#calendar', // Make this appear on the entire screen
@@ -424,6 +430,28 @@ CalendarObject.prototype.panel = function () {
         },
         enableEscapeKey: true // Clicking Esc will close the panel
     });
+
+    $('.calendar-overlay').click(function () {
+        // CLOSE ONLY
+        panelEvent.close();
+    });
+};
+
+CalendarObject.prototype.getBillEvent = function (id) {
+    var foundEvent = null;
+
+    this.events.forEach(function (event) {
+        if (parseInt(id) === event.bill.id) return foundEvent = event;
+    });
+
+    return foundEvent;
+};
+
+CalendarObject.prototype.updatePanel = function (id) {
+
+    var event = this.getBillEvent(id);
+
+    $('#panel-event-name').text(event.bill.merchant.name);
 };
 
 module.exports = CalendarObject;

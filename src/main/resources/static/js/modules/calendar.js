@@ -46,6 +46,8 @@ CalendarObject.prototype.renderMonth = function () {
 
     let cal = calendar().of(self.currYear, self.currMonth);
 
+
+    $('.event-item, .event-item').off();
     $('.calendar-body').empty();
     $('.cal-title-text').text(cal.month + ' - ' + cal.year);
 
@@ -72,6 +74,14 @@ CalendarObject.prototype.renderMonth = function () {
     });
 
 
+    $('.event-item, .event-name').click(function () {
+        self.updatePanel($(this).attr("data-id"));
+
+    });
+
+
+
+
     this.panel();
 
 
@@ -93,14 +103,11 @@ CalendarObject.prototype.createDay = function(day) {
 
             if(matchCount === 0) calendarDay +=  `<ul class="event-list text-left">`;
 
-            calendarDay += `<li class="event-item toggle-event">
-                             <span class="event-name text-truncate toggle-event" data-id="${event.id}">
-
+            calendarDay += `<li class="event-item toggle-event" data-id="${event.bill.id}">
+                             <span class="event-name text-truncate toggle-event" data-id="${event.bill.id}">
 ${event.bill.merchant.name}
 <span class="badge badge-${event.bill.status.color}">${event.bill.status.name}</span>
-</span>
-                             
-                             
+</span>                
                              </li>`;
             matchCount++;
 
@@ -134,7 +141,6 @@ CalendarObject.prototype.renderMonthHeader = function(weekdays) {
 
 };
 
-
 CalendarObject.prototype.changeMonth = function(direction) {
     let self = this;
 
@@ -164,7 +170,6 @@ CalendarObject.prototype.changeMonth = function(direction) {
 
 
 };
-
 
 // Update the events pulling new data before refreshing calendar
 CalendarObject.prototype.eventsSync = function() {
@@ -196,6 +201,7 @@ CalendarObject.prototype.asDate = function(day) {
 
 
 CalendarObject.prototype.panel = function () {
+    let self = this;
 
     var panelEvent = $('#calendar-panel').scotchPanel({
         containerSelector: '#calendar', // Make this appear on the entire screen
@@ -209,11 +215,38 @@ CalendarObject.prototype.panel = function () {
             $('.scotch-panel').css('z-index', 0);
             // Bring current panel to top
             $('#calendar-panel').css('z-index', -1);
+
+
         },
         enableEscapeKey: true // Clicking Esc will close the panel
     });
 
-}
+    $('.calendar-overlay').click(function() {
+        // CLOSE ONLY
+        panelEvent.close();
+    })
+
+};
+
+
+CalendarObject.prototype.getBillEvent = function (id) {
+    let foundEvent = null;
+
+    this.events.forEach(function (event) {
+        if(parseInt(id) === event.bill.id) return foundEvent = event;
+    });
+
+    return foundEvent;
+};
+
+
+CalendarObject.prototype.updatePanel = function (id) {
+
+   let event = this.getBillEvent(id);
+
+   $('#panel-event-name').text(event.bill.merchant.name);
+
+};
 
 
 module.exports = CalendarObject;
