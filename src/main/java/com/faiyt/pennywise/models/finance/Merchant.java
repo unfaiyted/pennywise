@@ -1,6 +1,8 @@
 package com.faiyt.pennywise.models.finance;
 
 import com.faiyt.pennywise.models.Address;
+import com.faiyt.pennywise.models.user.View;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
 
@@ -12,15 +14,20 @@ public class Merchant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
+    @JsonView(View.Summary.class)
     private String name;
     @Column
+    @JsonView(View.SummaryWithDetails.class)
     private String website;
     @Column
+    @JsonView(View.SummaryWithDetails.class)
     private String websiteUsername;
     @Column
+    @JsonView(View.SummaryWithDetails.class)
     private String phoneNumber;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JsonView(View.SummaryWithDetails.class)
     private Address address;
 
     public Merchant() {

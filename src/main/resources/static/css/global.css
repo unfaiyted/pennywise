@@ -95,6 +95,14 @@ body {
     font-size: 12px;
 }
 
+button.delete-btn {
+    outline: 0;
+
+}
+.delete-btn, .delete-payment-btn {
+    outline: 0;
+
+}
 
 .btn-sm, .btn-group-sm>.btn {
     padding-left: 10px;

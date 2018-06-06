@@ -1,7 +1,9 @@
 package com.faiyt.pennywise.models.finance;
 
 import com.faiyt.pennywise.models.user.User;
+import com.faiyt.pennywise.models.user.View;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,48 +24,61 @@ import java.util.List;
 public class Bill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(View.Summary.class)
     private Long id;
     @Column
+    @JsonView(View.SummaryWithDetails.class)
     private String nickname;
 
     @Column
+    @JsonView(View.Summary.class)
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column
+    @JsonView(View.Summary.class)
     private Double interestRate;
     @Column
     private String interestType;
     @Column
+    @JsonView(View.Summary.class)
     private Double payment;
 
 
     @Column
+    @JsonView(View.Summary.class)
     private Double totalOwed;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dueDate;
 
     @Column
+    @JsonView(View.Summary.class)
     private boolean active = true;
 
     @ManyToOne
+    @JsonView(View.Summary.class)
     private BillStatus status;
 
     @ManyToOne
+    @JsonView(View.Summary.class)
     private BillCategory category;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JsonView(View.Summary.class)
     private Merchant merchant;
 
     @ManyToOne
+    @JsonView(View.Summary.class)
     private PaymentMethod method;
 
     @JoinTable
     @OneToMany(cascade = CascadeType.ALL)
+    @JsonView(View.SummaryWithDetails.class)
     private List<Payment> payments = new ArrayList<>();
 
     @ManyToOne
     @JsonBackReference
+    @JsonView(View.SummaryWithDetails.class)
     private User owner;
 
     public Bill() {

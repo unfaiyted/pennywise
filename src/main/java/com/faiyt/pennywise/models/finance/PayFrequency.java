@@ -1,6 +1,9 @@
 package com.faiyt.pennywise.models.finance;
 
 
+import com.faiyt.pennywise.models.user.View;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -9,9 +12,11 @@ import java.time.LocalDateTime;
 public class PayFrequency {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(View.Summary.class)
     private Long id;
 
     @Column
+    @JsonView(View.Summary.class)
     private String name;
 
     public PayFrequency() {}

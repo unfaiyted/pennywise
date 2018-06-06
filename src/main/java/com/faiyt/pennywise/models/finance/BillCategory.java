@@ -1,5 +1,8 @@
 package com.faiyt.pennywise.models.finance;
 
+import com.faiyt.pennywise.models.user.View;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,12 +10,15 @@ import javax.persistence.*;
 public class BillCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(View.Summary.class)
     private Long id;
 
     @Column
+    @JsonView(View.Summary.class)
     private String name;
 
     @Column
+    @JsonView(View.SummaryWithDetails.class)
     private String icon;
 
     public BillCategory() {}

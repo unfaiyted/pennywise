@@ -43,8 +43,14 @@ module.exports = {
                 headers: {
                     "Content-Type": "text/plain",
                     'Authorization': 'Basic '+btoa('username:password')
-
                 }
-            }).then(response => response.json());
+            }).then((response) => {
+                let json = response.json();
+                if (response.status >= 200 && response.status < 300) {
+                    return json;
+                } else {
+                    return json.then(Promise.reject.bind(Promise));
+                }
+        });
     }
 };

@@ -1,6 +1,5 @@
 package com.faiyt.pennywise.services;
 
-import com.faiyt.pennywise.models.Calendar;
 import com.faiyt.pennywise.models.CalendarEvent;
 import com.faiyt.pennywise.models.finance.Bill;
 import com.faiyt.pennywise.models.finance.BillCalendarEvent;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -52,11 +50,11 @@ public class CalendarService {
         return events;
     }
 
-    public List<BillCalendarEvent> getBillsDueInMonthWithDate(LocalDate date, User user) {
+    public List<CalendarEvent> getBillsDueInMonthWithDate(LocalDate date, User user) {
         LocalDate start = date.withDayOfMonth(1);
         LocalDate end = date.withDayOfMonth(date.lengthOfMonth());
 
-        List<BillCalendarEvent> events = new ArrayList<>();
+        List<CalendarEvent> events = new ArrayList<>();
 
         List<Bill> billList = bills.findBillsContainingDueDatesBetween(start, end, user);
 

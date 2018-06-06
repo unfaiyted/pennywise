@@ -1,6 +1,9 @@
 package com.faiyt.pennywise.models.finance;
 
 
+import com.faiyt.pennywise.models.user.View;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
 
 @Table
@@ -9,18 +12,23 @@ public class BillStatus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(View.Summary.class)
     private Long id;
 
     @Column(nullable = false)
+    @JsonView(View.Summary.class)
     private String name;
 
     @Column
+    @JsonView(View.SummaryWithDetails.class)
     private Integer minDays;
 
     @Column
+    @JsonView(View.SummaryWithDetails.class)
     private Integer maxDays;
 
     @Column
+    @JsonView(View.Summary.class)
     private String color;
 
     public BillStatus() { }

@@ -1,5 +1,8 @@
 package com.faiyt.pennywise.models.finance;
 
+import com.faiyt.pennywise.models.user.View;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
 
 @Table
@@ -8,15 +11,19 @@ public class PaymentMethod {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(View.SummaryWithDetails.class)
     private Long id;
 
     @Column
+    @JsonView(View.Summary.class)
     private String name;
 
     @Column
+    @JsonView(View.Summary.class)
     private String icon;
 
     @Column
+    @JsonView(View.SummaryWithDetails.class)
     private String link;
 
 

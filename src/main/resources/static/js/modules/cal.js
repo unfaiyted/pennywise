@@ -29,8 +29,6 @@ module.exports = {
         });
 
 
-
-
         $('.prev-month').click(function () {
             module.exports.changeMonth("back");
 
@@ -71,11 +69,11 @@ module.exports = {
 
         let calHTML = `
          <div class="row cal-row cal-header">
-                                <div class="cal-1 text-truncate">Sun</div>
-                                <div class="cal-1 text-truncate">Mon</div>
-                                <div class="cal-1 text-truncate">Tue</div>
-                                <div class="cal-1 text-truncate">Wed</div>
-                                <div class="cal-1 text-truncate">Thu</div>
+                                <div class="cal-big-1 text-truncate">Sun</div>
+                                <div class="cal-big-1 text-truncate">Mon</div>
+                                <div class="cal-big-1 text-truncate">Tue</div>
+                                <div class="cal-big-1 text-truncate">Wed</div>
+                                <div class="cal-big-1 text-truncate">Thu</div>
                                 <div class="cal-1 text-truncate">Fri</div>
                                 <div class="cal-1 text-truncate">Sat</div>
                             </div>`;

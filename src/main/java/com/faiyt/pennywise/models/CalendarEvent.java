@@ -60,4 +60,15 @@ public class CalendarEvent {
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
+
+
+    @Override
+    public String toString() {
+        return "CalendarEvent{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                '}';
+    }
 }

@@ -45,7 +45,7 @@ public interface Bills extends CrudRepository<Bill, Long> {
 
     List<Bill> findAllByOwnerAndAndCategory(User owner, BillCategory category);
 
-    @Query("select b from Bill b " +
+    @Query("select distinct b from Bill b " +
             "JOIN b.dueDates  d " +
             "where d.date between ?1 and ?2 and " +
             "b.owner = ?3")

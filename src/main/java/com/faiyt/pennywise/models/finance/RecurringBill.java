@@ -2,7 +2,9 @@ package com.faiyt.pennywise.models.finance;
 
 
 import com.faiyt.pennywise.models.user.User;
+import com.faiyt.pennywise.models.user.View;
 import com.faiyt.pennywise.util.Calculation;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -18,9 +20,11 @@ public class RecurringBill  extends Bill {
 
 
     @ManyToOne
+    @JsonView(View.Summary.class)
     private PayFrequency frequency;
 
     @ManyToMany(cascade = CascadeType.ALL)
+    @JsonView(View.SummaryWithDetails.class)
     private List<BillDueDate> dueDates;
 
 
