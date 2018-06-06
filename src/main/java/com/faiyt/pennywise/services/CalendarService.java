@@ -3,6 +3,10 @@ package com.faiyt.pennywise.services;
 import com.faiyt.pennywise.models.Calendar;
 import com.faiyt.pennywise.models.CalendarEvent;
 import com.faiyt.pennywise.models.finance.Bill;
+import com.faiyt.pennywise.models.finance.BillCalendarEvent;
+import com.faiyt.pennywise.models.finance.BillDueDate;
+import com.faiyt.pennywise.models.finance.RecurringBill;
+import com.faiyt.pennywise.models.user.User;
 import com.faiyt.pennywise.repositories.Bills;
 import com.faiyt.pennywise.repositories.Calendars;
 import com.faiyt.pennywise.repositories.Incomes;
@@ -40,16 +44,37 @@ public class CalendarService {
         return incomes;
     }
 
-    public List<CalendarEvent> getEventsInMonth(LocalDate date) {
+    public List<CalendarEvent> getEventsInMonth(LocalDate date, User user) {
+        LocalDate start = date.withDayOfMonth(1);
+        LocalDate end = date.withDayOfMonth(date.lengthOfMonth());
+
         List<CalendarEvent> events  = new ArrayList<>();
         return events;
     }
 
-    public HashMap<Bill,LocalDate> getBillsDueInMonthWithDate(LocalDate date) {
+    public List<BillCalendarEvent> getBillsDueInMonthWithDate(LocalDate date, User user) {
+        LocalDate start = date.withDayOfMonth(1);
+        LocalDate end = date.withDayOfMonth(date.lengthOfMonth());
 
-        HashMap<Bill, LocalDate> bills = new HashMap<>();
+        List<BillCalendarEvent> events = new ArrayList<>();
 
-        return bills;
+        List<Bill> billList = bills.findBillsContainingDueDatesBetween(start, end, user);
+
+        for(Bill bill : billList) {
+            if(bill instanceof RecurringBill) {
+                RecurringBill rBill = (RecurringBill) bill;
+                for(BillDueDate dueDate : rBill.getDueDates()) {
+                    if(dueDate.getDate().isAfter(start) && dueDate.getDate().isBefore(end)) {
+                        events.add(new BillCalendarEvent(rBill, dueDate.getDate()));
+                    }
+
+                }
+
+            }
+
+        }
+
+        return events;
     }
 
 

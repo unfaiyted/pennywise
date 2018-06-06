@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 @Repository
@@ -42,6 +44,12 @@ public interface Bills extends CrudRepository<Bill, Long> {
     List<Bill> findAllByOwner(User owner);
 
     List<Bill> findAllByOwnerAndAndCategory(User owner, BillCategory category);
+
+    @Query("select b from Bill b " +
+            "JOIN b.dueDates  d " +
+            "where d.date between ?1 and ?2 and " +
+            "b.owner = ?3")
+    List<Bill> findBillsContainingDueDatesBetween(LocalDate start, LocalDate end, User user);
 
 
     @Modifying
