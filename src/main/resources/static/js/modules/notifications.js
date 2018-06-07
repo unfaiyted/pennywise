@@ -68,6 +68,12 @@ NotificationObject.prototype.renderList = function () {
         }
     });
 
+
+    $('.notification-delete-btn').click(function () {
+        self.markRead($(this).attr('data-id'));
+    });
+
+
 };
 
 NotificationObject.prototype.createItem = function (notification) {
@@ -77,7 +83,7 @@ NotificationObject.prototype.createItem = function (notification) {
     let badge = (n.userView) ? '' : `<span class="ml-2 badge badge-blue">New</span>`;
 
     return `
-        <li class="list-group-item d-flex justify-content-start align-items-left text-truncate">
+        <li class="list-group-item d-flex  align-items-left text-truncate notification-group-item" data-id="${n.id}">
             <div class="icon pr-4">
                 <i class="${n.type.icon}"></i>
              </div>
@@ -86,6 +92,9 @@ NotificationObject.prototype.createItem = function (notification) {
                 <p class="description text-truncate">${n.message}</p>
                 <span class="time">${n.age}</span>
             </div>
+            <div class="ml-auto text-right">
+            <i class="fas fa-times notification-delete-btn" data-id="${n.id}"></i>
+</div>
         </li>`
 
 };
@@ -94,7 +103,7 @@ NotificationObject.prototype.createNotificationLink = function (notification) {
 
     let n = notification;
 
-    let htmlLink = `<a href="${window.location.origin}`
+    let htmlLink = `<a href="${window.location.origin}`;
 
     if(n.bill) {
         htmlLink += `/bill/view/${n.bill.id}`;
@@ -137,6 +146,21 @@ NotificationObject.prototype.markRead = function (notificationId) {
         function(valid) {
         }, function (error) {
             console.log("Error fetching notification data.");
+        });
+
+};
+
+NotificationObject.prototype.deleteItem = function (notificationId) {
+
+    let  data = {
+        identifier : notificationId
+    };
+
+    // Get Events
+    api.deleteData('notification/delete', data).then(
+        function(valid) {
+        }, function (error) {
+            console.log("Error deleting");
         });
 
 };

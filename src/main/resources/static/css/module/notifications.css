@@ -5,3 +5,7 @@
 .notification-list-group a {
     color: #000000;
 }
+
+.notification-list-group .list-group-item {
+    padding-right: 10px;
+}

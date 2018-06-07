@@ -6504,6 +6504,10 @@ NotificationObject.prototype.renderList = function () {
             self.markRead($(this).attr('data-id'));
         }
     });
+
+    $('.notification-delete-btn').click(function () {
+        self.markRead($(this).attr('data-id'));
+    });
 };
 
 NotificationObject.prototype.createItem = function (notification) {
@@ -6512,7 +6516,7 @@ NotificationObject.prototype.createItem = function (notification) {
 
     var badge = n.userView ? '' : '<span class="ml-2 badge badge-blue">New</span>';
 
-    return '\n        <li class="list-group-item d-flex justify-content-start align-items-left text-truncate">\n            <div class="icon pr-4">\n                <i class="' + n.type.icon + '"></i>\n             </div>\n             <div class="text-truncate">\n                <p class="title text-truncate">' + this.createNotificationLink(n) + ' ' + badge + '</p>\n                <p class="description text-truncate">' + n.message + '</p>\n                <span class="time">' + n.age + '</span>\n            </div>\n        </li>';
+    return '\n        <li class="list-group-item d-flex  align-items-left text-truncate notification-group-item" data-id="' + n.id + '">\n            <div class="icon pr-4">\n                <i class="' + n.type.icon + '"></i>\n             </div>\n             <div class="text-truncate">\n                <p class="title text-truncate">' + this.createNotificationLink(n) + ' ' + badge + '</p>\n                <p class="description text-truncate">' + n.message + '</p>\n                <span class="time">' + n.age + '</span>\n            </div>\n            <div class="ml-auto text-right">\n            <i class="fas fa-times notification-delete-btn" data-id="' + n.id + '"></i>\n</div>\n        </li>';
 };
 
 NotificationObject.prototype.createNotificationLink = function (notification) {
@@ -6554,6 +6558,18 @@ NotificationObject.prototype.markRead = function (notificationId) {
     // Get Events
     api.updateData('notification/markRead', data).then(function (valid) {}, function (error) {
         console.log("Error fetching notification data.");
+    });
+};
+
+NotificationObject.prototype.deleteItem = function (notificationId) {
+
+    var data = {
+        identifier: notificationId
+    };
+
+    // Get Events
+    api.deleteData('notification/delete', data).then(function (valid) {}, function (error) {
+        console.log("Error deleting");
     });
 };
 
@@ -6620,7 +6636,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".notification-list-group {\n    width: 350px;\n}\n\n.notification-list-group a {\n    color: #000000;\n}", ""]);
+exports.push([module.i, ".notification-list-group {\n    width: 350px;\n}\n\n.notification-list-group a {\n    color: #000000;\n}\n\n.notification-list-group .list-group-item {\n    padding-right: 10px;\n}", ""]);
 
 // exports
 
