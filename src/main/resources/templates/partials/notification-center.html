@@ -4,93 +4,17 @@
 <body>
 
 
-<th:block th:fragment="general">
-
-    <div class="dropdown notification">
-    <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="badge-alert badge badge-pill  badge-danger">3</span>
-        <i class="fas fa-ellipsis-h header-action-icon"></i>
-    </a>
-
-        <div class="dropdown-menu dropdown-menu-right">
-            <ul class="list-group">
-
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div class="icon pr-4">
-                            <i class="fas fa-columns"></i>
-                    </div>
-                     <div>
-                         <p class="title">Notification</p>
-                         <p class="description text-truncate">This things happened and you cant stop it</p>
-                         <span class="time">3 hours ago</span>
-                    </div>
-
-                </li>
-
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div class="icon pr-4">
-                        <i class="fas fa-columns"></i>
-                    </div>
-                    <div>
-                        <p class="title">Notification</p>
-                        <p class="description text-truncate">This things happened and you cant stop it</p>
-                        <span class="time">5 days ago</span>
-                    </div>
-
-                </li>
-
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div class="icon pr-4">
-                        <i class="fas fa-columns"></i>
-                    </div>
-                    <div>
-                        <p class="title">Notification</p>
-                        <p class="description text-truncate">This things happened and you cant stop it</p>
-                        <span class="time">6 days ago</span>
-                    </div>
-
-                </li>
-
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div class="icon pr-4">
-                        <i class="fas fa-columns"></i>
-                    </div>
-                    <div>
-                        <p class="title">Notification</p>
-                        <p class="description text-truncate">This things happened and you cant stop it</p>
-                        <span class="time">3 days ago</span>
-                    </div>
-
-                </li>
-
-
-
-            </ul>
-            <!--<a class="dropdown-item" th:href="@{~/profile}">Message</a>-->
-            <!--<a class="dropdown-item" th:href="@{~/static/view}">Other Message</a>-->
-            <!--<a class="dropdown-item" th:href="@{~/static/view}">Friends</a>-->
-            <!--<div class="dropdown-divider"></div>-->
-             <!--<a class="dropdown-item" th:href="@{~/logout}">Delete All</a>-->
-        </div>
-
-    </div>
-
-</th:block>
-
-
-
-
 
 <th:block  th:fragment="alert">
 
     <div class="dropdown notification">
         <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="badge-alert badge badge-pill  badge-danger">7</span>
+            <span class="badge-alert badge badge-pill  badge-danger " id="notificaiton-unread-count">7</span>
             <i class="fas fa-bell header-action-icon "></i>
         </a>
 
-        <div class="dropdown-menu dropdown-menu-right">
-            <ul class="list-group">
+        <div class="dropdown-menu dropdown-menu-right text-left" id="notification-menu-list">
+            <ul class="list-group notification-list-group">
 
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="icon pr-4">

@@ -27,16 +27,14 @@
 
 
     <div class="d-flex flex-row">
-        <div class="text-right header-action-icon p-1 pr-3">
 
-            <div th:replace="partials/notification-center :: general" />
 
-        </div>
-
+        <div sec:authorize="isAuthenticated()">
         <div class="header-action-icon p-1 pr-3">
 
             <div th:replace="partials/notification-center :: alert" />
 
+        </div>
         </div>
         <div class="btn-group header-button text-right">
             <button class="btn btn-primary btn-sm header-button" type="button">

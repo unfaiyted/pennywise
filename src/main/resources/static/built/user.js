@@ -250,11 +250,9 @@ var calendar = __webpack_require__(9);
 function CalendarObject(settings) {
     var self = this;
     // Attach Div ID
-    var d = new Date();
-
     this.settings = settings;
-    this.currMonth = d.getMonth();
-    this.currYear = d.getFullYear();
+
+    this.today();
     this.events = [];
 
     // Get Events
@@ -277,6 +275,24 @@ CalendarObject.prototype.init = function () {
     $('.prev-month').click(function () {
         self.changeMonth("back");
     });
+
+    $('.cal-today-btn').click(function () {
+        // Resets date
+        self.today();
+
+        self.eventsSync().then(function (data) {
+            self.events = data;
+            self.renderMonth();
+        }, function (error) {
+            console.log("Error fetching calendar data.");
+        });
+    });
+};
+
+CalendarObject.prototype.today = function () {
+    var d = new Date();
+    this.currMonth = d.getMonth();
+    this.currYear = d.getFullYear();
 };
 
 CalendarObject.prototype.renderMonth = function () {
@@ -320,19 +336,19 @@ CalendarObject.prototype.renderMonth = function () {
 CalendarObject.prototype.createDay = function (day) {
     // Checks if event are in event list
 
-    var activeDate = this.asDate(day);
-
     var matchCount = 0;
-    var calendarDay = '<div class="cal-big-1"><span class="day">' + day + '</span>';
+    var activeDate = this.asDate(day);
+    var todayClass = this.isDateToday(activeDate) ? 'cal-today' : '';
+
+    var calendarDay = '<div class="cal-big-1 ' + todayClass + '"><span class="day">' + day + '</span>';
 
     this.events.forEach(function (event) {
 
         if (event.dueDate === activeDate) {
-            console.log(event.bill.merchant.name);
 
             if (matchCount === 0) calendarDay += '<ul class="event-list text-left">';
 
-            calendarDay += '<li class="event-item toggle-event" data-id="' + event.bill.id + '">\n                             <span class="event-name text-truncate toggle-event" data-id="' + event.bill.id + '">\n' + event.bill.merchant.name + '\n<span class="badge badge-' + event.bill.status.color + '">' + event.bill.status.name + '</span>\n</span>                \n                             </li>';
+            calendarDay += '\n                <li class="event-item toggle-event" data-id="' + event.bill.id + '">\n                             <span class="event-name text-truncate toggle-event" data-id="' + event.bill.id + '">\n                                <span class="badge badge-' + event.bill.status.color + ' w-100 pl-2 pb-1 text-left event-name-highlight hvr-pulse-shrink">\n                                   ' + event.bill.merchant.name + '</span>\n                             </span>                \n                 </li>';
             matchCount++;
         }
     });
@@ -343,15 +359,32 @@ CalendarObject.prototype.createDay = function (day) {
     return calendarDay;
 };
 
+CalendarObject.prototype.isDateToday = function (date) {
+
+    var today = this.formatDate(new Date());
+
+    return today === date;
+};
+
+CalendarObject.prototype.formatDate = function (date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+};
+
 // could add language support later.... in theory
 CalendarObject.prototype.renderMonthHeader = function (weekdays) {
-
-    console.log(weekdays);
 
     var headerHTML = '<div class="row cal-row cal-header">';
 
     weekdays.forEach(function (day) {
-        headerHTML += '<div class="cal-1 text-truncate">' + day + '</div>';
+        headerHTML += '<div class="cal-1-header text-truncate">' + day + '</div>';
     });
 
     headerHTML += '</div>';
@@ -452,6 +485,14 @@ CalendarObject.prototype.updatePanel = function (id) {
     var event = this.getBillEvent(id);
 
     $('#panel-event-name').text(event.bill.merchant.name);
+
+    //$('#event-details-address').text(event.bill.merchant.address);
+    $('#event-details-bill-link').attr('href', "./bill/view/" + event.bill.id);
+    //$('#event-details-city').text(event.bill.merchant.address.city);
+    $('#event-details-map').text();
+    $('#event-details-payment-method').text(event.bill.method.name);
+    $('#event-details-state').text();
+    $('#event-details-zipcode').text();
 };
 
 module.exports = CalendarObject;
@@ -978,6 +1019,9 @@ module.exports = {
         return module.exports.addData(location, data);
     },
 
+    updateData: function updateData(location, data) {
+        return module.exports.addData(location, data);
+    },
     // query for post data
     // parameter for url info
     // ex: players/Name+Last/?post=3 type/parameter/query
@@ -1066,7 +1110,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.cal-1 {\n    width: 14.281%;\n    border-right: 1px solid #a7a3a7;\n    border-top: 1px solid #b8b6b8;\n    text-align: right;\n    height: 35px;\n    line-height: 3;\n    padding-right: 9px;\n}\n\n.cal-1:hover {\n    background-color: #ececec;\n}\n\n.next-month, .prev-month {\n    cursor: pointer;\n}\n\n.next-month:hover, .prev-month:hover {\n    cursor: pointer;\n    color: #00B4DB;\n}\n.cal-title {\n    font-weight: bold;\n}\n\n.cal-header {\n   background-color: #eaecef;\n    padding: 0;\n    font-weight: bold;\n\n}\n\n.cal-row .cal-1:last-child {\n    border-right: 0;\n}\n\n\n.calendar-body {\n    margin-left:15px;\n    margin-right:15px;\n}\n\n.calendar-body .cal-row:last-child {\n    border-bottom: 0;\n}\n\n.cal-due-date {\n    cursor: pointer;\n    color: #db3b42;\n    font-weight: bold;\n    background-color: #2312120f;\n}\n\n.cal-today {\n    font-weight: bold;\n    background: rgba(217, 15, 15, 0.07);\n}\n\n\n/* BIG CALENDAR */\n\n.calendar-container {\n    width: 100%;\n    height: 101vh;\n    padding-left: 10%;\n    padding-right: 2%;\n}\n\n\n.cal-big-1 {\n    width: 14.281%;\n    position: relative;\n    border-right: 1px solid #a7a3a7;\n    border-top: 1px solid #b8b6b8;\n    text-align: right;\n    line-height: 3;\n    padding-right: 9px;\n    overflow: hidden;\n}\n\n.cal-big-1:after {\n    content: \"\";\n    display: block;\n    padding-bottom: 48%;\n}\n\n.cal-big-1:hover {\n    background-color: #ececec;\n}\n\n.cal-row .cal-big-1:last-child {\n    border-right: 0;\n}\n\n\n.event-list li {\n    list-style-type: none;\n}\n.event-list li:before {\n    font-family: Font Awesome\\ 5 Free;\n    font-weight: 900;\n    -webkit-font-smoothing: antialiased;\n    text-rendering: auto;\n    content: '\\F4C0';\n    margin:-20px 5px 0 -15px;\n    color: #102911;\n    position: relative;\n    top: 10px\n\n}\n\n\n.event-list {\n    line-height: 1;\n    padding-left:25px;\n    height: 0px;\n    position: relative;\n    top: -25px\n}\n\n.event-item {\n    cursor: pointer;\n}\n\n\n#calendar-panel {\n    background-color: #eaeaea;\n    border-radius: 10px;\n}\n\n\n\n.calendar-overlay {\n    position: fixed;\n\n    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0.65+0,0+100;Neutral+Density */\n    background: -moz-linear-gradient(left, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 100%); /* FF3.6-15 */\n    background: -webkit-linear-gradient(left, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* Chrome10-25,Safari5.1-6 */\n    background: linear-gradient(to right, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */\n    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=1 ); /* IE6-9 */\n\n    width: 100%;\n    height: 100%;\n    display: none;\n    z-index: 999999;\n    -webkit-transition: all 225ms ease;\n    -moz-transition: all 225ms ease;\n    transition: all 225ms ease;\n\n    -webkit-animation-duration: 1s;\n    animation-duration: 1s;\n    -webkit-animation-fill-mode: both;\n    animation-fill-mode: both;\n    border-radius: 10px;\n\n    -webkit-animation-name: fadeIn;\n    animation-name: fadeIn;\n    cursor: pointer;\n}\n.scotch-is-showing .calendar-overlay {\n    display: block;\n}\n\n\n\n@-webkit-keyframes fadeIn {\n    0% {\n        opacity: 0;\n    }\n\n    100% {\n        opacity: 1;\n    }\n}\n\n@keyframes fadeIn {\n    0% {\n        opacity: 0;\n    }\n\n    100% {\n        opacity: 1;\n    }\n}\n\n\n", ""]);
+exports.push([module.i, "\n.cal-1 {\n    width: 14.281%;\n    border-right: 1px solid #c6c2c6;\n    border-top: 1px solid #d6d2d6;\n    text-align: right;\n    height: 35px;\n    line-height: 3;\n    padding-right: 9px;\n}\n\n.cal-1:hover {\n    background-color: #ececec;\n}\n\n.cal-row .cal-1:last-child, .cal-row .cal-1-header:last-child  {\n    border-right: 0;\n}\n\n\n.cal-1-header {\n    width: 14.281%;\n    border-right: 1px solid #c6c2c6;\n    border-top: 1px solid #d6d2d6;\n    text-align: right;\n    height: 35px;\n    line-height: 3;\n    padding-right: 9px;\n    border-bottom:  2px solid #c6c2c6;\n    text-align: center;\n}\n\n\n\n.next-month, .prev-month {\n    cursor: pointer;\n}\n\n.next-month:hover, .prev-month:hover {\n    cursor: pointer;\n    color: #00B4DB;\n}\n.cal-title {\n    font-weight: bold;\n}\n\n\n.cal-title-text {\n\n    font-size: 20px;\n}\n.cal-header {\n   background-color: #eaecef;\n    padding: 0;\n    font-weight: bold;\n\n}\n\n\n.calendar-body {\n    margin-left:15px;\n    margin-right:15px;\n}\n\n.calendar-body .cal-row:last-child {\n    border-bottom: 0;\n}\n\n.cal-due-date {\n    cursor: pointer;\n    color: #db3b42;\n    font-weight: bold;\n    background-color: #2312120f;\n}\n\n.cal-today {\n    font-weight: bold;\n    background: rgb(246, 252, 255)\n}\n\n.cal-today-btn {\n    margin-bottom: 7px;\n    margin-left: 11px;\n}\n\n\n/* BIG CALENDAR */\n\n.calendar-container {\n    width: 100%;\n    height: 101vh;\n    padding-left: 10%;\n    padding-right: 2%;\n}\n\n\n.cal-big-1 {\n    width: 14.281%;\n    position: relative;\n    border-right: 1px solid #ebe6eb;\n    border-top: 1px solid #ebe6eb;\n    text-align: right;\n    line-height: 3;\n    padding-right: 9px;\n    overflow: hidden;\n}\n\n.cal-big-1:after {\n    content: \"\";\n    display: block;\n    padding-bottom: 48%;\n}\n\n.cal-big-1:hover {\n    background-color: #ececec;\n}\n\n.cal-row .cal-big-1:last-child {\n    border-right: 0;\n}\n\n\n.event-list li {\n    list-style-type: none;\n}\n\n/*.event-list li:before {*/\n    /*font-family: Font Awesome\\ 5 Free;*/\n    /*font-weight: 900;*/\n    /*-webkit-font-smoothing: antialiased;*/\n    /*text-rendering: auto;*/\n    /*content: '\\f4c0';*/\n    /*margin:-20px 5px 0 -15px;*/\n    /*color: #102911;*/\n    /*position: relative;*/\n    /*top: 10px*/\n\n/*}*/\n\n\n.event-list {\n    line-height: 1.3;\n    padding-left:5px;\n    height: 0;\n    position: relative;\n    top: -10px\n}\n\n.event-item {\n    cursor: pointer;\n}\n\n.event-name-highlight:hover {\n\n}\n\n.event-details-header {\n    background-color: #dcdcdc;\n    border-bottom: 2px solid #e0e0e0;\n    position: relative;\n    top: -16px;\n    left: -31px;\n    padding: 10px;\n    width: calc(100% + 50px);\n}\n\n.event-details-title {\n    font-weight: bold;\n}\n\n\n.event-details-body {\n    background-color: #eaeaea;\n    position: relative;\n    left: -31px;\n    top: -16px;\n    width: calc(100% + 62px);\n\n\n}\n\n.event-details-footer {\n    background-color: #dcdcdc;\n    border-bottom: 2px solid #e0e0e0;\n    position: relative;\n    padding: 10px;\n    padding-left: 20px;\n    border-bottom-right-radius: 10px;\n    left: -31px;\n    top: -16px;\n    width: calc(100% + 62px);\n}\n\n#calendar-panel {\n    background-color: transparent;\n    border-radius: 10px;\n}\n\n\n\n.calendar-overlay {\n    position: fixed;\n\n    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0.65+0,0+100;Neutral+Density */\n    background: -moz-linear-gradient(left, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 100%); /* FF3.6-15 */\n    background: -webkit-linear-gradient(left, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* Chrome10-25,Safari5.1-6 */\n    background: linear-gradient(to right, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */\n    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=1 ); /* IE6-9 */\n\n    width: 100%;\n    height: 100%;\n    display: none;\n    z-index: 999999;\n    -webkit-transition: all 225ms ease;\n    -moz-transition: all 225ms ease;\n    transition: all 225ms ease;\n\n    -webkit-animation-duration: 1s;\n    animation-duration: 1s;\n    -webkit-animation-fill-mode: both;\n    animation-fill-mode: both;\n    border-radius: 10px;\n\n    -webkit-animation-name: fadeIn;\n    animation-name: fadeIn;\n    cursor: pointer;\n}\n.scotch-is-showing .calendar-overlay {\n    display: block;\n}\n\n\n\n@-webkit-keyframes fadeIn {\n    0% {\n        opacity: 0;\n    }\n\n    100% {\n        opacity: 1;\n    }\n}\n\n@keyframes fadeIn {\n    0% {\n        opacity: 0;\n    }\n\n    100% {\n        opacity: 1;\n    }\n}\n\n\n", ""]);
 
 // exports
 

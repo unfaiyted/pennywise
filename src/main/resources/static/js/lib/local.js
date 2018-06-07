@@ -27,6 +27,9 @@ module.exports = {
         return module.exports.addData(location, data);
     },
 
+    updateData: (location, data) => {
+        return module.exports.addData(location, data);
+    },
     // query for post data
     // parameter for url info
     // ex: players/Name+Last/?post=3 type/parameter/query

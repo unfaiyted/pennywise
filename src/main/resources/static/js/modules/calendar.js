@@ -8,11 +8,9 @@ const calendar = require('calendar-js');
 function CalendarObject(settings) {
     let self = this;
     // Attach Div ID
-    let d = new Date();
-
     this.settings = settings;
-    this.currMonth = d.getMonth();
-    this.currYear = d.getFullYear();
+
+    this.today();
     this.events = [];
 
     // Get Events
@@ -27,6 +25,7 @@ function CalendarObject(settings) {
 
 }
 
+
 CalendarObject.prototype.init = function() {
     let self = this;
 
@@ -39,13 +38,34 @@ CalendarObject.prototype.init = function() {
 
     });
 
+
+    $('.cal-today-btn').click(function () {
+        // Resets date
+        self.today();
+
+        self.eventsSync().then(
+            function(data) {
+                self.events = data;
+                self.renderMonth();
+            }, function (error) {
+                console.log("Error fetching calendar data.");
+            });
+
+    })
+
+};
+
+
+CalendarObject.prototype.today = function () {
+    let d = new Date();
+    this.currMonth = d.getMonth();
+    this.currYear = d.getFullYear();
 };
 
 CalendarObject.prototype.renderMonth = function () {
     let self = this;
 
     let cal = calendar().of(self.currYear, self.currMonth);
-
 
     $('.event-item, .event-item').off();
     $('.calendar-body').empty();
@@ -79,36 +99,35 @@ CalendarObject.prototype.renderMonth = function () {
 
     });
 
-
-
-
     this.panel();
 
 
 };
 
+
 CalendarObject.prototype.createDay = function(day) {
     // Checks if event are in event list
 
-    let activeDate = this.asDate(day);
-
     let matchCount = 0;
-    let calendarDay = `<div class="cal-big-1"><span class="day">${day}</span>`;
+    let activeDate = this.asDate(day);
+    let todayClass = (this.isDateToday(activeDate)) ? 'cal-today' : '';
+
+    let calendarDay = `<div class="cal-big-1 ${todayClass}"><span class="day">${day}</span>`;
 
 
     this.events.forEach(function (event) {
 
         if(event.dueDate === activeDate) {
-            console.log(event.bill.merchant.name);
 
             if(matchCount === 0) calendarDay +=  `<ul class="event-list text-left">`;
 
-            calendarDay += `<li class="event-item toggle-event" data-id="${event.bill.id}">
+            calendarDay += `
+                <li class="event-item toggle-event" data-id="${event.bill.id}">
                              <span class="event-name text-truncate toggle-event" data-id="${event.bill.id}">
-${event.bill.merchant.name}
-<span class="badge badge-${event.bill.status.color}">${event.bill.status.name}</span>
-</span>                
-                             </li>`;
+                                <span class="badge badge-${event.bill.status.color} w-100 pl-2 pb-1 text-left event-name-highlight hvr-pulse-shrink">
+                                   ${event.bill.merchant.name}</span>
+                             </span>                
+                 </li>`;
             matchCount++;
 
         }
@@ -124,15 +143,34 @@ ${event.bill.merchant.name}
 };
 
 
+CalendarObject.prototype.isDateToday = function(date) {
+
+    let today = this.formatDate(new Date());
+
+
+    return (today === date);
+};
+
+CalendarObject.prototype.formatDate = function(date) {
+    let d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+};
+
 // could add language support later.... in theory
 CalendarObject.prototype.renderMonthHeader = function(weekdays) {
 
-    console.log(weekdays);
 
     let headerHTML = `<div class="row cal-row cal-header">`;
 
     weekdays.forEach(function (day) {
-        headerHTML += `<div class="cal-1 text-truncate">${day}</div>`;
+        headerHTML += `<div class="cal-1-header text-truncate">${day}</div>`;
         });
 
         headerHTML += `</div>`;
@@ -245,6 +283,14 @@ CalendarObject.prototype.updatePanel = function (id) {
    let event = this.getBillEvent(id);
 
    $('#panel-event-name').text(event.bill.merchant.name);
+
+    //$('#event-details-address').text(event.bill.merchant.address);
+    $('#event-details-bill-link').attr('href', "./bill/view/"+ event.bill.id);
+    //$('#event-details-city').text(event.bill.merchant.address.city);
+    $('#event-details-map').text();
+    $('#event-details-payment-method').text(event.bill.method.name);
+    $('#event-details-state').text();
+    $('#event-details-zipcode').text();
 
 };
 

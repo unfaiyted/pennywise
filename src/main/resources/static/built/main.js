@@ -1346,13 +1346,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var panel = __webpack_require__(155);
 var chart = __webpack_require__(158);
+var NotificationObject = __webpack_require__(180);
 
 (function ($) {
-    // Default page
     console.log("Please pay your bills!");
 })(jQuery);
 
 panel.init();
+
+var notification = new NotificationObject();
 
 /***/ }),
 
@@ -6428,6 +6430,203 @@ module.exports = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwcHgiICBoZWlnaHQ9
 
 /***/ }),
 
+/***/ 180:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _notifications = __webpack_require__(181);
+
+var _notifications2 = _interopRequireDefault(_notifications);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var api = __webpack_require__(4);
+
+//Constructor
+function NotificationObject(settings) {
+    var self = this;
+    // Attach Div ID
+    this.settings = settings;
+
+    this.display = 4;
+
+    this.notifications = [];
+
+    // Get Events
+    api.getData('notification').then(function (valid) {
+        self.notifications = valid;
+        self.init();
+        self.renderList();
+    }, function (error) {
+        console.log("Error fetching notification data.");
+    });
+}
+
+NotificationObject.prototype.init = function () {
+    // Do something...
+
+};
+
+// Top 4 items displayed... add a view all link
+NotificationObject.prototype.renderList = function () {
+    var self = this;
+    var unreadCount = 0;
+    var count = 0;
+
+    $('#notification-menu-list').empty();
+
+    var notifyHTML = '<ul class="list-group notification-list-group">';
+
+    this.notifications.forEach(function (n) {
+
+        if (n.userViewed === false) unreadCount++;
+
+        // Limits display
+        if (count < self.display) {
+            notifyHTML += self.createItem(n);
+        }
+        count++;
+    });
+
+    if (count > self.display) notifyHTML += this.createOverflow(count);
+
+    notifyHTML += ' </ul>';
+
+    $('#notificaiton-unread-count').text(unreadCount);
+
+    $('#notification-menu-list').append(notifyHTML);
+
+    $('.notification-view').click(function () {
+        if ($(this).attr('data-read') === "false") {
+            console.log("unread");
+            self.markRead($(this).attr('data-id'));
+        }
+    });
+};
+
+NotificationObject.prototype.createItem = function (notification) {
+
+    var n = notification;
+
+    var badge = n.userView ? '' : '<span class="ml-2 badge badge-blue">New</span>';
+
+    return '\n        <li class="list-group-item d-flex justify-content-start align-items-left text-truncate">\n            <div class="icon pr-4">\n                <i class="' + n.type.icon + '"></i>\n             </div>\n             <div class="text-truncate">\n                <p class="title text-truncate">' + this.createNotificationLink(n) + ' ' + badge + '</p>\n                <p class="description text-truncate">' + n.message + '</p>\n                <span class="time">' + n.age + '</span>\n            </div>\n        </li>';
+};
+
+NotificationObject.prototype.createNotificationLink = function (notification) {
+
+    var n = notification;
+
+    var htmlLink = '<a href="' + window.location.origin;
+
+    if (n.bill) {
+        htmlLink += '/bill/view/' + n.bill.id;
+    } else if (n.systemMessage) {
+        htmlLink += '/system/' + n.id;
+    } else if (n.income) {
+        return '/income/' + n.income.id;
+    } else if (n.event) {
+        return '/calendar/event/' + n.event.id;
+    }
+
+    htmlLink += '" class="notification-view" data-id="' + n.id + '" data-read="' + n.userViewed + '">' + n.title + '</a>';
+
+    return htmlLink;
+};
+
+NotificationObject.prototype.createOverflow = function (count) {
+
+    var diff = count - this.display;
+
+    var noun = diff > 1 ? 'notifications' : 'notification';
+
+    return '\n        <li class="list-group-item d-flex justify-content-end align-items-right text-truncate">\n              <a href="#"> View ' + diff + ' more ' + noun + ' </a>\n        </li>';
+};
+
+NotificationObject.prototype.markRead = function (notificationId) {
+
+    var data = {
+        identifier: notificationId
+    };
+
+    // Get Events
+    api.updateData('notification/markRead', data).then(function (valid) {}, function (error) {
+        console.log("Error fetching notification data.");
+    });
+};
+
+module.exports = NotificationObject;
+
+/***/ }),
+
+/***/ 181:
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(182);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(2)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {
+	module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!./notifications.css", function() {
+		var newContent = require("!!../../../../../../node_modules/css-loader/index.js!./notifications.css");
+
+		if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+
+		var locals = (function(a, b) {
+			var key, idx = 0;
+
+			for(key in a) {
+				if(!b || a[key] !== b[key]) return false;
+				idx++;
+			}
+
+			for(key in b) idx--;
+
+			return idx === 0;
+		}(content.locals, newContent.locals));
+
+		if(!locals) throw new Error('Aborting CSS HMR due to changed css-modules locals.');
+
+		update(newContent);
+	});
+
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 182:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, ".notification-list-group {\n    width: 350px;\n}\n\n.notification-list-group a {\n    color: #000000;\n}", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ 2:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6948,6 +7147,9 @@ module.exports = {
         return module.exports.addData(location, data);
     },
 
+    updateData: function updateData(location, data) {
+        return module.exports.addData(location, data);
+    },
     // query for post data
     // parameter for url info
     // ex: players/Name+Last/?post=3 type/parameter/query

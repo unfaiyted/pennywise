@@ -32,17 +32,6 @@ public class ApiCalendarController {
         this.userDao = userDao;
     }
 
-
-
-
-    // Get Events
-//    @RequestMapping(
-//            value = "/events",
-//            method= RequestMethod.POST, // Change to post
-//            headers = "Accept=*/*",
-//            produces = "application/json",
-//            consumes="application/json")
-    //@RequestBody String jsonStr
     @JsonView(View.Summary.class)
     @GetMapping("/events")
     @ResponseBody
@@ -68,15 +57,7 @@ public class ApiCalendarController {
     public List<CalendarEvent> getEventsInMonth (@PathVariable(name= "date") String strDate) throws IOException {
 
         User user = userDao.getLoggedInUser();
-
-
         LocalDate date = LocalDate.parse(strDate);
-//        JsonNode jsonObj =  StringToObject.toJsonNode(jsonStr);
-//        JsonNode start = jsonObj.path("start");
-//        JsonNode end = jsonObj.path("end");
-
-//       List<CalendarEvent> events =
-//               calendarDao.getEventsInMonth(LocalDate.now(), user);
         List<CalendarEvent> billsWithDueDates =
                 calendarDao.getBillsDueInMonthWithDate(date, user);
 
