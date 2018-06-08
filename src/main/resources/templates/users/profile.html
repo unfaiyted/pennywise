@@ -9,22 +9,91 @@
 
 <div th:replace="partials/layout :: navbar" />
 
-
-<div class="panel-container">
     <span class="overlay"></span>
     <div class="container mx-auto">
-        <div th:replace="partials/panel :: left-panel" />
+        <div class="text-left col-12">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{~/profile}">Home</a></li>
+                <li class="breadcrumb-item"><a  th:href="@{~/dashboard}">
+                    <span th:text="${#authentication?.principal?.profile?.name}"></span>
+                </a></li>
+                <li class="breadcrumb-item active">Profile</li>
+            </ol>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                Profile Picture
+                <div>
+                    Profile Picture
+                </div>
+
+
+            </div>
+
+            <div class="col-md-8">
+                Welcome User!
+
+                User stats:
+
+                * User since:
+                * Email address
+                * Address
+
+
+                Set Goals:
+                    -> Savings -> Decrease Debt -> Improve Credit Score ->
+
+                *Edit/Update
+            </div>
+        </div>
+
+        <div>
+            External Notification Services
+
+            Pennywise
+                * Enable In-Browser Notifications
+
+            * Bill * Income * Calendar * System
+
+            Email
+                * All notifications
+                * Only bill payment due notifications
+                * Only overdue bill notifications
+                * System Notifications
+
+                -> Add email
+                -> Remove email
+
+            * Bill * Income * Calendar * System
+
+            Text Message
+                * Add Phone number
+                * Verify Phone Number
+                * Remove Phone Number
+
+            * Bill * Income * Calendar * System
+
+        </div>
 
 
 
-        Welcome User!
+        <div>
+            Linked social media:
+            * Facebook
+            * Google
+        </div>
 
 
 
+        Download your Data!
+
+        CSV / EXCEL
+
+
+        Delete your account
 
     </div>
-</div>
-
 <div th:replace="partials/layout :: footer" />
 
 </body>

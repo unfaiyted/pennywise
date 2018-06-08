@@ -130,7 +130,7 @@ NotificationObject.prototype.createOverflow = function (count) {
 
     return `
         <li class="list-group-item d-flex justify-content-end align-items-right text-truncate">
-              <a href="#"> View ${diff} more ${noun} </a>
+              <a href="${window.location.origin}/notifications"> View ${diff} more ${noun} </a>
         </li>`
 };
 

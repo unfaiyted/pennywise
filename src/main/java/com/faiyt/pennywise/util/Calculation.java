@@ -48,6 +48,8 @@ public class Calculation {
 
         Double diff = Math.floor((debt / income)* 100);
 
+        if (diff > 300) { return "∞/100"; }
+
         return  diff.intValue() + "/100";
     }
 

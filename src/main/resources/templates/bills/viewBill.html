@@ -62,7 +62,12 @@
                                 <div class="row">
                                     <div class="col-md-6 font-weight-bold">  Payment Info:</div>
                                     <div class="col-md-6"><span id="payment-amount" th:text="'$' + ${#numbers.formatDecimal(bill.payment, 0, 'COMMA', 2, 'POINT')}">$156.56</span>
+
+                                        <th:block th:if="${bill.class.name == 'com.faiyt.pennywise.models.finance.RecurringBill'}">
+
                                         (<span id="payment-freq" th:text="${bill.frequency.name}">Twice a Month</span>)</div>
+
+                                            </th:block>
                                 </div>
 
                                 <div class="row">
@@ -138,7 +143,10 @@
 
                 <div class="row">
 
-                <div id="calendar" th:data-due-dates="${bill.dueDatesAsString()}" class="col-12 mb-4">
+
+                    <div id="calendar"  th:if="${bill.class.name == 'com.faiyt.pennywise.models.finance.RecurringBill'}"
+                         th:data-due-dates="${bill.dueDatesAsString()}" class="col-12 mb-4">
+
                     <div class="card ml-4 mr-4 ">
                         <div class="card-header">
                             <div class="row cal-title">
@@ -256,7 +264,7 @@
                         </thead>
                         <tbody>
 
-                        <th:block th:each="payment,iterStat : ${bill.payments}" th:if="${iterStat.index}<6">
+                        <th:block th:each="payment,iterStat : ${bill.payments}" th:if="${iterStat.index}<20">
 
                             <tr class="bill-payment"  th:data-id="${payment.id}">
                                 <td class="font-weight-bold" th:text=" ${#temporals.format(payment.datePaid, 'M/dd/yyyy ')}">07/11/2015</td>

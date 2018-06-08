@@ -6410,7 +6410,7 @@ NotificationObject.prototype.createOverflow = function (count) {
 
     var noun = diff > 1 ? 'notifications' : 'notification';
 
-    return '\n        <li class="list-group-item d-flex justify-content-end align-items-right text-truncate">\n              <a href="#"> View ' + diff + ' more ' + noun + ' </a>\n        </li>';
+    return '\n        <li class="list-group-item d-flex justify-content-end align-items-right text-truncate">\n              <a href="' + window.location.origin + '/notifications"> View ' + diff + ' more ' + noun + ' </a>\n        </li>';
 };
 
 NotificationObject.prototype.markRead = function (notificationId) {

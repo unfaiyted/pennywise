@@ -47,6 +47,7 @@ public class DataLoader implements ApplicationRunner {
     private PasswordEncoder passwordEncoder;
 
     private List<BillCategory> categories ;
+    private List<BillStatus> billStatuses;
     private List<PayFrequency> frequencies;
     private List<PaymentMethod> methods;
     private List<NotificationType>  notificationTypes;
@@ -55,6 +56,10 @@ public class DataLoader implements ApplicationRunner {
 
     private Faker faker = new Faker();
     private Random rand = new Random();
+
+    private LocalDate startingDate = LocalDate.now().minusYears(2).minusMonths(6);
+
+
 
     @Autowired
     public DataLoader(UserService userDao, BillService billDao, PasswordEncoder passwordEncoder,
@@ -70,11 +75,14 @@ public class DataLoader implements ApplicationRunner {
        this.frequencies = billDao.getBills().getPayFrequencies();
        this.methods = billDao.getBills().getPaymentMethods();
        this.notificationTypes = notificationDao.getNotifications().getTypes();
+       this.billStatuses = billDao.getBills().getStatuses();
 
 
         this.interestTypes.add("None");
         this.interestTypes.add("Compound");
         this.interestTypes.add("Standard");
+
+
     }
 
 
@@ -85,12 +93,17 @@ public class DataLoader implements ApplicationRunner {
             // Deletes existing records
             cleanDB();
 
-            //How many users
+            //How many users to create
             Integer usersToCreate = 10;
+            // How many bills each user will have on AVG
             Integer avgBillsPerUser = 12;
+            // How many incomes per user as a MAX
             Integer maxIncomesPerUser = 3;
+            // Notifications to create for each user, maximum
             Integer maxNotificationsPerUser = 15;
 
+
+            // Test Data for fake accounts
             String testUserName = "test";
             String testPassword = "test";
 
@@ -98,7 +111,6 @@ public class DataLoader implements ApplicationRunner {
 
             Integer totalBills = avgBillsPerUser * usersToCreate;
 
-            List<Bill> bills = new ArrayList<>();
 
 
             // START DATA GENERATION (USERS)
@@ -112,6 +124,8 @@ public class DataLoader implements ApplicationRunner {
                     Bill bill = createBill(user);
                     billDao.getBills().save(bill);
 
+
+                    // Create Notification for BILLS
                     if (r.nextBoolean()) {
                         Notification notification = createNotification(user, bill);
                         notificationDao.getNotifications().save(notification);
@@ -119,6 +133,9 @@ public class DataLoader implements ApplicationRunner {
                     }
 
                 }
+
+                // updates all status of bills on creation
+                billDao.updateBillStatusesByOwner(user);
 
                 // START INCOME GENERATION
                 for(int j = 0; j < maxIncomesPerUser; j++) {
@@ -128,6 +145,7 @@ public class DataLoader implements ApplicationRunner {
                         Income income = createIncome(user);
                         incomeDao.getIncomes().save(income);
 
+                        // Create Income Notifications
                         if (r.nextBoolean()) {
                             Notification notification = createNotification(user, income);
                             notificationDao.getNotifications().save(notification);
@@ -162,14 +180,19 @@ public class DataLoader implements ApplicationRunner {
     }
 
     private Bill createBill(User user) {
-        Faker faker = new Faker();
-
         Random rand = new Random();
-        LocalDateTime createdAt = LocalDateTime.now();
-        LocalDate dueDate = LocalDate.now().minusDays(5).plusDays(rand.nextInt(20));
-        Double interestRate = 0.15;
-        Double payment = ThreadLocalRandom.current().nextDouble(10, 600);
-        Double totalOwed = payment * (ThreadLocalRandom.current().nextDouble(4, 60));
+
+        LocalDateTime createdAt = startingDate.atTime(0,0,0)
+                .minusDays(rand.nextInt(20)).plusHours(rand.nextInt(20))
+                .plusMinutes(rand.nextInt(120));
+
+        LocalDate dueDate = createdAt.toLocalDate().minusDays(5)
+                .plusDays(rand.nextInt(20));
+
+
+        // random interest rate
+        Double interestRate = ((double) rand.nextInt(29)) / 100D;
+
         String interestType = interestTypes.get(rand.nextInt(interestTypes.size()));
         PaymentMethod method = methods.get(rand.nextInt(methods.size()));
 
@@ -179,30 +202,48 @@ public class DataLoader implements ApplicationRunner {
         BillCategory randomCat = categories.get(rand.nextInt(categories.size()));
         PayFrequency frequency = frequencies.get(rand.nextInt(frequencies.size()));
 
-
         if (!frequency.getName().equalsIgnoreCase("One-Time")) {
 
-            RecurringBill bill = new RecurringBill(faker.rickAndMorty().location(), createdAt, dueDate, interestRate,
-                    interestType, randomCat, merchant, method, user);
+            return this.populateRecurringBill(
+                    new RecurringBill(faker.rickAndMorty().location(), createdAt, dueDate, interestRate,
+                    interestType, randomCat, merchant, method, user), frequency
+            );
 
-
-            bill.setTotalOwed(totalOwed);
-            bill.setPayment(payment);
-            bill.setFrequency(frequency);
-            bill.generateDueDatesList();
-
-            return bill;
         }
 
-
-        OneTimeBill bill = new OneTimeBill(faker.zelda().game(), createdAt, dueDate, interestRate,
-                    interestType, randomCat, merchant, method, user);
-
-        bill.setPayment(payment);
-        return bill;
+        return this.populateOneTimeBill(new OneTimeBill(faker.zelda().game(), createdAt, dueDate, interestRate,
+                interestType, randomCat, merchant, method, user));
 
 
     }
+
+
+    private RecurringBill populateRecurringBill(RecurringBill bill, PayFrequency frequency) {
+        Double payment = ThreadLocalRandom.current().nextDouble(10, 600);
+
+        Double totalOwed = payment * (ThreadLocalRandom.current().nextDouble(4, 60));
+
+        bill.setTotalOwed(totalOwed);
+        bill.setPayment(payment);
+
+        bill.setFrequency(frequency);
+        bill.generateDueDatesList();
+
+        List<Payment> payments = createPayments(bill.getDueDates(), bill.getPayment());
+
+        bill.setPayments(payments);
+
+        return bill;
+
+    }
+
+    private OneTimeBill populateOneTimeBill(OneTimeBill bill) {
+        Double payment = ThreadLocalRandom.current().nextDouble(10, 600);
+        bill.setPayment(payment);
+
+        return bill;
+    }
+
 
     private Merchant createRandomMerchant() {
         Faker faker = new Faker();
@@ -219,6 +260,38 @@ public class DataLoader implements ApplicationRunner {
                 faker.name().username(),  faker.phoneNumber().phoneNumber(),
                         address);
 
+    }
+
+    private List<Payment> createPayments(List<BillDueDate> dueDates, Double paymentAmount) {
+
+        List<Payment> payments = new ArrayList<>();
+
+        for(BillDueDate dueDate : dueDates) {
+
+            if(dueDate.getDate().isBefore(LocalDate.now())) {
+
+                LocalDate datePaid = dueDate.getDate().plusDays(rand.nextInt(5)).minusDays(rand.nextInt(10));
+
+                BillStatus statusOnPayment;
+
+                // If paid before due or not.
+                if(datePaid.isBefore(dueDate.getDate())) {
+                    // Not late
+                   statusOnPayment = billStatuses.get(rand.nextInt(3)+2);
+
+                } else {
+                    // Late.
+                    statusOnPayment = billStatuses.get(rand.nextInt(2)+5);
+                }
+
+                Double paidAmount = paymentAmount;
+                payments.add( new Payment(statusOnPayment, datePaid, paidAmount));
+
+            }
+
+        }
+
+        return payments;
     }
 
     private User createUser(String username, String password) {
@@ -239,12 +312,13 @@ public class DataLoader implements ApplicationRunner {
         return user;
     }
 
-
-
     private Notification createNotification(User user, Bill bill) {
         NotificationType  type = notificationTypes.get(rand.nextInt(notificationTypes.size()));
 
-        Notification notification = new BillNotification(faker.commerce().productName(),
+
+        String title = bill.getMerchant().getName() + " overdue!";
+
+        Notification notification = new BillNotification(title,
                 faker.rickAndMorty().quote(), type, user, bill);
 
         notification.setCreatedAt(LocalDateTime.now().minusHours(rand.nextInt(130)));
@@ -256,7 +330,10 @@ public class DataLoader implements ApplicationRunner {
     private Notification createNotification(User user, Income income) {
         NotificationType  type = notificationTypes.get(rand.nextInt(notificationTypes.size()));
 
-        Notification notification = new IncomeNotification(faker.commerce().productName(),
+
+        String title = income.getName() + " just paid you!";
+
+        Notification notification = new IncomeNotification(title,
                 faker.rickAndMorty().quote(), type, user, income);
 
         notification.setCreatedAt(LocalDateTime.now().minusHours(rand.nextInt(130)));
@@ -288,10 +365,6 @@ public class DataLoader implements ApplicationRunner {
         return notification;
     }
 
-
-
-
-
     private Income createIncome(User user) {
         // delete if exists...old test data.
         Faker faker = new Faker();
@@ -303,7 +376,6 @@ public class DataLoader implements ApplicationRunner {
         return new Income(faker.app().name(),  frequency,  payment, user);
 
     }
-
 
     private void cleanDB() {
         billDao.getBills().deleteAll();

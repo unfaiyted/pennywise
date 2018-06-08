@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
-
 @Repository
 public class UserService {
     private Users users;
@@ -44,9 +43,13 @@ public class UserService {
             try {
                 return  (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             } catch (ClassCastException e) {
-                System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-                ExtendedSocialUser socialUser = (ExtendedSocialUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-                return getUsers().findByUsername(socialUser.getUserId());
+                try {
+                    System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+                    ExtendedSocialUser socialUser = (ExtendedSocialUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                    return getUsers().findByUsername(socialUser.getUserId());
+                } catch (NullPointerException x) {
+                   return null;
+                }
             }
         }
         return null;

@@ -28,7 +28,6 @@ public class RecurringBill  extends Bill {
     private List<BillDueDate> dueDates;
 
 
-
     public RecurringBill() {
         this.frequency = new PayFrequency();
     }
@@ -60,11 +59,10 @@ public class RecurringBill  extends Bill {
             LocalDate next = Calculation.nextFrequencyDate(this.frequency.getName(), lastDate);
             dates.add(new BillDueDate(next));
             lastDate = next;
-            between = Period.between(this.getDueDate(), lastDate);
+            between = Period.between(LocalDate.now(), lastDate);
 
-            System.out.println(between.getYears());
-
-        } while(Math.abs(between.getYears()) <= 1);
+            // until its 1 year after today
+        } while(between.getYears() < 1);
 
         this.dueDates = dates;
 
@@ -121,7 +119,52 @@ public class RecurringBill  extends Bill {
         }
 
         return closest;
+
     }
+
+    @Override
+    public void setPayments(List<Payment> payments) {
+        super.setPayments(payments);
+        this.updateDueDate();
+    }
+
+    // Checks for the payments list and
+    // will update the due date to the nearest date
+    // to the current due date.
+    private void updateDueDate() {
+
+        LocalDate lastPaymentDate = LocalDate.MIN;
+        LocalDate updatedDueDate = LocalDate.MIN;
+
+        Long daysBetween = Long.MAX_VALUE;
+
+        // payments list
+        for (Payment payment : super.getPayments()) {
+            if (payment.getDatePaid().isAfter(lastPaymentDate)) lastPaymentDate = payment.getDatePaid();
+        }
+
+        for(BillDueDate dueDate : dueDates) {
+
+            // Due date must be after the last payment date
+            // must be closest due date to lastPaymentDate
+            if(dueDate.getDate().isAfter(lastPaymentDate)) {
+               Long days =  ChronoUnit.DAYS.between(lastPaymentDate, dueDate.getDate());
+
+               if(days < daysBetween) {
+                    updatedDueDate = dueDate.getDate();
+                    daysBetween = days;
+               }
+
+            }
+        }
+        // due dates list
+
+        // after last payment select next DUE DATE
+
+        super.setDueDate(updatedDueDate);
+
+    }
+
 
 
     @Override
