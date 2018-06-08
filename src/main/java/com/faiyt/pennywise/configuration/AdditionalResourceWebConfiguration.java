@@ -1,5 +1,6 @@
 package com.faiyt.pennywise.configuration;
 
+import com.faiyt.pennywise.configuration.interceptor.DelayInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -13,6 +14,11 @@ public class AdditionalResourceWebConfiguration implements WebMvcConfigurer {
     @Value("${file-upload-path}")
     String imgLocation;
 
+    @Value("${fake-application-delay}")
+    String time;
+
+    @Value("${fake-application-delay-enable}")
+    boolean delayEnabled;
 
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
@@ -28,7 +34,10 @@ public class AdditionalResourceWebConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // registry.addInterceptor();
+
+        if (delayEnabled) {
+            registry.addInterceptor(new DelayInterceptor(time));
+        }
     }
 }
 

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 142);
+/******/ 	return __webpack_require__(__webpack_require__.s = 131);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -148,17 +148,17 @@ function toComment(sourceMap) {
 
 /***/ }),
 
-/***/ 142:
+/***/ 131:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(143);
-__webpack_require__(147);
-module.exports = __webpack_require__(148);
+__webpack_require__(132);
+__webpack_require__(136);
+module.exports = __webpack_require__(137);
 
 
 /***/ }),
 
-/***/ 143:
+/***/ 132:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(setImmediate) {(function (root) {
@@ -395,11 +395,11 @@ module.exports = __webpack_require__(148);
 
 })(this);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(144).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(133).setImmediate))
 
 /***/ }),
 
-/***/ 144:
+/***/ 133:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -455,7 +455,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(145);
+__webpack_require__(134);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -466,11 +466,11 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ }),
 
-/***/ 145:
+/***/ 134:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -660,11 +660,11 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17), __webpack_require__(146)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7), __webpack_require__(135)))
 
 /***/ }),
 
-/***/ 146:
+/***/ 135:
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -855,7 +855,7 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 147:
+/***/ 136:
 /***/ (function(module, exports) {
 
 (function(self) {
@@ -1328,25 +1328,21 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 148:
+/***/ 137:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _global = __webpack_require__(149);
-
-var _global2 = _interopRequireDefault(_global);
-
-var _hover = __webpack_require__(153);
+var _hover = __webpack_require__(138);
 
 var _hover2 = _interopRequireDefault(_hover);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var panel = __webpack_require__(155);
-var chart = __webpack_require__(158);
-var NotificationObject = __webpack_require__(180);
+var panel = __webpack_require__(140);
+var chart = __webpack_require__(143);
+var NotificationObject = __webpack_require__(147);
 
 (function ($) {
     console.log("Please pay your bills!");
@@ -1358,108 +1354,11 @@ var notification = new NotificationObject();
 
 /***/ }),
 
-/***/ 149:
+/***/ 138:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(150);
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(2)(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {
-	module.hot.accept("!!../../../../../node_modules/css-loader/index.js!./global.css", function() {
-		var newContent = require("!!../../../../../node_modules/css-loader/index.js!./global.css");
-
-		if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-
-		var locals = (function(a, b) {
-			var key, idx = 0;
-
-			for(key in a) {
-				if(!b || a[key] !== b[key]) return false;
-				idx++;
-			}
-
-			for(key in b) idx--;
-
-			return idx === 0;
-		}(content.locals, newContent.locals));
-
-		if(!locals) throw new Error('Aborting CSS HMR due to changed css-modules locals.');
-
-		update(newContent);
-	});
-
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
-/***/ 150:
-/***/ (function(module, exports, __webpack_require__) {
-
-var escape = __webpack_require__(151);
-exports = module.exports = __webpack_require__(1)(false);
-// imports
-
-
-// module
-exports.push([module.i, "/*\nMain StyleSheet\n*/\n\n/* PRELOADER START */\nbody {\n    overflow: hidden;\n    background: #F5F5F5;\n\n}\n\n.container {\n    padding-bottom: 80px;\n    padding-top: 10px;\n    min-height: 100vh;\n}\n\n/* Preloader */\n#preloader {\n    position: fixed;\n    top:0;\n    left:0;\n    right:0;\n    bottom:0;\n    background-color: #262626; /* change if the mask should have another color then white */\n    z-index:99999; /* makes sure it stays on top */\n}\n\n#status {\n    width:200px;\n    height:200px;\n    position:absolute;\n    left:50%; /* centers the loading animation horizontally one the screen */\n    top:50%; /* centers the loading animation vertically one the screen */\n    background-image:url(" + escape(__webpack_require__(18)) + "); /* path to your loading animation */\n    background-repeat:no-repeat;\n    background-position:center;\n    margin:-100px 0 0 -100px; /* is width and height divided by two */\n}\n\n.splash-container {\n    position: relative;\n    width: 100%;\n    height: calc(100vh - 77px);\n    background: url(" + escape(__webpack_require__(152)) + ");\n    background-size: cover;\n    background-position:center;\n\n}\n\n\n.text-truncate {\n    text-overflow: ellipsis;\n    display: block;\n    white-space: nowrap;\n    overflow: hidden;\n\n}\n\n.navbar {\n    padding-top: 12px;\n    padding-bottom: 10px;\n    border: 0;\n}\n\n\n.bg-dark {\n    background-color: #343a4096 !important;\n}\n.navbar-footer {\n    padding: 10px;\n}\n\n.navbar-header {\n\n    background: #00B4DB;  /* fallback for old browsers */\n    background: -webkit-linear-gradient(to top, #0083B0, #00B4DB);  /* Chrome 10-25, Safari 5.1-6 */\n    background: linear-gradient(to top, #0083B0, #00B4DB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */\n\n    box-shadow: 0 9px 23px rgba(0, 0, 0, 0.09), 0 5px 5px rgba(0, 0, 0, 0.06) !important;\n    -webkit-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -moz-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -o-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n\n}\n\n.header-action-icon {\n    font-size: 22px;\n    color: #fff;\n}\n\n.btn-primary a {\n    color: #fff;\n    font-size: 12px;\n}\n\nbutton.delete-btn {\n    outline: 0;\n\n}\n.delete-btn, .delete-payment-btn {\n    outline: 0;\n\n}\n\n.btn-sm, .btn-group-sm>.btn {\n    padding-left: 10px;\n}\n\n\n.ripple {\n    background-position: center;\n    transition: background 0.8s;\n}\n.ripple:hover {\n    background: #47a7f5 radial-gradient(circle, transparent 1%, #47a7f5 1%) center/15000%;\n}\n.ripple:active {\n    background-color: #6eb9f7;\n    background-size: 100%;\n    transition: background 0s;\n}\n\n\n\nbutton .btn-primary {\n    padding-bottom: 35px;\n}\n\n\n.badge-alert {\n    position: relative;\n    font-size: 10px;\n    top: -17px;\n    left: 34px;\n}\n\n\n.card {\n    height: 100%;\n    box-shadow: 0 9px 23px rgba(0, 0, 0, 0.09), 0 5px 5px rgba(0, 0, 0, 0.06) !important;\n    -webkit-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -moz-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -o-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -webkit-border-radius: 0.4167rem;\n    -moz-border-radius: 0.4167rem;\n    -ms-border-radius: 0.4167rem;\n    -o-border-radius: 0.4167rem;\n    border-radius: 0.4167rem;\n\n    border: 0;\n}\n\n.card:hover{\n    box-shadow: 0 9px 23px rgba(0, 0, 0, 0.19), 0 5px 5px rgba(0, 0, 0, 0.13) !important;\n    -webkit-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -moz-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -o-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n}\n\n\n\n.dropdown-menu .icon{\n    font-size: 40px;\n    color: rgb(218, 45, 26);\n}\n.dropdown-menu p  {\n    margin-bottom: 2px;\n}\n\n.dropdown-menu .title {\n    color: black;\n    font-weight: bold;\n}\n\n\n.dropdown-menu .time {\n    color: #912320;\n}\n\n\n.notification a {\n    text-decoration: none;\n}\n\n.notification li:nth-child(even) {\n    background-color: #f7f7f7;\n\n}\n\n.notification li:hover {\n    background-color: #ebebeb;\n\n}\n\n.bg-dark-gradient {\n background: linear-gradient(135deg, #4f5b60 0%, #97a9b2 100%);\n}\n\n.bg-blue-gradient {\n    background: linear-gradient(135deg, #07a7e3 0%, #32dac3 100%);\n}\n\n.bg-green-gradient {\n    background: linear-gradient(135deg, #28C76F 0%, #81FBB8 100%);\n}\n\n.bg-amber-gradient {\n    background: linear-gradient(135deg, #EA5455 0%, #FC9131 100%);\n}\n\n.bg-red-gradient {\n    background: #ED213A;  /* fallback for old browsers */\n    background: -webkit-linear-gradient(to right, #93291E, #ED213A);  /* Chrome 10-25, Safari 5.1-6 */\n    background: linear-gradient(to right, #93291E, #ED213A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */\n\n}\n\n.badge-red {\n    color: #fff;\n    background-color: #D6220E;\n}\n\n.badge-light-blue {\n    color: #fff;\n    background-color: #02b9f8;\n}\n\n.badge-blue  {\n    color: #fff;\n    background-color: #1c44d5;\n}\n\n.badge-yellow {\n    background-color: #ede033;\n}\n\n.badge-orange {\n    color: #fff;\n    background-color: #ed621c;\n}\n.big-icon {\n  font-size:  50px;\n}\n\n.card-text-amount {\n    font-size: 25px;\n    display: block;\n\n}\n\n\nelement.style {\n}\n.dropdown-menu-right {\n    right: 0;\n    left: auto;\n}\n.dropdown-menu {\n    padding: 0;\n}\n\n.dropdown-menu .list-group-item {\n    border: 0px;\n}\n\n.tag-button {\n    background-color: rgba(133, 4, 0, 0.72);\n    border: 3px solid #fff;\n    color: #fff;\n    border-radius: 25px;\n    width: 250px;\n    height:50px;\n    line-height: 40px;\n    -webkit-box-shadow: -1px -1px 44px -6px rgba(255,255,255,1);\n    -moz-box-shadow: -1px -1px 44px -6px rgba(255,255,255,1);\n    box-shadow: -1px -1px 44px -6px rgba(255,255,255,1);\n}\n\n.tag-button:hover {\n    background-color: rgba(200,0,0,0.75);\n    -webkit-box-shadow: -1px -1px 44px -6px rgba(255,0,0,1);\n    -moz-box-shadow: -1px -1px 44px -6px rgba(255,0,0,1);\n    box-shadow: -1px -1px 44px -6px rgba(255,0,0,1);\n    cursor: pointer;\n\n}\n\n.tag-button a {\n    color: #fff;\n    text-decoration: none;\n}\n\n.table thead {\n    background-color: #EAECEF;\n    font-weight:bold;\n}\n\n.table th, .table td{\n    vertical-align: middle;\n}\n\n\n/*// Medium devices (tablets, 768px and up)*/\n@media (min-width: 768px) {\n    .container {\n        max-width: 900px;\n    }\n\n}\n\n\n\n\n.btn-social{position:relative;padding-left:44px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.btn-social :first-child{position:absolute;left:0;top:0;bottom:0;width:32px;line-height:34px;font-size:1.6em;text-align:center;border-right:1px solid rgba(0,0,0,0.2)}\n.btn-social.btn-lg{padding-left:61px}.btn-social.btn-lg :first-child{line-height:45px;width:45px;font-size:1.8em}\n.btn-social.btn-sm{padding-left:38px}.btn-social.btn-sm :first-child{line-height:25px;width:28px;font-size:1.4em}\n.btn-social.btn-xs{padding-left:30px}.btn-social.btn-xs :first-child{line-height:20px;width:20px;font-size:1.2em}\n.btn-social-icon{position:relative;padding-left:44px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;height:34px;width:34px;padding:0}.btn-social-icon :first-child{position:absolute;left:0;top:0;bottom:0;width:32px;line-height:34px;font-size:1.6em;text-align:center;border-right:1px solid rgba(0,0,0,0.2)}\n.btn-social-icon.btn-lg{padding-left:61px}.btn-social-icon.btn-lg :first-child{line-height:45px;width:45px;font-size:1.8em}\n.btn-social-icon.btn-sm{padding-left:38px}.btn-social-icon.btn-sm :first-child{line-height:25px;width:28px;font-size:1.4em}\n.btn-social-icon.btn-xs{padding-left:30px}.btn-social-icon.btn-xs :first-child{line-height:20px;width:20px;font-size:1.2em}\n.btn-social-icon :first-child{border:none;text-align:center;width:100% !important}\n.btn-social-icon.btn-lg{height:45px;width:45px;padding-left:0;padding-right:0}\n.btn-social-icon.btn-sm{height:30px;width:30px;padding-left:0;padding-right:0}\n.btn-social-icon.btn-xs{height:22px;width:22px;padding-left:0;padding-right:0}\n.btn-adn{color:#fff;background-color:#d87a68;border-color:rgba(0,0,0,0.2)}.btn-adn:hover,.btn-adn:focus,.btn-adn:active,.btn-adn.active,.open>.dropdown-toggle.btn-adn{color:#fff;background-color:#ce563f;border-color:rgba(0,0,0,0.2)}\n.btn-adn:active,.btn-adn.active,.open>.dropdown-toggle.btn-adn{background-image:none}\n.btn-adn.disabled,.btn-adn[disabled],fieldset[disabled] .btn-adn,.btn-adn.disabled:hover,.btn-adn[disabled]:hover,fieldset[disabled] .btn-adn:hover,.btn-adn.disabled:focus,.btn-adn[disabled]:focus,fieldset[disabled] .btn-adn:focus,.btn-adn.disabled:active,.btn-adn[disabled]:active,fieldset[disabled] .btn-adn:active,.btn-adn.disabled.active,.btn-adn[disabled].active,fieldset[disabled] .btn-adn.active{background-color:#d87a68;border-color:rgba(0,0,0,0.2)}\n.btn-adn .badge{color:#d87a68;background-color:#fff}\n.btn-bitbucket{color:#fff;background-color:#205081;border-color:rgba(0,0,0,0.2)}.btn-bitbucket:hover,.btn-bitbucket:focus,.btn-bitbucket:active,.btn-bitbucket.active,.open>.dropdown-toggle.btn-bitbucket{color:#fff;background-color:#163758;border-color:rgba(0,0,0,0.2)}\n.btn-bitbucket:active,.btn-bitbucket.active,.open>.dropdown-toggle.btn-bitbucket{background-image:none}\n.btn-bitbucket.disabled,.btn-bitbucket[disabled],fieldset[disabled] .btn-bitbucket,.btn-bitbucket.disabled:hover,.btn-bitbucket[disabled]:hover,fieldset[disabled] .btn-bitbucket:hover,.btn-bitbucket.disabled:focus,.btn-bitbucket[disabled]:focus,fieldset[disabled] .btn-bitbucket:focus,.btn-bitbucket.disabled:active,.btn-bitbucket[disabled]:active,fieldset[disabled] .btn-bitbucket:active,.btn-bitbucket.disabled.active,.btn-bitbucket[disabled].active,fieldset[disabled] .btn-bitbucket.active{background-color:#205081;border-color:rgba(0,0,0,0.2)}\n.btn-bitbucket .badge{color:#205081;background-color:#fff}\n.btn-dropbox{color:#fff;background-color:#1087dd;border-color:rgba(0,0,0,0.2)}.btn-dropbox:hover,.btn-dropbox:focus,.btn-dropbox:active,.btn-dropbox.active,.open>.dropdown-toggle.btn-dropbox{color:#fff;background-color:#0d6aad;border-color:rgba(0,0,0,0.2)}\n.btn-dropbox:active,.btn-dropbox.active,.open>.dropdown-toggle.btn-dropbox{background-image:none}\n.btn-dropbox.disabled,.btn-dropbox[disabled],fieldset[disabled] .btn-dropbox,.btn-dropbox.disabled:hover,.btn-dropbox[disabled]:hover,fieldset[disabled] .btn-dropbox:hover,.btn-dropbox.disabled:focus,.btn-dropbox[disabled]:focus,fieldset[disabled] .btn-dropbox:focus,.btn-dropbox.disabled:active,.btn-dropbox[disabled]:active,fieldset[disabled] .btn-dropbox:active,.btn-dropbox.disabled.active,.btn-dropbox[disabled].active,fieldset[disabled] .btn-dropbox.active{background-color:#1087dd;border-color:rgba(0,0,0,0.2)}\n.btn-dropbox .badge{color:#1087dd;background-color:#fff}\n.btn-facebook{color:#fff;background-color:#3b5998;border-color:rgba(0,0,0,0.2)}.btn-facebook:hover,.btn-facebook:focus,.btn-facebook:active,.btn-facebook.active,.open>.dropdown-toggle.btn-facebook{color:#fff;background-color:#2d4373;border-color:rgba(0,0,0,0.2)}\n.btn-facebook:active,.btn-facebook.active,.open>.dropdown-toggle.btn-facebook{background-image:none}\n.btn-facebook.disabled,.btn-facebook[disabled],fieldset[disabled] .btn-facebook,.btn-facebook.disabled:hover,.btn-facebook[disabled]:hover,fieldset[disabled] .btn-facebook:hover,.btn-facebook.disabled:focus,.btn-facebook[disabled]:focus,fieldset[disabled] .btn-facebook:focus,.btn-facebook.disabled:active,.btn-facebook[disabled]:active,fieldset[disabled] .btn-facebook:active,.btn-facebook.disabled.active,.btn-facebook[disabled].active,fieldset[disabled] .btn-facebook.active{background-color:#3b5998;border-color:rgba(0,0,0,0.2)}\n.btn-facebook .badge{color:#3b5998;background-color:#fff}\n.btn-flickr{color:#fff;background-color:#ff0084;border-color:rgba(0,0,0,0.2)}.btn-flickr:hover,.btn-flickr:focus,.btn-flickr:active,.btn-flickr.active,.open>.dropdown-toggle.btn-flickr{color:#fff;background-color:#cc006a;border-color:rgba(0,0,0,0.2)}\n.btn-flickr:active,.btn-flickr.active,.open>.dropdown-toggle.btn-flickr{background-image:none}\n.btn-flickr.disabled,.btn-flickr[disabled],fieldset[disabled] .btn-flickr,.btn-flickr.disabled:hover,.btn-flickr[disabled]:hover,fieldset[disabled] .btn-flickr:hover,.btn-flickr.disabled:focus,.btn-flickr[disabled]:focus,fieldset[disabled] .btn-flickr:focus,.btn-flickr.disabled:active,.btn-flickr[disabled]:active,fieldset[disabled] .btn-flickr:active,.btn-flickr.disabled.active,.btn-flickr[disabled].active,fieldset[disabled] .btn-flickr.active{background-color:#ff0084;border-color:rgba(0,0,0,0.2)}\n.btn-flickr .badge{color:#ff0084;background-color:#fff}\n.btn-foursquare{color:#fff;background-color:#0072b1;border-color:rgba(0,0,0,0.2)}.btn-foursquare:hover,.btn-foursquare:focus,.btn-foursquare:active,.btn-foursquare.active,.open>.dropdown-toggle.btn-foursquare{color:#fff;background-color:#00517e;border-color:rgba(0,0,0,0.2)}\n.btn-foursquare:active,.btn-foursquare.active,.open>.dropdown-toggle.btn-foursquare{background-image:none}\n.btn-foursquare.disabled,.btn-foursquare[disabled],fieldset[disabled] .btn-foursquare,.btn-foursquare.disabled:hover,.btn-foursquare[disabled]:hover,fieldset[disabled] .btn-foursquare:hover,.btn-foursquare.disabled:focus,.btn-foursquare[disabled]:focus,fieldset[disabled] .btn-foursquare:focus,.btn-foursquare.disabled:active,.btn-foursquare[disabled]:active,fieldset[disabled] .btn-foursquare:active,.btn-foursquare.disabled.active,.btn-foursquare[disabled].active,fieldset[disabled] .btn-foursquare.active{background-color:#0072b1;border-color:rgba(0,0,0,0.2)}\n.btn-foursquare .badge{color:#0072b1;background-color:#fff}\n.btn-github{color:#fff;background-color:#444;border-color:rgba(0,0,0,0.2)}.btn-github:hover,.btn-github:focus,.btn-github:active,.btn-github.active,.open>.dropdown-toggle.btn-github{color:#fff;background-color:#2b2b2b;border-color:rgba(0,0,0,0.2)}\n.btn-github:active,.btn-github.active,.open>.dropdown-toggle.btn-github{background-image:none}\n.btn-github.disabled,.btn-github[disabled],fieldset[disabled] .btn-github,.btn-github.disabled:hover,.btn-github[disabled]:hover,fieldset[disabled] .btn-github:hover,.btn-github.disabled:focus,.btn-github[disabled]:focus,fieldset[disabled] .btn-github:focus,.btn-github.disabled:active,.btn-github[disabled]:active,fieldset[disabled] .btn-github:active,.btn-github.disabled.active,.btn-github[disabled].active,fieldset[disabled] .btn-github.active{background-color:#444;border-color:rgba(0,0,0,0.2)}\n.btn-github .badge{color:#444;background-color:#fff}\n.btn-google-plus{color:#fff;background-color:#dd4b39;border-color:rgba(0,0,0,0.2)}.btn-google-plus:hover,.btn-google-plus:focus,.btn-google-plus:active,.btn-google-plus.active,.open>.dropdown-toggle.btn-google-plus{color:#fff;background-color:#c23321;border-color:rgba(0,0,0,0.2)}\n.btn-google-plus:active,.btn-google-plus.active,.open>.dropdown-toggle.btn-google-plus{background-image:none}\n.btn-google-plus.disabled,.btn-google-plus[disabled],fieldset[disabled] .btn-google-plus,.btn-google-plus.disabled:hover,.btn-google-plus[disabled]:hover,fieldset[disabled] .btn-google-plus:hover,.btn-google-plus.disabled:focus,.btn-google-plus[disabled]:focus,fieldset[disabled] .btn-google-plus:focus,.btn-google-plus.disabled:active,.btn-google-plus[disabled]:active,fieldset[disabled] .btn-google-plus:active,.btn-google-plus.disabled.active,.btn-google-plus[disabled].active,fieldset[disabled] .btn-google-plus.active{background-color:#dd4b39;border-color:rgba(0,0,0,0.2)}\n.btn-google-plus .badge{color:#dd4b39;background-color:#fff}\n.btn-instagram{color:#fff;background-color:#3f729b;border-color:rgba(0,0,0,0.2)}.btn-instagram:hover,.btn-instagram:focus,.btn-instagram:active,.btn-instagram.active,.open>.dropdown-toggle.btn-instagram{color:#fff;background-color:#305777;border-color:rgba(0,0,0,0.2)}\n.btn-instagram:active,.btn-instagram.active,.open>.dropdown-toggle.btn-instagram{background-image:none}\n.btn-instagram.disabled,.btn-instagram[disabled],fieldset[disabled] .btn-instagram,.btn-instagram.disabled:hover,.btn-instagram[disabled]:hover,fieldset[disabled] .btn-instagram:hover,.btn-instagram.disabled:focus,.btn-instagram[disabled]:focus,fieldset[disabled] .btn-instagram:focus,.btn-instagram.disabled:active,.btn-instagram[disabled]:active,fieldset[disabled] .btn-instagram:active,.btn-instagram.disabled.active,.btn-instagram[disabled].active,fieldset[disabled] .btn-instagram.active{background-color:#3f729b;border-color:rgba(0,0,0,0.2)}\n.btn-instagram .badge{color:#3f729b;background-color:#fff}\n.btn-linkedin{color:#fff;background-color:#007bb6;border-color:rgba(0,0,0,0.2)}.btn-linkedin:hover,.btn-linkedin:focus,.btn-linkedin:active,.btn-linkedin.active,.open>.dropdown-toggle.btn-linkedin{color:#fff;background-color:#005983;border-color:rgba(0,0,0,0.2)}\n.btn-linkedin:active,.btn-linkedin.active,.open>.dropdown-toggle.btn-linkedin{background-image:none}\n.btn-linkedin.disabled,.btn-linkedin[disabled],fieldset[disabled] .btn-linkedin,.btn-linkedin.disabled:hover,.btn-linkedin[disabled]:hover,fieldset[disabled] .btn-linkedin:hover,.btn-linkedin.disabled:focus,.btn-linkedin[disabled]:focus,fieldset[disabled] .btn-linkedin:focus,.btn-linkedin.disabled:active,.btn-linkedin[disabled]:active,fieldset[disabled] .btn-linkedin:active,.btn-linkedin.disabled.active,.btn-linkedin[disabled].active,fieldset[disabled] .btn-linkedin.active{background-color:#007bb6;border-color:rgba(0,0,0,0.2)}\n.btn-linkedin .badge{color:#007bb6;background-color:#fff}\n.btn-microsoft{color:#fff;background-color:#2672ec;border-color:rgba(0,0,0,0.2)}.btn-microsoft:hover,.btn-microsoft:focus,.btn-microsoft:active,.btn-microsoft.active,.open>.dropdown-toggle.btn-microsoft{color:#fff;background-color:#125acd;border-color:rgba(0,0,0,0.2)}\n.btn-microsoft:active,.btn-microsoft.active,.open>.dropdown-toggle.btn-microsoft{background-image:none}\n.btn-microsoft.disabled,.btn-microsoft[disabled],fieldset[disabled] .btn-microsoft,.btn-microsoft.disabled:hover,.btn-microsoft[disabled]:hover,fieldset[disabled] .btn-microsoft:hover,.btn-microsoft.disabled:focus,.btn-microsoft[disabled]:focus,fieldset[disabled] .btn-microsoft:focus,.btn-microsoft.disabled:active,.btn-microsoft[disabled]:active,fieldset[disabled] .btn-microsoft:active,.btn-microsoft.disabled.active,.btn-microsoft[disabled].active,fieldset[disabled] .btn-microsoft.active{background-color:#2672ec;border-color:rgba(0,0,0,0.2)}\n.btn-microsoft .badge{color:#2672ec;background-color:#fff}\n.btn-openid{color:#fff;background-color:#f7931e;border-color:rgba(0,0,0,0.2)}.btn-openid:hover,.btn-openid:focus,.btn-openid:active,.btn-openid.active,.open>.dropdown-toggle.btn-openid{color:#fff;background-color:#da7908;border-color:rgba(0,0,0,0.2)}\n.btn-openid:active,.btn-openid.active,.open>.dropdown-toggle.btn-openid{background-image:none}\n.btn-openid.disabled,.btn-openid[disabled],fieldset[disabled] .btn-openid,.btn-openid.disabled:hover,.btn-openid[disabled]:hover,fieldset[disabled] .btn-openid:hover,.btn-openid.disabled:focus,.btn-openid[disabled]:focus,fieldset[disabled] .btn-openid:focus,.btn-openid.disabled:active,.btn-openid[disabled]:active,fieldset[disabled] .btn-openid:active,.btn-openid.disabled.active,.btn-openid[disabled].active,fieldset[disabled] .btn-openid.active{background-color:#f7931e;border-color:rgba(0,0,0,0.2)}\n.btn-openid .badge{color:#f7931e;background-color:#fff}\n.btn-reddit{color:#000;background-color:#eff7ff;border-color:rgba(0,0,0,0.2)}.btn-reddit:hover,.btn-reddit:focus,.btn-reddit:active,.btn-reddit.active,.open>.dropdown-toggle.btn-reddit{color:#000;background-color:#bcddff;border-color:rgba(0,0,0,0.2)}\n.btn-reddit:active,.btn-reddit.active,.open>.dropdown-toggle.btn-reddit{background-image:none}\n.btn-reddit.disabled,.btn-reddit[disabled],fieldset[disabled] .btn-reddit,.btn-reddit.disabled:hover,.btn-reddit[disabled]:hover,fieldset[disabled] .btn-reddit:hover,.btn-reddit.disabled:focus,.btn-reddit[disabled]:focus,fieldset[disabled] .btn-reddit:focus,.btn-reddit.disabled:active,.btn-reddit[disabled]:active,fieldset[disabled] .btn-reddit:active,.btn-reddit.disabled.active,.btn-reddit[disabled].active,fieldset[disabled] .btn-reddit.active{background-color:#eff7ff;border-color:rgba(0,0,0,0.2)}\n.btn-reddit .badge{color:#eff7ff;background-color:#000}\n.btn-soundcloud{color:#fff;background-color:#f50;border-color:rgba(0,0,0,0.2)}.btn-soundcloud:hover,.btn-soundcloud:focus,.btn-soundcloud:active,.btn-soundcloud.active,.open>.dropdown-toggle.btn-soundcloud{color:#fff;background-color:#c40;border-color:rgba(0,0,0,0.2)}\n.btn-soundcloud:active,.btn-soundcloud.active,.open>.dropdown-toggle.btn-soundcloud{background-image:none}\n.btn-soundcloud.disabled,.btn-soundcloud[disabled],fieldset[disabled] .btn-soundcloud,.btn-soundcloud.disabled:hover,.btn-soundcloud[disabled]:hover,fieldset[disabled] .btn-soundcloud:hover,.btn-soundcloud.disabled:focus,.btn-soundcloud[disabled]:focus,fieldset[disabled] .btn-soundcloud:focus,.btn-soundcloud.disabled:active,.btn-soundcloud[disabled]:active,fieldset[disabled] .btn-soundcloud:active,.btn-soundcloud.disabled.active,.btn-soundcloud[disabled].active,fieldset[disabled] .btn-soundcloud.active{background-color:#f50;border-color:rgba(0,0,0,0.2)}\n.btn-soundcloud .badge{color:#f50;background-color:#fff}\n.btn-tumblr{color:#fff;background-color:#2c4762;border-color:rgba(0,0,0,0.2)}.btn-tumblr:hover,.btn-tumblr:focus,.btn-tumblr:active,.btn-tumblr.active,.open>.dropdown-toggle.btn-tumblr{color:#fff;background-color:#1c2d3f;border-color:rgba(0,0,0,0.2)}\n.btn-tumblr:active,.btn-tumblr.active,.open>.dropdown-toggle.btn-tumblr{background-image:none}\n.btn-tumblr.disabled,.btn-tumblr[disabled],fieldset[disabled] .btn-tumblr,.btn-tumblr.disabled:hover,.btn-tumblr[disabled]:hover,fieldset[disabled] .btn-tumblr:hover,.btn-tumblr.disabled:focus,.btn-tumblr[disabled]:focus,fieldset[disabled] .btn-tumblr:focus,.btn-tumblr.disabled:active,.btn-tumblr[disabled]:active,fieldset[disabled] .btn-tumblr:active,.btn-tumblr.disabled.active,.btn-tumblr[disabled].active,fieldset[disabled] .btn-tumblr.active{background-color:#2c4762;border-color:rgba(0,0,0,0.2)}\n.btn-tumblr .badge{color:#2c4762;background-color:#fff}\n.btn-twitter{color:#fff;background-color:#55acee;border-color:rgba(0,0,0,0.2)}.btn-twitter:hover,.btn-twitter:focus,.btn-twitter:active,.btn-twitter.active,.open>.dropdown-toggle.btn-twitter{color:#fff;background-color:#2795e9;border-color:rgba(0,0,0,0.2)}\n.btn-twitter:active,.btn-twitter.active,.open>.dropdown-toggle.btn-twitter{background-image:none}\n.btn-twitter.disabled,.btn-twitter[disabled],fieldset[disabled] .btn-twitter,.btn-twitter.disabled:hover,.btn-twitter[disabled]:hover,fieldset[disabled] .btn-twitter:hover,.btn-twitter.disabled:focus,.btn-twitter[disabled]:focus,fieldset[disabled] .btn-twitter:focus,.btn-twitter.disabled:active,.btn-twitter[disabled]:active,fieldset[disabled] .btn-twitter:active,.btn-twitter.disabled.active,.btn-twitter[disabled].active,fieldset[disabled] .btn-twitter.active{background-color:#55acee;border-color:rgba(0,0,0,0.2)}\n.btn-twitter .badge{color:#55acee;background-color:#fff}\n.btn-vimeo{color:#fff;background-color:#1ab7ea;border-color:rgba(0,0,0,0.2)}.btn-vimeo:hover,.btn-vimeo:focus,.btn-vimeo:active,.btn-vimeo.active,.open>.dropdown-toggle.btn-vimeo{color:#fff;background-color:#1295bf;border-color:rgba(0,0,0,0.2)}\n.btn-vimeo:active,.btn-vimeo.active,.open>.dropdown-toggle.btn-vimeo{background-image:none}\n.btn-vimeo.disabled,.btn-vimeo[disabled],fieldset[disabled] .btn-vimeo,.btn-vimeo.disabled:hover,.btn-vimeo[disabled]:hover,fieldset[disabled] .btn-vimeo:hover,.btn-vimeo.disabled:focus,.btn-vimeo[disabled]:focus,fieldset[disabled] .btn-vimeo:focus,.btn-vimeo.disabled:active,.btn-vimeo[disabled]:active,fieldset[disabled] .btn-vimeo:active,.btn-vimeo.disabled.active,.btn-vimeo[disabled].active,fieldset[disabled] .btn-vimeo.active{background-color:#1ab7ea;border-color:rgba(0,0,0,0.2)}\n.btn-vimeo .badge{color:#1ab7ea;background-color:#fff}\n.btn-vk{color:#fff;background-color:#587ea3;border-color:rgba(0,0,0,0.2)}.btn-vk:hover,.btn-vk:focus,.btn-vk:active,.btn-vk.active,.open>.dropdown-toggle.btn-vk{color:#fff;background-color:#466482;border-color:rgba(0,0,0,0.2)}\n.btn-vk:active,.btn-vk.active,.open>.dropdown-toggle.btn-vk{background-image:none}\n.btn-vk.disabled,.btn-vk[disabled],fieldset[disabled] .btn-vk,.btn-vk.disabled:hover,.btn-vk[disabled]:hover,fieldset[disabled] .btn-vk:hover,.btn-vk.disabled:focus,.btn-vk[disabled]:focus,fieldset[disabled] .btn-vk:focus,.btn-vk.disabled:active,.btn-vk[disabled]:active,fieldset[disabled] .btn-vk:active,.btn-vk.disabled.active,.btn-vk[disabled].active,fieldset[disabled] .btn-vk.active{background-color:#587ea3;border-color:rgba(0,0,0,0.2)}\n.btn-vk .badge{color:#587ea3;background-color:#fff}\n.btn-yahoo{color:#fff;background-color:#720e9e;border-color:rgba(0,0,0,0.2)}.btn-yahoo:hover,.btn-yahoo:focus,.btn-yahoo:active,.btn-yahoo.active,.open>.dropdown-toggle.btn-yahoo{color:#fff;background-color:#500a6f;border-color:rgba(0,0,0,0.2)}\n.btn-yahoo:active,.btn-yahoo.active,.open>.dropdown-toggle.btn-yahoo{background-image:none}\n.btn-yahoo.disabled,.btn-yahoo[disabled],fieldset[disabled] .btn-yahoo,.btn-yahoo.disabled:hover,.btn-yahoo[disabled]:hover,fieldset[disabled] .btn-yahoo:hover,.btn-yahoo.disabled:focus,.btn-yahoo[disabled]:focus,fieldset[disabled] .btn-yahoo:focus,.btn-yahoo.disabled:active,.btn-yahoo[disabled]:active,fieldset[disabled] .btn-yahoo:active,.btn-yahoo.disabled.active,.btn-yahoo[disabled].active,fieldset[disabled] .btn-yahoo.active{background-color:#720e9e;border-color:rgba(0,0,0,0.2)}\n.btn-yahoo .badge{color:#720e9e;background-color:#fff}\n\n\n\n/* Preloader */\n.preloader {\n    position: fixed;\n    top:25%;\n    left:0;\n    right:0;\n    bottom:0;\n    background-color: #f5f5f5; /* change if the mask should have another color then white */\n    z-index:99999; /* makes sure it stays on top */\n    width: 100%;\n    height: 50%;\n    border-radius: 5px;\n\n}\n\n.status {\n    position:fixed;\n    width: 100px;\n    height: 100px;\n    left:50%; /* centers the loading animation horizontally one the screen */\n    top:50%; /* centers the loading animation vertically one the screen */\n    background-image:url(" + escape(__webpack_require__(18)) + "); /* path to your loading animation */\n    background-repeat:no-repeat;\n    background-position:center;\n    margin:-100px 0 0 -100px; /* is width and height divided by two */\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ 151:
-/***/ (function(module, exports) {
-
-module.exports = function escape(url) {
-    if (typeof url !== 'string') {
-        return url
-    }
-    // If url is already wrapped in quotes, remove them
-    if (/^['"].*['"]$/.test(url)) {
-        url = url.slice(1, -1);
-    }
-    // Should url be wrapped?
-    // See https://drafts.csswg.org/css-values-3/#urls
-    if (/["'() \t\n]/.test(url)) {
-        return '"' + url.replace(/"/g, '\\"').replace(/\n/g, '\\n') + '"'
-    }
-
-    return url
-}
-
-
-/***/ }),
-
-/***/ 152:
-/***/ (function(module, exports) {
-
-module.exports = "built/src/main/resources/static/img/header.jpg";
-
-/***/ }),
-
-/***/ 153:
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(154);
+var content = __webpack_require__(139);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -1506,7 +1405,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 154:
+/***/ 139:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -1521,13 +1420,13 @@ exports.push([module.i, "/*!\r\n * Hover.css (http://ianlunn.github.io/Hover/)\r
 
 /***/ }),
 
-/***/ 155:
+/***/ 140:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _panel = __webpack_require__(156);
+var _panel = __webpack_require__(141);
 
 var _panel2 = _interopRequireDefault(_panel);
 
@@ -1650,11 +1549,11 @@ module.exports = {
 
 /***/ }),
 
-/***/ 156:
+/***/ 141:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(157);
+var content = __webpack_require__(142);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -1701,7 +1600,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 157:
+/***/ 142:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -1716,20 +1615,20 @@ exports.push([module.i, "#panel-main {\n    background-color: #212529;\n    bord
 
 /***/ }),
 
-/***/ 158:
+/***/ 143:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _chartist = __webpack_require__(159);
+var _chartist = __webpack_require__(144);
 
 var _chartist2 = _interopRequireDefault(_chartist);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Chartist = __webpack_require__(161);
-var lib = __webpack_require__(4);
+var Chartist = __webpack_require__(146);
+var lib = __webpack_require__(3);
 
 module.exports = {
 
@@ -1833,11 +1732,11 @@ if ($(".ct-chart")[0]) {
 
 /***/ }),
 
-/***/ 159:
+/***/ 144:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(160);
+var content = __webpack_require__(145);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -1884,7 +1783,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 160:
+/***/ 145:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -1899,7 +1798,7 @@ exports.push([module.i, ".ct-label {\n  fill: rgba(0, 0, 0, 0.4);\n  color: rgba
 
 /***/ }),
 
-/***/ 161:
+/***/ 146:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (root, factory) {
@@ -6395,54 +6294,19 @@ return Chartist;
 
 /***/ }),
 
-/***/ 17:
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-
-/***/ 18:
-/***/ (function(module, exports) {
-
-module.exports = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwcHgiICBoZWlnaHQ9IjIwMHB4IiAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQiIGNsYXNzPSJsZHMtcmlwcGxlIiBzdHlsZT0iYmFja2dyb3VuZDogbm9uZTsiPjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjEzLjY0NDIiIGZpbGw9Im5vbmUiIG5nLWF0dHItc3Ryb2tlPSJ7e2NvbmZpZy5jMX19IiBuZy1hdHRyLXN0cm9rZS13aWR0aD0ie3tjb25maWcud2lkdGh9fSIgc3Ryb2tlPSIjOGNkMGU1IiBzdHJva2Utd2lkdGg9IjIiPjxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9InIiIGNhbGNNb2RlPSJzcGxpbmUiIHZhbHVlcz0iMDs0MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxLjYiIGtleVNwbGluZXM9IjAgMC4yIDAuOCAxIiBiZWdpbj0iLTAuOHMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIj48L2FuaW1hdGU+PGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ib3BhY2l0eSIgY2FsY01vZGU9InNwbGluZSIgdmFsdWVzPSIxOzAiIGtleVRpbWVzPSIwOzEiIGR1cj0iMS42IiBrZXlTcGxpbmVzPSIwLjIgMCAwLjggMSIgYmVnaW49Ii0wLjhzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSI+PC9hbmltYXRlPjwvY2lyY2xlPjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjMzLjIyMjgiIGZpbGw9Im5vbmUiIG5nLWF0dHItc3Ryb2tlPSJ7e2NvbmZpZy5jMn19IiBuZy1hdHRyLXN0cm9rZS13aWR0aD0ie3tjb25maWcud2lkdGh9fSIgc3Ryb2tlPSIjMzc2ODg4IiBzdHJva2Utd2lkdGg9IjIiPjxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9InIiIGNhbGNNb2RlPSJzcGxpbmUiIHZhbHVlcz0iMDs0MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxLjYiIGtleVNwbGluZXM9IjAgMC4yIDAuOCAxIiBiZWdpbj0iMHMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIj48L2FuaW1hdGU+PGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ib3BhY2l0eSIgY2FsY01vZGU9InNwbGluZSIgdmFsdWVzPSIxOzAiIGtleVRpbWVzPSIwOzEiIGR1cj0iMS42IiBrZXlTcGxpbmVzPSIwLjIgMCAwLjggMSIgYmVnaW49IjBzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSI+PC9hbmltYXRlPjwvY2lyY2xlPjwvc3ZnPg=="
-
-/***/ }),
-
-/***/ 180:
+/***/ 147:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _notifications = __webpack_require__(181);
+var _notifications = __webpack_require__(148);
 
 var _notifications2 = _interopRequireDefault(_notifications);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var api = __webpack_require__(4);
+var api = __webpack_require__(3);
 
 //Constructor
 function NotificationObject(settings) {
@@ -6577,11 +6441,11 @@ module.exports = NotificationObject;
 
 /***/ }),
 
-/***/ 181:
+/***/ 148:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(182);
+var content = __webpack_require__(149);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -6628,7 +6492,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 182:
+/***/ 149:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -6709,7 +6573,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(3);
+var	fixUrls = __webpack_require__(4);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -7031,6 +6895,75 @@ function updateLink (link, options, obj) {
 /***/ }),
 
 /***/ 3:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// Functions for local json file interactions
+module.exports = {
+
+    settings: { //settings
+        url: window.location.origin + "/api/",
+        rateLimit: 5,
+        token: $("meta[name='_csrf']").attr("content"),
+        header: $("meta[name='_csrf_header']").attr("content")
+    },
+
+    //Inserts data into server
+    addData: function addData(location, data) {
+        location = typeof location !== 'undefined' ? location : "";
+        return fetch(module.exports.settings.url + location, {
+            method: "post",
+            credentials: "same-origin",
+            headers: {
+                "X-CSRF-Token": module.exports.settings.token,
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        }).then(function (response) {
+            return response.json();
+        });
+    },
+
+    deleteData: function deleteData(location, data) {
+        return module.exports.addData(location, data);
+    },
+
+    updateData: function updateData(location, data) {
+        return module.exports.addData(location, data);
+    },
+    // query for post data
+    // parameter for url info
+    // ex: players/Name+Last/?post=3 type/parameter/query
+    getData: function getData(type, parameter, query) {
+        parameter = typeof parameter !== 'undefined' ? parameter : "";
+        query = typeof query !== 'undefined' ? query : "";
+
+        return fetch(module.exports.settings.url + type + "/" + parameter + query, {
+            method: 'GET',
+            credentials: 'same-origin',
+            redirect: 'follow',
+            agent: null,
+            headers: {
+                "Content-Type": "text/plain",
+                'Authorization': 'Basic ' + btoa('username:password')
+            }
+        }).then(function (response) {
+            var json = response.json();
+            if (response.status >= 200 && response.status < 300) {
+                return json;
+            } else {
+                return json.then(Promise.reject.bind(Promise));
+            }
+        });
+    }
+};
+
+/***/ }),
+
+/***/ 4:
 /***/ (function(module, exports) {
 
 
@@ -7126,72 +7059,31 @@ module.exports = function (css) {
 
 /***/ }),
 
-/***/ 4:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ 7:
+/***/ (function(module, exports) {
 
-"use strict";
+var g;
 
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
 
-// Functions for local json file interactions
-module.exports = {
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
 
-    settings: { //settings
-        url: window.location.origin + "/api/",
-        rateLimit: 5,
-        token: $("meta[name='_csrf']").attr("content"),
-        header: $("meta[name='_csrf_header']").attr("content")
-    },
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
 
-    //Inserts data into server
-    addData: function addData(location, data) {
-        location = typeof location !== 'undefined' ? location : "";
-        return fetch(module.exports.settings.url + location, {
-            method: "post",
-            credentials: "same-origin",
-            headers: {
-                "X-CSRF-Token": module.exports.settings.token,
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        }).then(function (response) {
-            return response.json();
-        });
-    },
+module.exports = g;
 
-    deleteData: function deleteData(location, data) {
-        return module.exports.addData(location, data);
-    },
-
-    updateData: function updateData(location, data) {
-        return module.exports.addData(location, data);
-    },
-    // query for post data
-    // parameter for url info
-    // ex: players/Name+Last/?post=3 type/parameter/query
-    getData: function getData(type, parameter, query) {
-        parameter = typeof parameter !== 'undefined' ? parameter : "";
-        query = typeof query !== 'undefined' ? query : "";
-
-        return fetch(module.exports.settings.url + type + "/" + parameter + query, {
-            method: 'GET',
-            credentials: 'same-origin',
-            redirect: 'follow',
-            agent: null,
-            headers: {
-                "Content-Type": "text/plain",
-                'Authorization': 'Basic ' + btoa('username:password')
-            }
-        }).then(function (response) {
-            var json = response.json();
-            if (response.status >= 200 && response.status < 300) {
-                return json;
-            } else {
-                return json.then(Promise.reject.bind(Promise));
-            }
-        });
-    }
-};
 
 /***/ })
 

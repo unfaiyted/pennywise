@@ -1,4 +1,42 @@
 
+.cal-loader {
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-color: rgba(29, 27, 27, 0.12); /* change if the mask should have another color then white */
+    z-index:99999999; /* makes sure it stays on top */
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+
+}
+
+
+.cal-status {
+    width:300px;
+    height:300px;
+    position:absolute;
+    left:50%; /* centers the loading animation horizontally one the screen */
+    top:50%; /* centers the loading animation vertically one the screen */
+    background-image:url("../../img/loader.svg"); /* path to your loading animation */
+    background-repeat:no-repeat;
+    background-position:center;
+    margin:-150px 0 0 -150px; /* is width and height divided by two */
+}
+
+
+.cal-blur {
+    -webkit--filter: blur(4px);
+    filter: blur(4px);
+}
+
+
+
+
 .cal-1 {
     width: 14.281%;
     border-right: 1px solid #c6c2c6;
@@ -88,9 +126,9 @@
 
 .calendar-container {
     width: 100%;
-    height: 101vh;
-    padding-left: 5%;
-    padding-right: 5%;
+    height: 100vh;
+    padding-left: 6%;
+
 }
 
 #calendar {
@@ -109,6 +147,7 @@
     margin:0;
 
 }
+
 
 
 .cal-big-1 {
@@ -267,5 +306,4 @@
         opacity: 1;
     }
 }
-
 

@@ -13,15 +13,15 @@ function CalendarObject(settings) {
     this.today();
     this.events = [];
 
+
+    // Setup initial panel
+    this.panel();
+
     // Get Events
-    api.getData('calendar/events').then(
-        function(valid) {
-            self.events = valid;
-         self.init();
-         self.renderMonth();
-    }, function (error) {
-        console.log("Error fetching calendar data.");
-    });
+
+    this.init();
+    this.eventsSync();
+
 
 }
 
@@ -42,14 +42,7 @@ CalendarObject.prototype.init = function() {
     $('.cal-today-btn').click(function () {
         // Resets date
         self.today();
-
-        self.eventsSync().then(
-            function(data) {
-                self.events = data;
-                self.renderMonth();
-            }, function (error) {
-                console.log("Error fetching calendar data.");
-            });
+        self.eventsSync();
 
     })
 
@@ -198,14 +191,7 @@ CalendarObject.prototype.changeMonth = function(direction) {
         self.currMonth--;
     }
 
-    this.eventsSync().then(
-    function(data) {
-        self.events = data;
-        self.renderMonth();
-    }, function (error) {
-        console.log("Error fetching calendar data.");
-    });
-
+    this.eventsSync();
 
 };
 
@@ -213,11 +199,32 @@ CalendarObject.prototype.changeMonth = function(direction) {
 CalendarObject.prototype.eventsSync = function() {
     let self = this;
 
-    // switch this to pass month and post request
+    return this.loading(api.getData('calendar/events', self.asDate(1)));
 
-        return api.getData('calendar/events', this.asDate(1));
 };
 
+
+CalendarObject.prototype.loading = function(data) {
+    let self = this;
+
+    $('.cal-loader, .cal-status').show();
+    $('.calendar-body, .card-header').addClass('cal-blur');
+
+    console.log("yes");
+
+    data.then(
+          function(d) {
+              self.events = d;
+              $('.cal-loader, .cal-status').hide();
+              $('.calendar-body,  .card-header').removeClass('cal-blur');
+                self.renderMonth();
+        }, function (error) {
+              $('.cal-loader, .cal-status').hide();
+            console.log("Error fetching calendar data.");
+        });
+
+
+};
 
 CalendarObject.prototype.asDate = function(day) {
 
@@ -241,6 +248,8 @@ CalendarObject.prototype.asDate = function(day) {
 CalendarObject.prototype.panel = function () {
     let self = this;
 
+    $('.calendar-overlay').off();
+
     var panelEvent = $('#calendar-panel').scotchPanel({
         containerSelector: '#calendar', // Make this appear on the entire screen
         direction: 'right', // Make it toggle in from the left
@@ -252,12 +261,14 @@ CalendarObject.prototype.panel = function () {
             // Reset all panels
             $('.scotch-panel').css('z-index', 0);
             // Bring current panel to top
-            $('#calendar-panel').css('z-index', -1);
+            $('#calendar-panel').removeClass('hidden-on-load').css('z-index', -1);
 
 
         },
         enableEscapeKey: true // Clicking Esc will close the panel
     });
+
+
 
     $('.calendar-overlay').click(function() {
         // CLOSE ONLY
