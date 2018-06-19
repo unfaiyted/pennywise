@@ -1,6 +1,7 @@
 package com.faiyt.pennywise.controllers;
 
 import com.faiyt.pennywise.models.finance.LinkedInstitution;
+import com.faiyt.pennywise.models.finance.Transaction;
 import com.faiyt.pennywise.models.user.User;
 import com.faiyt.pennywise.services.LinkedInstitutionService;
 import com.faiyt.pennywise.services.PlaidAuthService;
@@ -21,10 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import retrofit2.Response;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -83,8 +81,6 @@ public class PlaidController {
                 .execute();
 
         if (response.isSuccessful()) {
-
-
             System.out.println("is successful");
 //            this.authService.setAccessToken(response.body().getAccessToken());
 ////            this.authService.setItemId(response.body().getItemId());
@@ -115,26 +111,34 @@ public class PlaidController {
      */
     @RequestMapping(value="/api/plaid/accounts", method=GET, produces=MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity getAccount() throws Exception {
-        if (authService.getAccessToken() == null) {
+
+        User owner = userDao.getLoggedInUser();
+        List<LinkedInstitution> institutionList = institutionDao.getInstitutions().findByOwner(owner);
+
+
+        if (institutionList == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(getErrorResponseData("Not authorized"));
         }
 
-        Response<AuthGetResponse> response = this.plaidClient.service()
-                .authGet(new AuthGetRequest(this.authService.getAccessToken())).execute();
+        Map<String, Object> data = new HashMap<>();
+        for(LinkedInstitution institution : institutionList) {
 
-        if (response.isSuccessful()) {
-            Map<String, Object> data = new HashMap<>();
-            data.put("error", false);
-            data.put("accounts", response.body().getAccounts());
-            data.put("numbers", response.body().getNumbers());
+            Response<AuthGetResponse> response = this.plaidClient.service()
+                    .authGet(new AuthGetRequest(institution.getAccessToken())).execute();
 
-            return ResponseEntity.ok(data);
-        } else {
-            Map<String, Object> data = new HashMap<>();
-            data.put("error", "Unable to pull accounts from the Plaid API.");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(data);
+            // TODO: fix to return correct data on multiple accounts
+            if (response.isSuccessful()) {
+                data.put("error", false);
+                data.put("accounts", response.body().getAccounts());
+                data.put("numbers", response.body().getNumbers());
+            } else {
+                data.put("error", "Unable to pull accounts from the Plaid API.");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(data);
+            }
+
         }
+            return ResponseEntity.ok(data);
     }
 
     /**
@@ -180,32 +184,27 @@ public class PlaidController {
      */
     @RequestMapping(value="/api/plaid/transactions", method=POST, produces=MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity getTransactions() throws Exception {
-        if (authService.getAccessToken() == null) {
+
+        User owner = userDao.getLoggedInUser();
+        List<LinkedInstitution> institutionList = institutionDao.getInstitutions().findByOwner(owner);
+
+        if (institutionList == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(getErrorResponseData("Not authorized"));
         }
 
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -30);
-        Date startDate = cal.getTime();
-        Date endDate = new Date();
+        List<Transaction> transactionList = new ArrayList<>();
 
-        Response<TransactionsGetResponse> response = this.plaidClient.service()
-                .transactionsGet(new TransactionsGetRequest(this.authService.getAccessToken(), startDate, endDate)
-                        .withCount(250)
-                        .withOffset(0))
-                .execute();
-
-        if (response.isSuccessful()) {
-            return ResponseEntity.ok(response.body());
-        } else {
-
-            ErrorResponse error = this.plaidClient.parseError(response);
-            Map<String, Object> data = new HashMap<>();
-            data.put("error", error);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(data);
+        for(LinkedInstitution institution : institutionList) {
+            transactionList = institutionDao.getTransactions(institution.getAccessToken());
         }
+
+        return ResponseEntity.ok(transactionList);
+
     }
+
+
+
 
     private Map<String, Object> getErrorResponseData(String message) {
         Map<String, Object> data = new HashMap<>();
