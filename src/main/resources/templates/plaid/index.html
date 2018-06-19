@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="partials/layout :: header">
+    <meta charset="UTF-8" />
+    <title>Home</title>
+</head>
+<body>
+
+<div th:replace="partials/layout :: navbar" />
+
+
+<span class="overlay"></span>
+<div class="container mx-auto">
+
+<div id="banner">
+    <h1>Get your banking informations</h1>
+    <p id="intro">
+        This is an example test to grab banking information from the Plaid API
+    </p>
+</div>
+
+<div id="container">
+    <p>
+        Click the button below to open a list of Institutions - after you select one,
+        you'll be guided through an authentication process. The public_token will be passed
+        back to the example server, which will then exchange it for an access token and log it
+        to your console.
+    </p>
+
+    <button id="link-btn">Link Account</button>
+</div>
+
+<div id="app">
+    <div class="box">
+        <button id="get-accounts-btn">Get Accounts</button>
+        <div id="get-accounts-data"></div>
+    </div>
+
+    <div class="box">
+        <button id="get-item-btn">Get Item</button>
+        <div id="get-item-data"></div>
+    </div>
+
+    <div class="box">
+        <button id="get-transactions-btn">Get Transactions</button>
+        <div id="get-transactions-data"></div>
+    </div>
+</div>
+
+</div>
+
+<div th:replace="partials/layout :: footer" />
+
+<script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+
+<script th:inline="javascript">
+        const PLAID_ENV = [[${PLAID_ENV}]];
+        const PLAID_PUBLIC_KEY = [[${PLAID_PUBLIC_KEY}]];
+</script>
+<script th:src="@{~/built/plaid.js}"></script>
+</body>
+</html>

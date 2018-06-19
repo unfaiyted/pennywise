@@ -31,6 +31,10 @@ module.exports = {
         return module.exports.addData(location, data);
     },
 
+    post: (location, data) => {
+        return module.exports.addData(location, data);
+    },
+
     getData: (type, parameter, query) => {
         parameter = typeof parameter !== 'undefined' ? parameter : "";
         query = typeof query !== 'undefined' ? query : "";

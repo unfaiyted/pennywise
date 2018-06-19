@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 131);
+/******/ 	return __webpack_require__(__webpack_require__.s = 142);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -148,17 +148,17 @@ function toComment(sourceMap) {
 
 /***/ }),
 
-/***/ 131:
+/***/ 142:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(132);
-__webpack_require__(136);
-module.exports = __webpack_require__(137);
+__webpack_require__(143);
+__webpack_require__(147);
+module.exports = __webpack_require__(148);
 
 
 /***/ }),
 
-/***/ 132:
+/***/ 143:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(setImmediate) {(function (root) {
@@ -395,11 +395,11 @@ module.exports = __webpack_require__(137);
 
 })(this);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(133).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(144).setImmediate))
 
 /***/ }),
 
-/***/ 133:
+/***/ 144:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -455,7 +455,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(134);
+__webpack_require__(145);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -466,11 +466,11 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
 
 /***/ }),
 
-/***/ 134:
+/***/ 145:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -660,11 +660,11 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7), __webpack_require__(135)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18), __webpack_require__(146)))
 
 /***/ }),
 
-/***/ 135:
+/***/ 146:
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -855,7 +855,7 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 136:
+/***/ 147:
 /***/ (function(module, exports) {
 
 (function(self) {
@@ -1328,21 +1328,21 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 137:
+/***/ 148:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _hover = __webpack_require__(138);
+var _hover = __webpack_require__(149);
 
 var _hover2 = _interopRequireDefault(_hover);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var panel = __webpack_require__(140);
-var chart = __webpack_require__(143);
-var NotificationObject = __webpack_require__(147);
+var panel = __webpack_require__(151);
+var chart = __webpack_require__(154);
+var NotificationObject = __webpack_require__(158);
 
 (function ($) {
     console.log("Please pay your bills!");
@@ -1354,11 +1354,11 @@ var notification = new NotificationObject();
 
 /***/ }),
 
-/***/ 138:
+/***/ 149:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(139);
+var content = __webpack_require__(150);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -1405,7 +1405,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 139:
+/***/ 150:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -1420,13 +1420,13 @@ exports.push([module.i, "/*!\r\n * Hover.css (http://ianlunn.github.io/Hover/)\r
 
 /***/ }),
 
-/***/ 140:
+/***/ 151:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _panel = __webpack_require__(141);
+var _panel = __webpack_require__(152);
 
 var _panel2 = _interopRequireDefault(_panel);
 
@@ -1549,11 +1549,11 @@ module.exports = {
 
 /***/ }),
 
-/***/ 141:
+/***/ 152:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(142);
+var content = __webpack_require__(153);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -1600,7 +1600,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 142:
+/***/ 153:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -1615,19 +1615,19 @@ exports.push([module.i, "#panel-main {\n    background-color: #212529;\n    bord
 
 /***/ }),
 
-/***/ 143:
+/***/ 154:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _chartist = __webpack_require__(144);
+var _chartist = __webpack_require__(155);
 
 var _chartist2 = _interopRequireDefault(_chartist);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Chartist = __webpack_require__(146);
+var Chartist = __webpack_require__(157);
 var lib = __webpack_require__(3);
 
 module.exports = {
@@ -1732,11 +1732,11 @@ if ($(".ct-chart")[0]) {
 
 /***/ }),
 
-/***/ 144:
+/***/ 155:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(145);
+var content = __webpack_require__(156);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -1783,7 +1783,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 145:
+/***/ 156:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -1798,7 +1798,7 @@ exports.push([module.i, ".ct-label {\n  fill: rgba(0, 0, 0, 0.4);\n  color: rgba
 
 /***/ }),
 
-/***/ 146:
+/***/ 157:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (root, factory) {
@@ -6294,13 +6294,13 @@ return Chartist;
 
 /***/ }),
 
-/***/ 147:
+/***/ 158:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _notifications = __webpack_require__(148);
+var _notifications = __webpack_require__(159);
 
 var _notifications2 = _interopRequireDefault(_notifications);
 
@@ -6441,11 +6441,11 @@ module.exports = NotificationObject;
 
 /***/ }),
 
-/***/ 148:
+/***/ 159:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(149);
+var content = __webpack_require__(160);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -6492,7 +6492,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 149:
+/***/ 160:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -6503,6 +6503,34 @@ exports = module.exports = __webpack_require__(1)(false);
 exports.push([module.i, ".notification-list-group {\n    width: 350px;\n}\n\n.notification-list-group a {\n    color: #000000;\n}\n\n.notification-list-group .list-group-item {\n    padding-right: 10px;\n}", ""]);
 
 // exports
+
+
+/***/ }),
+
+/***/ 18:
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
 
 
 /***/ }),
@@ -6934,9 +6962,11 @@ module.exports = {
     updateData: function updateData(location, data) {
         return module.exports.addData(location, data);
     },
-    // query for post data
-    // parameter for url info
-    // ex: players/Name+Last/?post=3 type/parameter/query
+
+    post: function post(location, data) {
+        return module.exports.addData(location, data);
+    },
+
     getData: function getData(type, parameter, query) {
         parameter = typeof parameter !== 'undefined' ? parameter : "";
         query = typeof query !== 'undefined' ? query : "";
@@ -7055,34 +7085,6 @@ module.exports = function (css) {
 	// send back the fixed css
 	return fixedCss;
 };
-
-
-/***/ }),
-
-/***/ 7:
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
 
 
 /***/ })
