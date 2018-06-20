@@ -3,8 +3,8 @@ package com.faiyt.pennywise.controllers;
 import com.faiyt.pennywise.models.finance.LinkedInstitution;
 import com.faiyt.pennywise.models.finance.Transaction;
 import com.faiyt.pennywise.models.user.User;
-import com.faiyt.pennywise.services.LinkedInstitutionService;
-import com.faiyt.pennywise.services.PlaidAuthService;
+import com.faiyt.pennywise.services.PlaidLocalStorageService;
+import com.faiyt.pennywise.services.PlaidService;
 import com.faiyt.pennywise.services.user.UserService;
 import com.faiyt.pennywise.util.StringToObject;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -32,18 +32,18 @@ public class PlaidController {
 
     private Environment env;
     private PlaidClient plaidClient;
-    private PlaidAuthService authService;
-    private LinkedInstitutionService institutionDao;
+    private PlaidService plaidService;
+    private PlaidLocalStorageService storageService;
     private UserService userDao;
 
 
     @Autowired
-    public PlaidController(Environment env, PlaidClient plaidClient, PlaidAuthService authService
-    , LinkedInstitutionService institutionDao, UserService userDao) {
+    public PlaidController(Environment env, PlaidClient plaidClient, PlaidService plaidService
+    , PlaidLocalStorageService storageService, UserService userDao) {
         this.env = env;
         this.plaidClient = plaidClient;
-        this.authService = authService;
-        this.institutionDao = institutionDao;
+        this.plaidService = plaidService;
+        this.storageService = storageService;
         this.userDao = userDao;
     }
 
@@ -55,6 +55,9 @@ public class PlaidController {
     public String index(Model model) {
         model.addAttribute("PLAID_PUBLIC_KEY", env.getProperty("PLAID_PUBLIC_KEY"));
         model.addAttribute("PLAID_ENV", env.getProperty("PLAID_ENV"));
+
+       // model.addAttribute("", institutionDao.);
+
         return "plaid/index";
     }
 
@@ -70,27 +73,24 @@ public class PlaidController {
             @ResponseBody
     public ResponseEntity getAccessToken(@RequestBody String publicTokenJSON) throws IOException {
 
-
                 JsonNode jsonObj =  StringToObject.toJsonNode(publicTokenJSON);
                String public_token = jsonObj.path("public_token").asText();
-
-                System.out.println("PUBLIC TOKEN " + public_token);
 
                 Response<ItemPublicTokenExchangeResponse> response = this.plaidClient.service()
                 .itemPublicTokenExchange(new ItemPublicTokenExchangeRequest(public_token))
                 .execute();
 
         if (response.isSuccessful()) {
-            System.out.println("is successful");
-//            this.authService.setAccessToken(response.body().getAccessToken());
-////            this.authService.setItemId(response.body().getItemId());
+
             String accessToken = response.body().getAccessToken();
             String itemId = response.body().getItemId();
             User owner = userDao.getLoggedInUser();
 
             LinkedInstitution institution = new LinkedInstitution(accessToken, itemId, owner);
 
-            this.institutionDao.getInstitutions().save(institution);
+            institution.setName(.getInstitutionFromItem(accessToken).getName());
+
+            this.storageService.getInstitutions().save(institution);
 
             Map<String, Object> data = new HashMap<>();
             data.put("error", false);
@@ -113,7 +113,7 @@ public class PlaidController {
     public @ResponseBody ResponseEntity getAccount() throws Exception {
 
         User owner = userDao.getLoggedInUser();
-        List<LinkedInstitution> institutionList = institutionDao.getInstitutions().findByOwner(owner);
+        List<LinkedInstitution> institutionList = storageService.getInstitutions().findByOwner(owner);
 
 
         if (institutionList == null) {
@@ -186,7 +186,7 @@ public class PlaidController {
     public @ResponseBody ResponseEntity getTransactions() throws Exception {
 
         User owner = userDao.getLoggedInUser();
-        List<LinkedInstitution> institutionList = institutionDao.getInstitutions().findByOwner(owner);
+        List<LinkedInstitution> institutionList = storageService.getInstitutions().findByOwner(owner);
 
         if (institutionList == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
@@ -196,7 +196,8 @@ public class PlaidController {
         List<Transaction> transactionList = new ArrayList<>();
 
         for(LinkedInstitution institution : institutionList) {
-            transactionList = institutionDao.getTransactions(institution.getAccessToken());
+            transactionList = plaidService.getTransactions(institution.getAccessToken());
+            storageService.getTransactions().saveAll(transactionList);
         }
 
         return ResponseEntity.ok(transactionList);
