@@ -31,17 +31,48 @@
     </div>
 
     <div class="row">
-        <div class="col-12">
+        <div class="col-md-8 pb-4">
             <div class="card">
-                This is header with account info
-                <span th:text="${account.officialName}"></span>
-                <span th:text="${account.mask}"></span>
-                <span th:text="${account.subtype}"></span>
+
+                <div class="card-header">
+                    <div class="row">
+                        <div>
+                            <h3> <span th:text="${account.officialName}"></span>
+                                <span th:text="'x' + ${account.mask}"></span>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+
+                <div class="row">
+                        <div class="col-md-6">
+                           <strong>Available Bal: </strong> <span th:text="${account.balances.available}"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Current Bal:</strong> <span th:text="${account.balances.current}"></span>
+                        </div>
+                </div>
+                </div>
+
             </div>
         </div>
+
+        <div class="col-md-4 pb-4">
+
+            <div class="card">
+                <div class="card-body">
+                    <button class="btn btn-primary m-2">View Spending Analysis</button>
+                    <button class="btn btn-secondary m-2">Other thing </button>
+                </div>
+            </div>
+
+        </div>
+
     </div>
 
-
+    <div class="card">
     <table class="table table-hover">
         <thead>
         <tr>
@@ -76,6 +107,7 @@
 
         </tbody>
     </table>
+    </div>
 
     <!--<div class="box">-->
     <!--<button id="get-transactions-btn">Get Transactions</button>-->
