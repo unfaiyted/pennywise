@@ -1,6 +1,7 @@
 package com.faiyt.pennywise.services;
 
 import com.faiyt.pennywise.models.finance.Transaction;
+import com.faiyt.pennywise.models.finance.Account;
 import com.plaid.client.PlaidClient;
 import com.plaid.client.request.*;
 import com.plaid.client.response.*;
@@ -22,7 +23,6 @@ public class PlaidService {
     public PlaidService(PlaidClient plaidClient) {
         this.plaidClient = plaidClient;
     }
-
 
     public List<Transaction> getTransactions(String accessKey, Date fromDate, Date toDate) {
 
@@ -89,8 +89,8 @@ public class PlaidService {
                 .authGet(new AuthGetRequest(accessKey)).execute().body();
     }
 
-    public List<Account> getAccountAuthResponse(String accessKey) throws IOException {
-        return getFullAuthResponse(accessKey).getAccounts();
+    public List<com.plaid.client.response.Account> getAccountAuthResponse(String accessKey) throws IOException {
+                return getFullAuthResponse(accessKey).getAccounts();
     }
 
     public ItemStatus getAuthItemResponse(String accessKey) throws IOException {
@@ -115,6 +115,9 @@ public class PlaidService {
         ).execute().body().getInstitutions();
     }
 
+
+    // https://stackoverflow.com/questions/43824915/how-can-i-get-the-logo-for-an-item-from-the-plaid-api
+    // TODO: look into implementing logos
     public Institution getInstitutionById(String requestId) throws IOException {
         return this.plaidClient.service().institutionsGetById(
                 new InstitutionsGetByIdRequest(requestId)
@@ -127,6 +130,30 @@ public class PlaidService {
         return getInstitutionById(id);
     }
 
+    /* CONVERSION FUNCTIONALITY */
+    public Transaction convertToApplicationTransaction(com.plaid.client.response.TransactionsGetResponse.Transaction t) {
+        return  new Transaction(t);
+    }
+
+    public Account convertToApplicationAccount(com.plaid.client.response.Account a) {
+        return  new Account(a);
+    }
+
+    public List<Transaction> convertAllToApplicationTransactions(List<com.plaid.client.response.TransactionsGetResponse.Transaction> t) {
+       List<Transaction> transactions = new ArrayList<>();
+        for(com.plaid.client.response.TransactionsGetResponse.Transaction tran : t) {
+            transactions.add(convertToApplicationTransaction(tran));
+        }
+        return transactions;
+    }
+
+    public List<Account> convertAllToApplicationAccounts(List<com.plaid.client.response.Account> a) {
+        List<Account> accounts = new ArrayList<>();
+        for(com.plaid.client.response.Account acc : a) {
+            accounts.add(convertToApplicationAccount(acc));
+        }
+        return accounts;
+    }
 
 
 }

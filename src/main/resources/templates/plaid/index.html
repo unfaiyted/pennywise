@@ -13,40 +13,83 @@
 <span class="overlay"></span>
 <div class="container mx-auto">
 
-<div id="banner">
-    <h1>Get your banking informations</h1>
-    <p id="intro">
-        This is an example test to grab banking information from the Plaid API
-    </p>
-</div>
 
-<div id="container">
-    <p>
-        Click the button below to open a list of Institutions - after you select one,
-        you'll be guided through an authentication process. The public_token will be passed
-        back to the example server, which will then exchange it for an access token and log it
-        to your console.
-    </p>
 
-    <button id="link-btn">Link Account</button>
-</div>
+    <div class="row">
 
-<div id="app">
-    <div class="box">
-        <button id="get-accounts-btn">Get Accounts</button>
-        <div id="get-accounts-data"></div>
+        <div class="text-left mr-auto">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Dane Miller</a></li>
+                <li class="breadcrumb-item active">Income</li>
+            </ol>
+        </div>
+
+        <div class="text-right">
+            <button class="btn btn-info"  id="link-btn">Add Institution</button>
+        </div>
     </div>
 
-    <div class="box">
-        <button id="get-item-btn">Get Item</button>
-        <div id="get-item-data"></div>
+
+    <div class="row">
+        <div class="col-12"> <h2>Your Linked Institutions</h2></div>
     </div>
 
-    <div class="box">
-        <button id="get-transactions-btn">Get Transactions</button>
-        <div id="get-transactions-data"></div>
+    <div class="row">
+        <th:block th:each="i : ${institutions}">
+            <div class="col-12 col-md-4 col-sm-6 pb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h5 class="card-title" th:text="${i.name}">Card title</h5>
+
+                        <div class="row m-1 font-weight-bold">
+                            <div class="mr-auto">
+                            Accounts
+                            </div>
+                            <div class="pl-2">Bal</div>
+                        </div>
+
+                        <th:block th:each="a : ${i.accounts}">
+                            <div class="row m-1">
+                            <div class="mr-auto">
+                                <a th:href="@{/institutions/account/} + ${a.id}"  th:text="${a.name}">
+                                Test</a>
+                            </div>
+                            <div class="pl-2" th:text="'$' + ${a.balances.current}"></div>
+                            </div>
+                        </th:block>
+
+                    </div>
+                    <div class="card-footer text-right">
+                        <a href="#" class="btn btn-primary btn-sm">Transactions</a>
+                        <a href="#" class="btn btn-secondary btn-sm">Spending Analysis</a>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+
     </div>
-</div>
+
+
+<!--<div id="app">-->
+    <!--<div class="box">-->
+        <!--<button id="get-accounts-btn">Get Accounts</button>-->
+        <!--<div id="get-accounts-data"></div>-->
+    <!--</div>-->
+
+    <!--<div class="box">-->
+        <!--<button id="get-item-btn">Get Item</button>-->
+        <!--<div id="get-item-data"></div>-->
+    <!--</div>-->
+
+    <!--<div class="box">-->
+        <!--<button id="get-transactions-btn">Get Transactions</button>-->
+        <!--<div id="get-transactions-data"></div>-->
+    <!--</div>-->
+<!--</div>-->
 
 </div>
 

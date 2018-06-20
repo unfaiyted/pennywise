@@ -4,6 +4,7 @@ import com.faiyt.pennywise.models.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Table
 @Entity
@@ -30,6 +31,9 @@ public class Institution {
 
     @ManyToOne
     private User owner;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Account> accounts;
 
     public Institution() {}
 
@@ -86,12 +90,19 @@ public class Institution {
         this.owner = owner;
     }
 
-
     public String getItemId() {
         return itemId;
     }
 
     public void setItemId(String itemId) {
         this.itemId = itemId;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 }

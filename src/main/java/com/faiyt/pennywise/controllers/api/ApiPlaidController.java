@@ -2,6 +2,7 @@ package com.faiyt.pennywise.controllers.api;
 
 import com.faiyt.pennywise.models.finance.Institution;
 import com.faiyt.pennywise.models.finance.Transaction;
+import com.faiyt.pennywise.models.finance.Account;
 import com.faiyt.pennywise.models.user.User;
 import com.faiyt.pennywise.services.InstitutionService;
 import com.faiyt.pennywise.services.PlaidService;
@@ -48,7 +49,6 @@ public class ApiPlaidController {
     /**
      * Exchange link public token for access token.
      */
-
     @RequestMapping(
             value = "/get_access_token",
             method= RequestMethod.POST,
@@ -73,6 +73,12 @@ public class ApiPlaidController {
             Institution institution = new Institution(accessToken, itemId, owner);
 
             institution.setName(plaidService.getInstitutionFromItem(accessToken).getName());
+
+            List<Account> accounts  = plaidService.convertAllToApplicationAccounts(
+                    plaidService.getAccountAuthResponse(accessToken)
+            );
+
+            institution.setAccounts(accounts);
 
             this.storageService.getInstitutions().save(institution);
 
