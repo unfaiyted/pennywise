@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Table
 @Entity
-public class LinkedInstitution {
+public class Institution {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,16 +31,16 @@ public class LinkedInstitution {
     @ManyToOne
     private User owner;
 
-    public LinkedInstitution() {}
+    public Institution() {}
 
-    public LinkedInstitution(String name, String accessToken, String itemId, User owner) {
+    public Institution(String name, String accessToken, String itemId, User owner) {
         this.name = name;
         this.accessToken = accessToken;
         this.itemId = itemId;
         this.owner = owner;
     }
 
-    public LinkedInstitution(String accessToken, String itemId, User owner) {
+    public Institution(String accessToken, String itemId, User owner) {
         this.accessToken = accessToken;
         this.itemId = itemId;
         this.owner = owner;
