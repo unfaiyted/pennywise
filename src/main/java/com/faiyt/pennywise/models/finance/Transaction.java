@@ -41,7 +41,7 @@ public class Transaction {
     private Boolean pending;
     @Column
     private String pendingTransactionId;
-    @Column
+    @Column(unique = true)
     private String transactionId;
     @Column
     private String transactionType;

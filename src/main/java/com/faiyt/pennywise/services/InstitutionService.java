@@ -1,10 +1,14 @@
 package com.faiyt.pennywise.services;
 
+import com.faiyt.pennywise.models.finance.Transaction;
 import com.faiyt.pennywise.repositories.Accounts;
 import com.faiyt.pennywise.repositories.Institutions;
 import com.faiyt.pennywise.repositories.Transactions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Service for stored banking institutions or other finance gathered from the Plaid API
@@ -31,6 +35,20 @@ public class InstitutionService {
     }
 
     public Accounts getAccounts() { return accounts; }
+
+
+    public List<Transaction> removeDuplicateTransactions(List<Transaction> list) {
+        List<Transaction> clean = new ArrayList<>();
+
+        for(Transaction transaction : list) {
+           if(getTransactions().findByTransactionId(transaction.getTransactionId()) == null) {
+               clean.add(transaction);
+            }
+        }
+        return clean;
+    }
+
+//    public List<Transactions>
 
 
 

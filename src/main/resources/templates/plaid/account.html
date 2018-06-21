@@ -72,24 +72,26 @@
 
     </div>
 
-    <div class="card">
+    <div class="card mb-4 pb-0">
+    <div class="card-header">
+    </div>
     <table class="table table-hover">
         <thead>
         <tr>
+            <th>Date</th>
             <th class="d-none d-sm-table-cell sticky-header">Merchant</th>
             <th class="sticky-top">Amount</th>
             <th class="sticky-top">Category</th>
 
         </tr>
         </thead>
-        <tbody>
+        <tbody id="transaction-list">
 
         <th:block th:each="t : ${transactions}">
                 <tr class="transaction"  th:data-id="${t.id}">
-
-                    <td><p>
-                        <a th:href="@{~/transaction/view/} + ${t.id}" th:text="${t.name}"></a></p>
-                        <span class="text-muted" th:text="${t.date} ">Since 05/01/2012</span>
+                    <td>  <span class="text-muted" th:text="${t.date} ">Since 05/01/2012</span></td>
+                    <td>
+                        <a th:href="@{~/transaction/view/} + ${t.id}" th:text="${t.name}"></a>
                     </td>
                     <td ><span th:text="'$' + ${#numbers.formatDecimal(t.amount, 0, 'COMMA', 2, 'POINT')}">$114.00</span>
 
@@ -109,11 +111,10 @@
     </table>
     </div>
 
-    <!--<div class="box">-->
-    <!--<button id="get-transactions-btn">Get Transactions</button>-->
-    <!--<div id="get-transactions-data"></div>-->
-    <!--</div>-->
-    <!--</div>-->
+    <div class="box">
+    <button class="btn btn-info" id="get-older-transactions-btn" th:data-acc-id="${account.id}">Get More...</button>
+    </div>
+    </div>
 
 </div>
 

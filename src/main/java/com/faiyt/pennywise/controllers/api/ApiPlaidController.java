@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import retrofit2.Response;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -52,7 +53,7 @@ public class ApiPlaidController {
     @RequestMapping(
             value = "/get_access_token",
             method= RequestMethod.POST,
-            headers = "Accept=*/*",
+           headers = "Accept=*/*",
             consumes="application/json")
     @ResponseBody
     public ResponseEntity getAccessToken(@RequestBody String publicTokenJSON) throws IOException {
@@ -175,7 +176,7 @@ public class ApiPlaidController {
     }
 
     /**
-     * Pull transactions for the Item for the last 30 days.
+     * Pull transactions for the Item for the last 30 days, default
      */
     @RequestMapping(value="/transactions", method=POST, produces=MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity getTransactions() throws Exception {
@@ -198,6 +199,57 @@ public class ApiPlaidController {
         return ResponseEntity.ok(transactionList);
 
     }
+
+
+    @RequestMapping(value="/transactions/aged",  method=POST,
+            headers = "Accept=*/*", consumes=MediaType.APPLICATION_JSON_VALUE,
+            produces=MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponseEntity getTransactions(@RequestBody String jsonStr) throws Exception {
+
+        // Check Institution Id
+        // Check offSet, check page
+        JsonNode jsonObj =  StringToObject.toJsonNode(jsonStr);
+
+        Long accId = jsonObj.path("acc_id").asLong();
+        Integer days = jsonObj.path("days").asInt();
+        String oldestTransaction = jsonObj.path("oldestTransaction").asText();
+
+
+        User owner = userDao.getLoggedInUser();
+
+        Account account = storageService.getAccounts().findById(accId).get();
+
+        Institution institution = storageService.getInstitutions().findByAccount(account);
+
+        List<Transaction> transactionList = new ArrayList<>();
+
+
+        // Parsing Date and Subtracing the number of days specified for pull
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date parsedDate = sdf.parse(oldestTransaction);
+
+        Calendar cal = GregorianCalendar.getInstance();
+
+        cal.setTime(parsedDate);
+        cal.add(Calendar.DATE, -1);
+        Date toDate = cal.getTime();
+
+        days = days * -1;
+
+        cal.add(Calendar.DATE, days);
+        Date fromDate = cal.getTime();
+
+
+        transactionList = plaidService.getTransactions(institution.getAccessToken(), fromDate, toDate);
+
+        transactionList = storageService.removeDuplicateTransactions(transactionList);
+
+        storageService.getTransactions().saveAll(transactionList);
+
+        return ResponseEntity.ok(transactionList);
+
+    }
+
 
 
 

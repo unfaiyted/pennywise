@@ -11,4 +11,7 @@ public interface Transactions  extends CrudRepository<Transaction, Long> {
 
     List<Transaction> findAllByAccountId(String accountid);
 
+    Transaction findByTransactionId(String id);
+
+
 }
