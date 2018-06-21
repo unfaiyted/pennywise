@@ -40,7 +40,9 @@ Personal Finance and Management System
    * Java Springboot Framework 
         - Javascript
         - HTML / CSS
-        - JSON backend
+        - RESTful JSON backend
    * Webpack supporting for ES2016 transpilining
+   * Plaid API for importing financial institution data.
+   
    
    

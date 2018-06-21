@@ -51,7 +51,7 @@ public class InstitutionController {
      * Get Accounts associated with a given itemId
      */
     @RequestMapping(value="/account/{id}", method=GET)
-    public String accounts(@PathVariable Long id, Model model) {
+    public String account(@PathVariable Long id, Model model) {
 
         User owner = userDao.getLoggedInUser();
         Account account = institutionDao.getAccounts().findById(id).get();
@@ -65,6 +65,20 @@ public class InstitutionController {
                 institutionDao.getTransactions().findAllByAccountId(account.getAccountId()));
 
         return "plaid/account";
+    }
+
+
+    @RequestMapping(value="/account/analysis/{id}", method=GET)
+    public String accountAnalysis(@PathVariable Long id, Model model) {
+
+        User owner = userDao.getLoggedInUser();
+        Account account = institutionDao.getAccounts().findById(id).get();
+
+
+        // Add institutions and add other accounts, view all..later
+
+        model.addAttribute("account", account);
+        return "plaid/accountAnalysis";
     }
 
     /**

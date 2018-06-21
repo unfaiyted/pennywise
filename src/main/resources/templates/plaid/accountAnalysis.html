@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="partials/layout :: header">
+    <meta charset="UTF-8" />
+    <title>Home</title>
+</head>
+<body>
+
+<div th:replace="partials/layout :: navbar" />
+
+
+<span class="overlay"></span>
+<div class="container mx-auto">
+
+
+
+    <div class="row">
+
+        <div class="text-left mr-auto">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Dane Miller</a></li>
+                <li class="breadcrumb-item active" th:text="${account.name}">Account Name </li>
+            </ol>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+<div th:replace="partials/layout :: footer" />
+
+<script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+
+
+<script th:src="@{~/built/charts.js}"></script>
+</body>
+</html>
