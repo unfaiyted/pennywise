@@ -6,11 +6,9 @@ import com.faiyt.pennywise.util.StringToObject;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
@@ -26,28 +24,14 @@ public class ApiInstitutionController {
     }
 
 
-
-    @RequestMapping(value="/account/daily/spending/",  method=POST,
-            headers = "Accept=*/*",
-            consumes= MediaType.APPLICATION_JSON_VALUE,
+    @RequestMapping(value="/account/daily/spending/{id}",  method=RequestMethod.GET,
             produces=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getDailySpendingByAccount(@RequestBody String jsonStr) throws Exception {
-
-        JsonNode jsonObj = StringToObject.toJsonNode(jsonStr);
-
-        Long accId = jsonObj.path("acc_id").asLong();
-//        Integer days = jsonObj.path("days").asInt();
-//        String oldestTransaction = jsonObj.path("oldestTransaction").asText();
-        
-
-           Chart chartData =  institutionDao.getDailySpendingByAccount(accId);
-
+    public ResponseEntity getDailySpendingByAccount(@PathVariable Long id)  {
+           Chart chartData =  institutionDao.getDailySpendingByAccount(id);
        return ResponseEntity.ok(chartData);
 
 
     }
-
-
 
 
 
