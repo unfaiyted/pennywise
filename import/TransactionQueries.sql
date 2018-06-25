@@ -11,7 +11,6 @@ having sum(t.amount) > 0
 ORDER BY t.date desc;
 
 
-
 /* Total Spent by Category per Month */
 select
 tc.category,

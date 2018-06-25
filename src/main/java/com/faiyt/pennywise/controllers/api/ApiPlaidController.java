@@ -252,8 +252,6 @@ public class ApiPlaidController {
 
 
 
-
-
     private Map<String, Object> getErrorResponseData(String message) {
         Map<String, Object> data = new HashMap<>();
         data.put("error", false);
