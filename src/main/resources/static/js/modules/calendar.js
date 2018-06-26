@@ -13,7 +13,6 @@ function CalendarObject(settings) {
     this.today();
     this.events = [];
 
-
     // Setup initial panel
     this.panel();
 

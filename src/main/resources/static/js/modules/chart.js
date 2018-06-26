@@ -96,7 +96,6 @@ module.exports = {
 
 if ($(".ct-chart")[0]){
     // Do something if class exists
-
     module.exports.init();
 }
 

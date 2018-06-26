@@ -60,94 +60,270 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 186);
+/******/ 	return __webpack_require__(__webpack_require__.s = 187);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 149:
+/***/ 187:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var api = __webpack_require__(5);
-var alert = __webpack_require__(9);
-
-// Trigger on page to remove entries from page, settings need to be setup to delete
-// both visual and database data from user.
-
+var lib = __webpack_require__(5);
+var alerts = __webpack_require__(9);
 
 //Constructor
-function DeleteObject(settings) {
-    // {dataSet, triggerClass, displayClass, deleteMsg}
-    this.settings = settings;
-    this.settings.triggerClass = typeof this.settings.triggerClass !== 'undefined' ? this.settings.triggerClass : 'delete-btn';
-    this.settings.displayClass = typeof this.settings.displayClass !== 'undefined' ? this.settings.displayClass : "object-display";
-    this.settings.deleteMsg = typeof this.settings.deleteMsg !== 'undefined' ? this.settings.deleteMsg : "Are you sure you'd like to delete this?";
+function PlaidObject(settings) {
 
-    if (this.settings.dataSet !== null) {
-        this.initHandler();
-    }
+    this.page = 1;
+    this.days = 30;
+
+    this.findLastTransactionDate();
+
+    this.init();
 }
 
-// Function of Delete Object
-DeleteObject.prototype.disp = function disp() {
-    console.log(this.settings);
-};
-
-DeleteObject.prototype.initHandler = function () {
+PlaidObject.prototype.init = function () {
     var self = this;
 
-    $('.' + this.settings.triggerClass).click(function () {
-        var id = $(this).data("id");
-        self.confirmRemove(id);
+    // Link new account
+    $('#link-btn').on('click', function (e) {
+        self.handler.open();
+    });
+
+    $('#get-accounts-btn').on('click', function (e) {
+        self.getAccounts();
+    });
+
+    $('#get-item-btn').on('click', function (e) {});
+
+    $('#sync-transactions-btn').click(function () {
+        self.getTransactions();
+    });
+
+    $('#get-older-transactions-btn').click(function () {
+
+        var btn = $(this);
+
+        btn.prop('disabled', true);
+
+        var id = $(this).attr('data-acc-id');
+
+        self.page = self.page + 1;
+
+        self.getAgedTransactions(id, self.oldestTransaction, self.days).then(function (data) {
+
+            if (data.message != null) {
+                alerts.displayPopUpAlert("Issue adding transactions", "warning");
+                btn.prop('disabled', false);
+            } else {
+                console.log(data);
+
+                self.renderTransactions(data);
+
+                btn.prop('disabled', false);
+            }
+        });
     });
 };
 
-DeleteObject.prototype.confirmRemove = function (id) {
-    var self = this;
-    alert.confirmPopUp(this.settings.deleteMsg).then(function () {
-        self.updateServer(id).then(self.removeVisual(id)).catch(function (data) {
-            alert.displayPopUpAlert("Error removing item", "danger");
+/**
+ * Create a new link to an institution and add it to the existing
+ * list of institutions within a users interface.
+ */
+PlaidObject.prototype.linkInstitution = function () {};
+
+PlaidObject.prototype.findLastTransactionDate = function () {
+    this.oldestTransaction = $('tbody tr:last td:first span').text();
+
+    console.log(this.oldestTransaction);
+    return this.oldestTransaction;
+};
+
+/**
+ * Removes an existing institution from the stored list locally
+ * removes access key and server will remove all transactions.
+ */
+PlaidObject.prototype.deleteInstitution = function () {};
+
+/**
+ * Grabs the existing users institution list to be displayed on the page.
+ */
+PlaidObject.prototype.getInstitutionList = function () {};
+
+/**
+ * Display added institution
+ */
+PlaidObject.prototype.renderInstitutions = function () {};
+
+PlaidObject.prototype.getAccounts = function () {
+    return $.get('/api/plaid/accounts', function (data) {
+        $('#get-accounts-data').slideUp(function () {
+            var html = '';
+            data.accounts.forEach(function (account, idx) {
+                html += '<div class="inner">';
+                html += '<strong>' + account.name + ' $' + (account.balances.available != null ? account.balances.available : account.balances.current) + '</strong><br/>';
+                html += account.subtype + ' ' + account.mask;
+                html += '</div>';
+            });
         });
-    }, //promise resolved
-    function () {
-        console.log('You clicked cancel');
-    } //promise rejected
-
-    );
+    });
 };
 
-DeleteObject.prototype.removeVisual = function (id) {
-    $('.' + this.settings.displayClass + '[data-id="' + id + '"]').remove();
+PlaidObject.prototype.getTransactions = function () {
+    var self = this;
+    return lib.post('plaid/transactions').then(function (data) {
+        if (data.error == null) {
+            self.renderTransactions(data);
+        } else {
+            //err
+        }
+    });
 };
 
-DeleteObject.prototype.updateServer = function (id) {
-    var json = { identifier: id };
-    return api.deleteData(this.settings.dataSet, JSON.stringify(json));
+PlaidObject.prototype.getAgedTransactions = function (id, oldest, days) {
+    return lib.post('plaid/transactions/aged', {
+        acc_id: id,
+        oldestTransaction: oldest,
+        days: days
+    });
 };
 
-//
-module.exports = DeleteObject;
+PlaidObject.prototype.getItem = function () {
+    return lib.post('plaid/item').then(function (data) {
+        $('#get-item-data').slideUp(function () {
+            if (data.error) {
+                $(this).html('<p>' + data.error + '</p>').slideDown();
+            } else {
+                console.log('no error');
+                var html = '<div class="inner">';
+                html += '<p>Here\'s some basic information about your Item:</p>';
+                html += '<p>Institution name:' + data.institution.name + '</p>';
+                html += '<p>Billed products: ' + data.item.billedProducts.join(', ') + '</p>';
+                html += '<p>Available products: ' + data.item.availableProducts.join(', ') + '</p>';
+                html += '</div>';
 
-/***/ }),
+                $(this).html(html).slideDown();
+            }
+        });
+    });
+};
 
-/***/ 186:
-/***/ (function(module, exports, __webpack_require__) {
+PlaidObject.prototype.renderTransactions = function (data) {
+    var self = this;
+    var transactions = '';
 
-"use strict";
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
 
+    try {
+        for (var _iterator = data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var d = _step.value;
 
-var DeleteObj = __webpack_require__(149);
+            transactions += self.createTransaction(d);
+        }
+    } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+            }
+        } finally {
+            if (_didIteratorError) {
+                throw _iteratorError;
+            }
+        }
+    }
 
-// Deletes a bill from the list of bills
-var deleteIncome = new DeleteObj({
-    dataSet: "../api/income/delete",
-    triggerClass: "delete-btn",
-    displayClass: "income",
-    deleteMsg: "Are you sure you want to delete this income source?"
+    $("#transaction-list").append(transactions);
+
+    // updates last transaction
+    this.findLastTransactionDate();
+};
+
+PlaidObject.prototype.createTransaction = function (t) {
+
+    var category = '';
+
+    t.category.forEach(function (cat) {
+        category += cat + ',';
+    });
+
+    category = category.slice(0, -1);
+
+    return '<tr class="transaction"  data-id="' + t.id + '">\n        <td>  <span class="text-muted">' + t.date + '</span></td>\n    <td>\n    <a href="/transaction/view/' + t.id + '" >' + t.name + '</a>\n        </td>\n        <td ><span>' + t.amount + '</span>\n\n    </td>\n    <td class="pl-4 d-none d-sm-table-cell">\n     ' + category + '\n        </td>\n        </tr>';
+};
+
+PlaidObject.prototype.handler = Plaid.create({
+    env: PLAID_ENV,
+    key: PLAID_PUBLIC_KEY,
+
+    apiVersion: 'v2',
+    clientName: 'Pennywise',
+    product: ['transactions'],
+
+    onSuccess: function onSuccess(public_token) {
+        // send access token
+        lib.post('plaid/get_access_token', {
+            public_token: public_token
+        }, function () {
+            $('#container').fadeOut('fast', function () {
+                $('#intro').hide();
+            });
+        });
+    }
 });
+
+// $('#get-transactions-btn').on('click', function(e) {
+//     lib.post('plaid/transactions').then(function(data) {
+//         if (data.error != null) {
+//             // Format the error
+//             var errorHtml = '<div class="inner"><p>' +
+//                 '<strong>' + data.error.error_code + ':</strong> ' +
+//                 data.error.error_message + '</p></div>';
+//
+//             if (data.error.error_code === 'PRODUCT_NOT_READY') {
+//                 // Add additional context for `PRODUCT_NOT_READY` errors
+//                 errorHtml += '<div class="inner"><p>The PRODUCT_NOT_READY ' +
+//                     'error is returned when a request to retrieve Transaction data ' +
+//                     'is made before Plaid finishes the <a href="https://plaid.com/' +
+//                     'docs/quickstart/#transaction-data-with-webhooks">initial ' +
+//                     'transaction pull.</a></p></div>';
+//             }
+//             // Render the error
+//             $('#get-transactions-data').slideUp(function() {
+//                 $(this).slideUp(function() {
+//                     $(this).html(errorHtml).slideDown();
+//                 });
+//             });
+//         } else {
+//             $('#get-transactions-data').slideUp(function() {
+//                 var html = '';
+//                 data.transactions.forEach(function(txn, idx) {
+//                     html += '<div class="inner">';
+//                     html += '<strong>' + txn.name + '</strong><br/>';
+//                     html += '$' + txn.amount;
+//                     html += '<br/><em>' + txn.date + '</em>';
+//                     html += '</div>';
+//                 });
+//
+//                 $(this).slideUp(function() {
+//                     $(this).html(html).slideDown();
+//                 });
+//             });
+//         }
+//     });
+// });
+
+
+module.exports = PlaidObject;
+
+var inst = new PlaidObject();
 
 /***/ }),
 
@@ -333,4 +509,4 @@ module.exports = {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=income.js.map
+//# sourceMappingURL=plaid.js.map

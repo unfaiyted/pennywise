@@ -60,140 +60,16 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 163);
+/******/ 	return __webpack_require__(__webpack_require__.s = 181);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 1:
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
-
-/***/ }),
-
-/***/ 163:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _bills = __webpack_require__(164);
-
-var _bills2 = _interopRequireDefault(_bills);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var DeleteObj = __webpack_require__(6);
-var cal = __webpack_require__(166);
-var payBill = __webpack_require__(178);
-// Date Picker
-
-
-var deleteBill = new DeleteObj({
-    dataSet: "bill/delete",
-    triggerClass: "delete-btn",
-    displayClass: "bill",
-    deleteMsg: "Are you sure you want to delete this bill?"
-});
-
-var deletePayment = new DeleteObj({
-    dataSet: "bill/payment/delete",
-    triggerClass: "delete-payment-btn",
-    displayClass: "bill-payment",
-    deleteMsg: "Are you sure you want to delete this payment?"
-});
-
-if ($("#calendar")[0]) {
-    // Do something if class exists
-    cal.init();
-}
-
-payBill.init();
-
-/***/ }),
-
-/***/ 164:
+/***/ 136:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(165);
+var content = __webpack_require__(137);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -207,200 +83,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(2)(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {
-	module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!./bills.css", function() {
-		var newContent = require("!!../../../../../../node_modules/css-loader/index.js!./bills.css");
-
-		if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-
-		var locals = (function(a, b) {
-			var key, idx = 0;
-
-			for(key in a) {
-				if(!b || a[key] !== b[key]) return false;
-				idx++;
-			}
-
-			for(key in b) idx--;
-
-			return idx === 0;
-		}(content.locals, newContent.locals));
-
-		if(!locals) throw new Error('Aborting CSS HMR due to changed css-modules locals.');
-
-		update(newContent);
-	});
-
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
-/***/ 165:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(false);
-// imports
-
-
-// module
-exports.push([module.i, ".table {\n    margin-bottom: 0;\n}\n\n.bill-analysis {\n    list-style-type: none;\n    padding: 0;\n    margin: 0;\n    text-align: center;\n\n}\n\n.bill-analysis .amt {\n    font-size: 25px;\n\n}\n\n.bill-analysis .desc {\n    font-size: 12px;\n}\n\n\n\n.delete-payment-btn, .edit-payment-btn {\n     cursor: pointer;\n\n }\n\n.edit-payment-btn:hover {\n    cursor: pointer;\n    color: #00B4DB;\n\n}\n\n\n.delete-payment-btn:hover {\n    cursor: pointer;\n    color: #c52926;\n\n}", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ 166:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _calendar = __webpack_require__(167);
-
-var _calendar2 = _interopRequireDefault(_calendar);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var calendar = __webpack_require__(171);
-
-module.exports = {
-
-    settings: {
-        currMonth: 0,
-        currYear: 2018,
-        dueDates: []
-    },
-
-    init: function init() {
-        //get current month date
-        var d = new Date();
-        module.exports.settings.currMonth = d.getMonth();
-        module.exports.settings.currYear = d.getFullYear();
-        module.exports.settings.dueDates = $('#calendar').data("due-dates");
-
-        module.exports.initHandlers();
-        module.exports.renderMonth();
-    },
-
-    initHandlers: function initHandlers() {
-
-        $('.next-month').click(function () {
-            module.exports.changeMonth("forward");
-        });
-
-        $('.prev-month').click(function () {
-            module.exports.changeMonth("back");
-        });
-    },
-
-    changeMonth: function changeMonth(direction) {
-
-        if (module.exports.settings.currMonth === 11 && direction === "forward") {
-            module.exports.settings.currMonth = -1;
-            module.exports.settings.currYear++;
-        }
-
-        if (module.exports.settings.currMonth === 0 && direction === "back") {
-            module.exports.settings.currMonth = 12;
-            module.exports.settings.currYear--;
-        }
-
-        if (direction === "forward") {
-            module.exports.settings.currMonth++;
-        } else {
-            module.exports.settings.currMonth--;
-        }
-
-        module.exports.renderMonth();
-    },
-
-    renderMonth: function renderMonth() {
-        var cal = calendar().of(module.exports.settings.currYear, module.exports.settings.currMonth);
-
-        $('.calendar-body').empty();
-
-        $('.cal-title-text').text(cal.month + ' - ' + cal.year);
-
-        var calHTML = '\n         <div class="row cal-row cal-header">\n                                <div class="cal-big-1 text-truncate">Sun</div>\n                                <div class="cal-big-1 text-truncate">Mon</div>\n                                <div class="cal-big-1 text-truncate">Tue</div>\n                                <div class="cal-big-1 text-truncate">Wed</div>\n                                <div class="cal-big-1 text-truncate">Thu</div>\n                                <div class="cal-1 text-truncate">Fri</div>\n                                <div class="cal-1 text-truncate">Sat</div>\n                            </div>';
-
-        for (var i = 0; i < cal.calendar.length; i++) {
-
-            calHTML += '               \n               <div class="row cal-row">';
-
-            for (var j = 0; j < 7; j++) {
-                if (cal.calendar[i][j] === 0) {
-                    calHTML += '<div class="cal-1"> </div>';
-                } else {
-
-                    calHTML += module.exports.isDueDate(cal.calendar[i][j]);
-                }
-            }
-            calHTML += '</div>';
-        }
-
-        $('.calendar-body').append(calHTML);
-
-        $('.cal-popover').popover({
-            container: 'body'
-        });
-    },
-
-    isDueDate: function isDueDate(day) {
-
-        var oDay = day;
-
-        var today = new Date().toISOString().slice(0, 10);
-
-        if (day < 10) {
-            day = "0" + day;
-        }
-
-        // starts at zero offset
-        var month = module.exports.settings.currMonth + 1;
-        if (month < 10) {
-            month = "0" + month;
-        }
-
-        var d = module.exports.settings.currYear + "-" + month + "-" + day;
-
-        var isToday = d === today ? 'cal-today' : ' ';
-
-        if (module.exports.settings.dueDates.includes(d)) {
-            return '<div class="cal-1 cal-due-date cal-popover ' + isToday + '" data-container="body"\n                         data-toggle="popover" data-trigger="hover"  data-placement="top" data-content="Bill due date."\n                            >' + oDay + '</div>';
-        }
-
-        return '<div class="cal-1  ' + isToday + '">' + oDay + '</div>';
-    }
-
-};
-
-/***/ }),
-
-/***/ 167:
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(168);
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(2)(content, options);
+var update = __webpack_require__(4)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -433,23 +116,23 @@ if(false) {
 
 /***/ }),
 
-/***/ 168:
+/***/ 137:
 /***/ (function(module, exports, __webpack_require__) {
 
-var escape = __webpack_require__(169);
-exports = module.exports = __webpack_require__(1)(false);
+var escape = __webpack_require__(138);
+exports = module.exports = __webpack_require__(3)(false);
 // imports
 
 
 // module
-exports.push([module.i, "\n.cal-loader {\n    top:0;\n    left:0;\n    right:0;\n    bottom:0;\n    width: 100%;\n    height: 100%;\n    position: fixed;\n    background-color: rgba(29, 27, 27, 0.12); /* change if the mask should have another color then white */\n    z-index:99999999; /* makes sure it stays on top */\n    -webkit-border-radius: 10px;\n    -moz-border-radius: 10px;\n    border-radius: 10px;\n\n}\n\n\n.cal-status {\n    width:300px;\n    height:300px;\n    position:absolute;\n    left:50%; /* centers the loading animation horizontally one the screen */\n    top:50%; /* centers the loading animation vertically one the screen */\n    background-image:url(" + escape(__webpack_require__(170)) + "); /* path to your loading animation */\n    background-repeat:no-repeat;\n    background-position:center;\n    margin:-150px 0 0 -150px; /* is width and height divided by two */\n}\n\n\n.cal-blur {\n    -webkit--filter: blur(4px);\n    filter: blur(4px);\n}\n\n\n\n\n.cal-1 {\n    width: 14.281%;\n    border-right: 1px solid #c6c2c6;\n    border-top: 1px solid #d6d2d6;\n    text-align: right;\n    height: 35px;\n    line-height: 3;\n    padding-right: 9px;\n}\n\n.cal-1:hover {\n    background-color: #ececec;\n}\n\n.cal-row .cal-1:last-child, .cal-row .cal-1-header:last-child  {\n    border-right: 0;\n}\n\n\n.cal-1-header {\n    width: 14.281%;\n    border-right: 1px solid #c6c2c6;\n    border-top: 1px solid #d6d2d6;\n    text-align: right;\n    height: 35px;\n    line-height: 3;\n    padding-right: 9px;\n    border-bottom:  2px solid #c6c2c6;\n    text-align: center;\n}\n\n\n\n.next-month, .prev-month {\n    cursor: pointer;\n}\n\n.next-month:hover, .prev-month:hover {\n    cursor: pointer;\n    color: #00B4DB;\n}\n.cal-title {\n    font-weight: bold;\n}\n\n\n.cal-title-text {\n\n    font-size: 20px;\n}\n.cal-header {\n   background-color: #eaecef;\n    padding: 0;\n    font-weight: bold;\n\n}\n\n\n.calendar-body {\n    margin-left:15px;\n    margin-right:15px;\n}\n\n.calendar-body .cal-row:last-child {\n    border-bottom: 0;\n}\n\n.cal-due-date {\n    cursor: pointer;\n    color: #db3b42;\n    font-weight: bold;\n    background-color: #2312120f;\n}\n\n.cal-today {\n    font-weight: bold;\n    background: rgb(246, 252, 255)\n}\n\n.cal-today-btn {\n    margin-bottom: 7px;\n    margin-left: 11px;\n}\n\n\n/* BIG CALENDAR */\n\n.calendar-container {\n    width: 100%;\n    height: 100vh;\n    padding-left: 6%;\n\n}\n\n#calendar {\n    box-shadow: 0 9px 23px rgba(0, 0, 0, 0.09), 0 5px 5px rgba(0, 0, 0, 0.06) !important;\n    -webkit-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -moz-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -o-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -webkit-border-radius: 0.4167rem;\n    -moz-border-radius: 0.4167rem;\n    -ms-border-radius: 0.4167rem;\n    -o-border-radius: 0.4167rem;\n    border-radius: 0.4167rem;\n\n    padding:0;\n    margin:0;\n\n}\n\n\n\n.cal-big-1 {\n    width: 14.281%;\n    position: relative;\n    border-right: 1px solid #ebe6eb;\n    border-top: 1px solid #ebe6eb;\n    text-align: right;\n    line-height: 3;\n    padding-right: 9px;\n    overflow: hidden;\n}\n\n.cal-big-1:after {\n    content: \"\";\n    display: block;\n    padding-bottom: 48%;\n}\n\n.cal-big-1:hover {\n    background-color: #ececec;\n}\n\n.cal-row .cal-big-1:last-child {\n    border-right: 0;\n}\n\n\n.event-list li {\n    list-style-type: none;\n}\n\n/*.event-list li:before {*/\n    /*font-family: Font Awesome\\ 5 Free;*/\n    /*font-weight: 900;*/\n    /*-webkit-font-smoothing: antialiased;*/\n    /*text-rendering: auto;*/\n    /*content: '\\f4c0';*/\n    /*margin:-20px 5px 0 -15px;*/\n    /*color: #102911;*/\n    /*position: relative;*/\n    /*top: 10px*/\n\n/*}*/\n\n\n.event-list {\n    line-height: 1.3;\n    padding-left:5px;\n    height: 0;\n    position: relative;\n    top: -10px\n}\n\n.event-item {\n    cursor: pointer;\n}\n\n.event-name-highlight:hover {\n\n}\n\n.event-details-header {\n    background-color: #dcdcdc;\n    border-bottom: 2px solid #e0e0e0;\n    position: relative;\n    top: -16px;\n    left: -31px;\n    padding: 10px;\n    width: calc(100% + 50px);\n}\n\n.event-details-title {\n    font-weight: bold;\n}\n\n\n.event-details-body {\n    background-color: #eaeaea;\n    position: relative;\n    left: -31px;\n    top: -16px;\n    width: calc(100% + 62px);\n\n\n}\n\n.event-details-footer {\n    background-color: #dcdcdc;\n    border-bottom: 2px solid #e0e0e0;\n    position: relative;\n    padding: 10px;\n    padding-left: 20px;\n    border-bottom-right-radius: 10px;\n    left: -31px;\n    top: -16px;\n    width: calc(100% + 62px);\n}\n\n#calendar-panel {\n    background-color: transparent;\n    border-radius: 10px;\n}\n\n\n\n.calendar-overlay {\n    position: fixed;\n\n    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0.65+0,0+100;Neutral+Density */\n    background: -moz-linear-gradient(left, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 100%); /* FF3.6-15 */\n    background: -webkit-linear-gradient(left, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* Chrome10-25,Safari5.1-6 */\n    background: linear-gradient(to right, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */\n    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=1 ); /* IE6-9 */\n\n    width: 100%;\n    height: 100%;\n    display: none;\n    z-index: 999999;\n    -webkit-transition: all 225ms ease;\n    -moz-transition: all 225ms ease;\n    transition: all 225ms ease;\n\n    -webkit-animation-duration: 1s;\n    animation-duration: 1s;\n    -webkit-animation-fill-mode: both;\n    animation-fill-mode: both;\n    border-radius: 10px;\n\n    -webkit-animation-name: fadeIn;\n    animation-name: fadeIn;\n    cursor: pointer;\n}\n.scotch-is-showing .calendar-overlay {\n    display: block;\n}\n\n\n\n@-webkit-keyframes fadeIn {\n    0% {\n        opacity: 0;\n    }\n\n    100% {\n        opacity: 1;\n    }\n}\n\n@keyframes fadeIn {\n    0% {\n        opacity: 0;\n    }\n\n    100% {\n        opacity: 1;\n    }\n}\n\n", ""]);
+exports.push([module.i, "\n.cal-loader {\n    top:0;\n    left:0;\n    right:0;\n    bottom:0;\n    width: 100%;\n    height: 100%;\n    position: fixed;\n    background-color: rgba(29, 27, 27, 0.12); /* change if the mask should have another color then white */\n    z-index:99999999; /* makes sure it stays on top */\n    -webkit-border-radius: 10px;\n    -moz-border-radius: 10px;\n    border-radius: 10px;\n\n}\n\n\n.cal-status {\n    width:300px;\n    height:300px;\n    position:absolute;\n    left:50%; /* centers the loading animation horizontally one the screen */\n    top:50%; /* centers the loading animation vertically one the screen */\n    background-image:url(" + escape(__webpack_require__(139)) + "); /* path to your loading animation */\n    background-repeat:no-repeat;\n    background-position:center;\n    margin:-150px 0 0 -150px; /* is width and height divided by two */\n}\n\n\n.cal-blur {\n    -webkit--filter: blur(4px);\n    filter: blur(4px);\n}\n\n\n\n\n.cal-1 {\n    width: 14.281%;\n    border-right: 1px solid #c6c2c6;\n    border-top: 1px solid #d6d2d6;\n    text-align: right;\n    height: 35px;\n    line-height: 3;\n    padding-right: 9px;\n}\n\n.cal-1:hover {\n    background-color: #ececec;\n}\n\n.cal-row .cal-1:last-child, .cal-row .cal-1-header:last-child  {\n    border-right: 0;\n}\n\n\n.cal-1-header {\n    width: 14.281%;\n    border-right: 1px solid #c6c2c6;\n    border-top: 1px solid #d6d2d6;\n    text-align: right;\n    height: 35px;\n    line-height: 3;\n    padding-right: 9px;\n    border-bottom:  2px solid #c6c2c6;\n    text-align: center;\n}\n\n\n\n.next-month, .prev-month {\n    cursor: pointer;\n}\n\n.next-month:hover, .prev-month:hover {\n    cursor: pointer;\n    color: #00B4DB;\n}\n.cal-title {\n    font-weight: bold;\n}\n\n\n.cal-title-text {\n\n    font-size: 20px;\n}\n.cal-header {\n   background-color: #eaecef;\n    padding: 0;\n    font-weight: bold;\n\n}\n\n\n.calendar-body {\n    margin-left:15px;\n    margin-right:15px;\n}\n\n.calendar-body .cal-row:last-child {\n    border-bottom: 0;\n}\n\n.cal-due-date {\n    cursor: pointer;\n    color: #db3b42;\n    font-weight: bold;\n    background-color: #2312120f;\n}\n\n.cal-today {\n    font-weight: bold;\n    background: rgb(246, 252, 255)\n}\n\n.cal-today-btn {\n    margin-bottom: 7px;\n    margin-left: 11px;\n}\n\n\n/* BIG CALENDAR */\n\n.calendar-container {\n    width: 100%;\n    height: 100vh;\n    padding-left: 6%;\n\n}\n\n#calendar {\n    box-shadow: 0 9px 23px rgba(0, 0, 0, 0.09), 0 5px 5px rgba(0, 0, 0, 0.06) !important;\n    -webkit-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -moz-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -o-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -webkit-border-radius: 0.4167rem;\n    -moz-border-radius: 0.4167rem;\n    -ms-border-radius: 0.4167rem;\n    -o-border-radius: 0.4167rem;\n    border-radius: 0.4167rem;\n\n    padding:0;\n    margin:0;\n\n}\n\n\n\n.cal-big-1 {\n    width: 14.281%;\n    position: relative;\n    border-right: 1px solid #ebe6eb;\n    border-top: 1px solid #ebe6eb;\n    text-align: right;\n    line-height: 3;\n    padding-right: 9px;\n    overflow: hidden;\n}\n\n.cal-big-1:after {\n    content: \"\";\n    display: block;\n    padding-bottom: 48%;\n}\n\n.cal-big-1:hover {\n    background-color: #ececec;\n}\n\n.cal-row .cal-big-1:last-child {\n    border-right: 0;\n}\n\n\n.event-list li {\n    list-style-type: none;\n}\n\n/*.event-list li:before {*/\n    /*font-family: Font Awesome\\ 5 Free;*/\n    /*font-weight: 900;*/\n    /*-webkit-font-smoothing: antialiased;*/\n    /*text-rendering: auto;*/\n    /*content: '\\f4c0';*/\n    /*margin:-20px 5px 0 -15px;*/\n    /*color: #102911;*/\n    /*position: relative;*/\n    /*top: 10px*/\n\n/*}*/\n\n\n.event-list {\n    line-height: 1.3;\n    padding-left:5px;\n    height: 0;\n    position: relative;\n    top: -10px\n}\n\n.event-item {\n    cursor: pointer;\n}\n\n.event-name-highlight:hover {\n\n}\n\n.event-details-header {\n    background-color: #dcdcdc;\n    border-bottom: 2px solid #e0e0e0;\n    position: relative;\n    top: -16px;\n    left: -31px;\n    padding: 10px;\n    width: calc(100% + 50px);\n}\n\n.event-details-title {\n    font-weight: bold;\n}\n\n\n.event-details-body {\n    background-color: #eaeaea;\n    position: relative;\n    left: -31px;\n    top: -16px;\n    width: calc(100% + 62px);\n\n\n}\n\n.event-details-footer {\n    background-color: #dcdcdc;\n    border-bottom: 2px solid #e0e0e0;\n    position: relative;\n    padding: 10px;\n    padding-left: 20px;\n    border-bottom-right-radius: 10px;\n    left: -31px;\n    top: -16px;\n    width: calc(100% + 62px);\n}\n\n#calendar-panel {\n    background-color: transparent;\n    border-radius: 10px;\n}\n\n\n\n.calendar-overlay {\n    position: fixed;\n\n    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0.65+0,0+100;Neutral+Density */\n    background: -moz-linear-gradient(left, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 100%); /* FF3.6-15 */\n    background: -webkit-linear-gradient(left, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* Chrome10-25,Safari5.1-6 */\n    background: linear-gradient(to right, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */\n    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=1 ); /* IE6-9 */\n\n    width: 100%;\n    height: 100%;\n    display: none;\n    z-index: 999999;\n    -webkit-transition: all 225ms ease;\n    -moz-transition: all 225ms ease;\n    transition: all 225ms ease;\n\n    -webkit-animation-duration: 1s;\n    animation-duration: 1s;\n    -webkit-animation-fill-mode: both;\n    animation-fill-mode: both;\n    border-radius: 10px;\n\n    -webkit-animation-name: fadeIn;\n    animation-name: fadeIn;\n    cursor: pointer;\n}\n.scotch-is-showing .calendar-overlay {\n    display: block;\n}\n\n\n\n@-webkit-keyframes fadeIn {\n    0% {\n        opacity: 0;\n    }\n\n    100% {\n        opacity: 1;\n    }\n}\n\n@keyframes fadeIn {\n    0% {\n        opacity: 0;\n    }\n\n    100% {\n        opacity: 1;\n    }\n}\n\n", ""]);
 
 // exports
 
 
 /***/ }),
 
-/***/ 169:
+/***/ 138:
 /***/ (function(module, exports) {
 
 module.exports = function escape(url) {
@@ -472,26 +155,26 @@ module.exports = function escape(url) {
 
 /***/ }),
 
-/***/ 170:
+/***/ 139:
 /***/ (function(module, exports) {
 
 module.exports = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwcHgiICBoZWlnaHQ9IjIwMHB4IiAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQiIGNsYXNzPSJsZHMtcmlwcGxlIiBzdHlsZT0iYmFja2dyb3VuZDogbm9uZTsiPjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjEzLjY0NDIiIGZpbGw9Im5vbmUiIG5nLWF0dHItc3Ryb2tlPSJ7e2NvbmZpZy5jMX19IiBuZy1hdHRyLXN0cm9rZS13aWR0aD0ie3tjb25maWcud2lkdGh9fSIgc3Ryb2tlPSIjOGNkMGU1IiBzdHJva2Utd2lkdGg9IjIiPjxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9InIiIGNhbGNNb2RlPSJzcGxpbmUiIHZhbHVlcz0iMDs0MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxLjYiIGtleVNwbGluZXM9IjAgMC4yIDAuOCAxIiBiZWdpbj0iLTAuOHMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIj48L2FuaW1hdGU+PGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ib3BhY2l0eSIgY2FsY01vZGU9InNwbGluZSIgdmFsdWVzPSIxOzAiIGtleVRpbWVzPSIwOzEiIGR1cj0iMS42IiBrZXlTcGxpbmVzPSIwLjIgMCAwLjggMSIgYmVnaW49Ii0wLjhzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSI+PC9hbmltYXRlPjwvY2lyY2xlPjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjMzLjIyMjgiIGZpbGw9Im5vbmUiIG5nLWF0dHItc3Ryb2tlPSJ7e2NvbmZpZy5jMn19IiBuZy1hdHRyLXN0cm9rZS13aWR0aD0ie3tjb25maWcud2lkdGh9fSIgc3Ryb2tlPSIjMzc2ODg4IiBzdHJva2Utd2lkdGg9IjIiPjxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9InIiIGNhbGNNb2RlPSJzcGxpbmUiIHZhbHVlcz0iMDs0MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxLjYiIGtleVNwbGluZXM9IjAgMC4yIDAuOCAxIiBiZWdpbj0iMHMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIj48L2FuaW1hdGU+PGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ib3BhY2l0eSIgY2FsY01vZGU9InNwbGluZSIgdmFsdWVzPSIxOzAiIGtleVRpbWVzPSIwOzEiIGR1cj0iMS42IiBrZXlTcGxpbmVzPSIwLjIgMCAwLjggMSIgYmVnaW49IjBzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSI+PC9hbmltYXRlPjwvY2lyY2xlPjwvc3ZnPg=="
 
 /***/ }),
 
-/***/ 171:
+/***/ 140:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var InvalidMonthError = __webpack_require__(172);
-var InvalidMonthsError = __webpack_require__(173);
-var InvalidMonthsAbbrError = __webpack_require__(174);
+var InvalidMonthError = __webpack_require__(141);
+var InvalidMonthsError = __webpack_require__(142);
+var InvalidMonthsAbbrError = __webpack_require__(143);
 
-var InvalidWeekdayError = __webpack_require__(175);
-var InvalidWeekdaysError = __webpack_require__(176);
-var InvalidWeekdaysAbbrError = __webpack_require__(177);
+var InvalidWeekdayError = __webpack_require__(144);
+var InvalidWeekdaysError = __webpack_require__(145);
+var InvalidWeekdaysAbbrError = __webpack_require__(146);
 
 var MONTHS = [
   'January',
@@ -753,7 +436,7 @@ module.exports = calendar;
 
 /***/ }),
 
-/***/ 172:
+/***/ 141:
 /***/ (function(module, exports) {
 
 module.exports = function InvalidMonthError(message) {
@@ -764,7 +447,7 @@ module.exports = function InvalidMonthError(message) {
 
 /***/ }),
 
-/***/ 173:
+/***/ 142:
 /***/ (function(module, exports) {
 
 module.exports = function InvalidMonthsError(message) {
@@ -775,7 +458,7 @@ module.exports = function InvalidMonthsError(message) {
 
 /***/ }),
 
-/***/ 174:
+/***/ 143:
 /***/ (function(module, exports) {
 
 module.exports = function InvalidMonthsAbbrError(message) {
@@ -786,7 +469,7 @@ module.exports = function InvalidMonthsAbbrError(message) {
 
 /***/ }),
 
-/***/ 175:
+/***/ 144:
 /***/ (function(module, exports) {
 
 module.exports = function InvalidMonthError(message) {
@@ -797,7 +480,7 @@ module.exports = function InvalidMonthError(message) {
 
 /***/ }),
 
-/***/ 176:
+/***/ 145:
 /***/ (function(module, exports) {
 
 module.exports = function InvalidMonthsError(message) {
@@ -808,7 +491,7 @@ module.exports = function InvalidMonthsError(message) {
 
 /***/ }),
 
-/***/ 177:
+/***/ 146:
 /***/ (function(module, exports) {
 
 module.exports = function InvalidMonthsAbbrError(message) {
@@ -819,14 +502,316 @@ module.exports = function InvalidMonthsAbbrError(message) {
 
 /***/ }),
 
-/***/ 178:
+/***/ 149:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var api = __webpack_require__(3);
-var alerts = __webpack_require__(5);
+var api = __webpack_require__(5);
+var alert = __webpack_require__(9);
+
+// Trigger on page to remove entries from page, settings need to be setup to delete
+// both visual and database data from user.
+
+
+//Constructor
+function DeleteObject(settings) {
+    // {dataSet, triggerClass, displayClass, deleteMsg}
+    this.settings = settings;
+    this.settings.triggerClass = typeof this.settings.triggerClass !== 'undefined' ? this.settings.triggerClass : 'delete-btn';
+    this.settings.displayClass = typeof this.settings.displayClass !== 'undefined' ? this.settings.displayClass : "object-display";
+    this.settings.deleteMsg = typeof this.settings.deleteMsg !== 'undefined' ? this.settings.deleteMsg : "Are you sure you'd like to delete this?";
+
+    if (this.settings.dataSet !== null) {
+        this.initHandler();
+    }
+}
+
+// Function of Delete Object
+DeleteObject.prototype.disp = function disp() {
+    console.log(this.settings);
+};
+
+DeleteObject.prototype.initHandler = function () {
+    var self = this;
+
+    $('.' + this.settings.triggerClass).click(function () {
+        var id = $(this).data("id");
+        self.confirmRemove(id);
+    });
+};
+
+DeleteObject.prototype.confirmRemove = function (id) {
+    var self = this;
+    alert.confirmPopUp(this.settings.deleteMsg).then(function () {
+        self.updateServer(id).then(self.removeVisual(id)).catch(function (data) {
+            alert.displayPopUpAlert("Error removing item", "danger");
+        });
+    }, //promise resolved
+    function () {
+        console.log('You clicked cancel');
+    } //promise rejected
+
+    );
+};
+
+DeleteObject.prototype.removeVisual = function (id) {
+    $('.' + this.settings.displayClass + '[data-id="' + id + '"]').remove();
+};
+
+DeleteObject.prototype.updateServer = function (id) {
+    var json = { identifier: id };
+    return api.deleteData(this.settings.dataSet, JSON.stringify(json));
+};
+
+//
+module.exports = DeleteObject;
+
+/***/ }),
+
+/***/ 181:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _bills = __webpack_require__(182);
+
+var _bills2 = _interopRequireDefault(_bills);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var DeleteObj = __webpack_require__(149);
+var cal = __webpack_require__(184);
+var payBill = __webpack_require__(185);
+// Date Picker
+
+
+var deleteBill = new DeleteObj({
+    dataSet: "bill/delete",
+    triggerClass: "delete-btn",
+    displayClass: "bill",
+    deleteMsg: "Are you sure you want to delete this bill?"
+});
+
+var deletePayment = new DeleteObj({
+    dataSet: "bill/payment/delete",
+    triggerClass: "delete-payment-btn",
+    displayClass: "bill-payment",
+    deleteMsg: "Are you sure you want to delete this payment?"
+});
+
+if ($("#calendar")[0]) {
+    // Do something if class exists
+    cal.init();
+}
+
+payBill.init();
+
+/***/ }),
+
+/***/ 182:
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(183);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(4)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {
+	module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!./bills.css", function() {
+		var newContent = require("!!../../../../../../node_modules/css-loader/index.js!./bills.css");
+
+		if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+
+		var locals = (function(a, b) {
+			var key, idx = 0;
+
+			for(key in a) {
+				if(!b || a[key] !== b[key]) return false;
+				idx++;
+			}
+
+			for(key in b) idx--;
+
+			return idx === 0;
+		}(content.locals, newContent.locals));
+
+		if(!locals) throw new Error('Aborting CSS HMR due to changed css-modules locals.');
+
+		update(newContent);
+	});
+
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 183:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, ".table {\n    margin-bottom: 0;\n}\n\n.bill-analysis {\n    list-style-type: none;\n    padding: 0;\n    margin: 0;\n    text-align: center;\n\n}\n\n.bill-analysis .amt {\n    font-size: 25px;\n\n}\n\n.bill-analysis .desc {\n    font-size: 12px;\n}\n\n\n\n.delete-payment-btn, .edit-payment-btn {\n     cursor: pointer;\n\n }\n\n.edit-payment-btn:hover {\n    cursor: pointer;\n    color: #00B4DB;\n\n}\n\n\n.delete-payment-btn:hover {\n    cursor: pointer;\n    color: #c52926;\n\n}", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ 184:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _calendar = __webpack_require__(136);
+
+var _calendar2 = _interopRequireDefault(_calendar);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var calendar = __webpack_require__(140);
+
+module.exports = {
+
+    settings: {
+        currMonth: 0,
+        currYear: 2018,
+        dueDates: []
+    },
+
+    init: function init() {
+        //get current month date
+        var d = new Date();
+        module.exports.settings.currMonth = d.getMonth();
+        module.exports.settings.currYear = d.getFullYear();
+        module.exports.settings.dueDates = $('#calendar').data("due-dates");
+
+        module.exports.initHandlers();
+        module.exports.renderMonth();
+    },
+
+    initHandlers: function initHandlers() {
+
+        $('.next-month').click(function () {
+            module.exports.changeMonth("forward");
+        });
+
+        $('.prev-month').click(function () {
+            module.exports.changeMonth("back");
+        });
+    },
+
+    changeMonth: function changeMonth(direction) {
+
+        if (module.exports.settings.currMonth === 11 && direction === "forward") {
+            module.exports.settings.currMonth = -1;
+            module.exports.settings.currYear++;
+        }
+
+        if (module.exports.settings.currMonth === 0 && direction === "back") {
+            module.exports.settings.currMonth = 12;
+            module.exports.settings.currYear--;
+        }
+
+        if (direction === "forward") {
+            module.exports.settings.currMonth++;
+        } else {
+            module.exports.settings.currMonth--;
+        }
+
+        module.exports.renderMonth();
+    },
+
+    renderMonth: function renderMonth() {
+        var cal = calendar().of(module.exports.settings.currYear, module.exports.settings.currMonth);
+
+        $('.calendar-body').empty();
+
+        $('.cal-title-text').text(cal.month + ' - ' + cal.year);
+
+        var calHTML = '\n         <div class="row cal-row cal-header">\n                                <div class="cal-big-1 text-truncate">Sun</div>\n                                <div class="cal-big-1 text-truncate">Mon</div>\n                                <div class="cal-big-1 text-truncate">Tue</div>\n                                <div class="cal-big-1 text-truncate">Wed</div>\n                                <div class="cal-big-1 text-truncate">Thu</div>\n                                <div class="cal-1 text-truncate">Fri</div>\n                                <div class="cal-1 text-truncate">Sat</div>\n                            </div>';
+
+        for (var i = 0; i < cal.calendar.length; i++) {
+
+            calHTML += '               \n               <div class="row cal-row">';
+
+            for (var j = 0; j < 7; j++) {
+                if (cal.calendar[i][j] === 0) {
+                    calHTML += '<div class="cal-1"> </div>';
+                } else {
+
+                    calHTML += module.exports.isDueDate(cal.calendar[i][j]);
+                }
+            }
+            calHTML += '</div>';
+        }
+
+        $('.calendar-body').append(calHTML);
+
+        $('.cal-popover').popover({
+            container: 'body'
+        });
+    },
+
+    isDueDate: function isDueDate(day) {
+
+        var oDay = day;
+
+        var today = new Date().toISOString().slice(0, 10);
+
+        if (day < 10) {
+            day = "0" + day;
+        }
+
+        // starts at zero offset
+        var month = module.exports.settings.currMonth + 1;
+        if (month < 10) {
+            month = "0" + month;
+        }
+
+        var d = module.exports.settings.currYear + "-" + month + "-" + day;
+
+        var isToday = d === today ? 'cal-today' : ' ';
+
+        if (module.exports.settings.dueDates.includes(d)) {
+            return '<div class="cal-1 cal-due-date cal-popover ' + isToday + '" data-container="body"\n                         data-toggle="popover" data-trigger="hover"  data-placement="top" data-content="Bill due date."\n                            >' + oDay + '</div>';
+        }
+
+        return '<div class="cal-1  ' + isToday + '">' + oDay + '</div>';
+    }
+
+};
+
+/***/ }),
+
+/***/ 185:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var api = __webpack_require__(5);
+var alerts = __webpack_require__(9);
 module.exports = {
 
     settings: {
@@ -937,7 +922,90 @@ module.exports = {
 
 /***/ }),
 
-/***/ 2:
+/***/ 3:
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+
+/***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -1003,7 +1071,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(4);
+var	fixUrls = __webpack_require__(8);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -1324,7 +1392,7 @@ function updateLink (link, options, obj) {
 
 /***/ }),
 
-/***/ 3:
+/***/ 5:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1364,9 +1432,11 @@ module.exports = {
     updateData: function updateData(location, data) {
         return module.exports.addData(location, data);
     },
-    // query for post data
-    // parameter for url info
-    // ex: players/Name+Last/?post=3 type/parameter/query
+
+    post: function post(location, data) {
+        return module.exports.addData(location, data);
+    },
+
     getData: function getData(type, parameter, query) {
         parameter = typeof parameter !== 'undefined' ? parameter : "";
         query = typeof query !== 'undefined' ? query : "";
@@ -1393,7 +1463,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 4:
+/***/ 8:
 /***/ (function(module, exports) {
 
 
@@ -1489,7 +1559,7 @@ module.exports = function (css) {
 
 /***/ }),
 
-/***/ 5:
+/***/ 9:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1596,74 +1666,6 @@ module.exports = {
     }
 
 };
-
-/***/ }),
-
-/***/ 6:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var api = __webpack_require__(3);
-var alert = __webpack_require__(5);
-
-// Trigger on page to remove entries from page, settings need to be setup to delete
-// both visual and database data from user.
-
-
-//Constructor
-function DeleteObject(settings) {
-    // {dataSet, triggerClass, displayClass, deleteMsg}
-    this.settings = settings;
-    this.settings.triggerClass = typeof this.settings.triggerClass !== 'undefined' ? this.settings.triggerClass : 'delete-btn';
-    this.settings.displayClass = typeof this.settings.displayClass !== 'undefined' ? this.settings.displayClass : "object-display";
-    this.settings.deleteMsg = typeof this.settings.deleteMsg !== 'undefined' ? this.settings.deleteMsg : "Are you sure you'd like to delete this?";
-
-    if (this.settings.dataSet !== null) {
-        this.initHandler();
-    }
-}
-
-// Function of Delete Object
-DeleteObject.prototype.disp = function disp() {
-    console.log(this.settings);
-};
-
-DeleteObject.prototype.initHandler = function () {
-    var self = this;
-
-    $('.' + this.settings.triggerClass).click(function () {
-        var id = $(this).data("id");
-        self.confirmRemove(id);
-    });
-};
-
-DeleteObject.prototype.confirmRemove = function (id) {
-    var self = this;
-    alert.confirmPopUp(this.settings.deleteMsg).then(function () {
-        self.updateServer(id).then(self.removeVisual(id)).catch(function (data) {
-            alert.displayPopUpAlert("Error removing item", "danger");
-        });
-    }, //promise resolved
-    function () {
-        console.log('You clicked cancel');
-    } //promise rejected
-
-    );
-};
-
-DeleteObject.prototype.removeVisual = function (id) {
-    $('.' + this.settings.displayClass + '[data-id="' + id + '"]').remove();
-};
-
-DeleteObject.prototype.updateServer = function (id) {
-    var json = { identifier: id };
-    return api.deleteData(this.settings.dataSet, JSON.stringify(json));
-};
-
-//
-module.exports = DeleteObject;
 
 /***/ })
 

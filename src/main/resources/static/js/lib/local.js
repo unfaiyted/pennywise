@@ -30,9 +30,11 @@ module.exports = {
     updateData: (location, data) => {
         return module.exports.addData(location, data);
     },
-    // query for post data
-    // parameter for url info
-    // ex: players/Name+Last/?post=3 type/parameter/query
+
+    post: (location, data) => {
+        return module.exports.addData(location, data);
+    },
+
     getData: (type, parameter, query) => {
         parameter = typeof parameter !== 'undefined' ? parameter : "";
         query = typeof query !== 'undefined' ? query : "";

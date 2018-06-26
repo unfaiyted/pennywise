@@ -37,6 +37,7 @@ public class ApiBillController {
         User owner = userDao.getLoggedInUser();
         Bill bill = billDao.getBills().findById(id).get();
 
+
         if(bill.getOwner().getId().equals(owner.getId())) {
             return bill;
         } else {

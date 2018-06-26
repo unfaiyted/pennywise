@@ -94,7 +94,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .permitAll()
                     .and()
                      .authorizeRequests()
-                     .antMatchers("/bill/**","/dashboard")
+                     .antMatchers("/bill/**","/dashboard","/plaid/**")
                      .hasAuthority("USER")
                     /* Pages that require authentication */
                 .and()
@@ -102,7 +102,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers(
                             "/bill/**", // only authenticated users can create posts
                             "/posts/**/edit",
-                            "/static/**"// only authenticated users can edit posts
+                            "/static/**",
+                            "/plaid/**"// only authenticated users can edit posts
                     )
                 .authenticated()
                 .and()

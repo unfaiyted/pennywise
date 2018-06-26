@@ -11,7 +11,9 @@ module.exports = {
         user: './src/main/resources/static/js/user.js',
         form: './src/main/resources/static/js/form.js',
         bills: './src/main/resources/static/js/bills.js',
-        income: './src/main/resources/static/js/income.js'
+        income: './src/main/resources/static/js/income.js',
+        plaid: './src/main/resources/static/js/plaid.js',
+        analysis: './src/main/resources/static/js/analysis.js'
 
     },
     // where to put the transpiled javascript
