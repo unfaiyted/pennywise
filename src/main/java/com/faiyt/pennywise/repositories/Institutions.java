@@ -20,4 +20,6 @@ public interface Institutions extends CrudRepository<Institution, Long> {
             "a.id IN (select a.id from Account a where a = ?1)")
     Institution findByAccount(Account account);
 
+
+
 }

@@ -51,14 +51,21 @@ public class InstitutionService {
         return clean;
     }
 
-//    public List<Transactions>
 
-    public Chart getDailySpendingByAccount(Long id) {
-        Account account = getAccounts().findById(id).get();
 
-        ChartDataSet dataSet = new ChartDataSet("Account name", getAccounts().getSpendingByDay(account.getAccountId()));
+    public Chart getDailySpendingByAccounts(Long instId) {
 
-      return new Chart(new ArrayList<ChartDataSet>());
+        List<Account> accounts = getAccounts().findByInstitutionId(instId);
+
+        ArrayList<ChartDataSet> dataSets = new ArrayList<>();
+
+        for(Account account :  accounts)   {
+            dataSets.add(
+                    new ChartDataSet(account.getName(), getAccounts().getSpendingByDay(account.getAccountId())));
+        }
+
+
+      return new Chart(dataSets);
     }
 
 

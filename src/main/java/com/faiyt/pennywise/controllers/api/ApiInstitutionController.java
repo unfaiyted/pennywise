@@ -27,7 +27,7 @@ public class ApiInstitutionController {
     @RequestMapping(value="/account/daily/spending/{id}",  method=RequestMethod.GET,
             produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getDailySpendingByAccount(@PathVariable Long id)  {
-           Chart chartData =  institutionDao.getDailySpendingByAccount(id);
+           Chart chartData =  institutionDao.getDailySpendingByAccounts(id);
        return ResponseEntity.ok(chartData);
 
 

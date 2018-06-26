@@ -9,7 +9,7 @@ public class ChartDataSet {
     private List<ChartDataPoint> series = new ArrayList<>();
     private List<Double> data = new ArrayList<>();
 
-    public ChartDataSet() {};
+    public ChartDataSet() {}
 
     public ChartDataSet(String label, List<ChartDataPoint> series) {
         this.label = label;
@@ -40,6 +40,14 @@ public class ChartDataSet {
             this.data.add(point.getValue());
         }
 
+    }
+
+    public void clearData() {
+        this.data.clear();
+    }
+
+    public void addData(Double data) {
+        this.data.add(data);
     }
 
     public List<Double> getData() {
