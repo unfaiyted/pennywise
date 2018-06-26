@@ -60,391 +60,16 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 150);
+/******/ 	return __webpack_require__(__webpack_require__.s = 170);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 1:
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
-
-/***/ }),
-
-/***/ 150:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var Calendar = __webpack_require__(151);
-if ($("#calendar")[0]) {
-    // Do something if class exists
-
-
-    var cal = new Calendar();
-}
-
-/***/ }),
-
-/***/ 151:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _calendar = __webpack_require__(167);
-
-var _calendar2 = _interopRequireDefault(_calendar);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var api = __webpack_require__(3);
-
-var calendar = __webpack_require__(171);
-
-//Constructor
-function CalendarObject(settings) {
-    var self = this;
-    // Attach Div ID
-    this.settings = settings;
-
-    this.today();
-    this.events = [];
-
-    // Setup initial panel
-    this.panel();
-
-    // Get Events
-
-    this.init();
-    this.eventsSync();
-}
-
-CalendarObject.prototype.init = function () {
-    var self = this;
-
-    $('.next-month').click(function () {
-        self.changeMonth("forward");
-    });
-
-    $('.prev-month').click(function () {
-        self.changeMonth("back");
-    });
-
-    $('.cal-today-btn').click(function () {
-        // Resets date
-        self.today();
-        self.eventsSync();
-    });
-};
-
-CalendarObject.prototype.today = function () {
-    var d = new Date();
-    this.currMonth = d.getMonth();
-    this.currYear = d.getFullYear();
-};
-
-CalendarObject.prototype.renderMonth = function () {
-    var self = this;
-
-    var cal = calendar().of(self.currYear, self.currMonth);
-
-    $('.event-item, .event-item').off();
-    $('.calendar-body').empty();
-    $('.cal-title-text').text(cal.month + ' - ' + cal.year);
-
-    var calHTML = self.renderMonthHeader(cal.weekdaysAbbr);
-
-    for (var i = 0; i < cal.calendar.length; i++) {
-
-        calHTML += '<div class="row cal-row">';
-
-        for (var j = 0; j < 7; j++) {
-            if (cal.calendar[i][j] === 0) {
-                calHTML += '<div class="cal-big-1"> </div>';
-            } else {
-                calHTML += self.createDay(cal.calendar[i][j]);
-            }
-        }
-        calHTML += '</div>';
-    }
-
-    $('.calendar-body').append(calHTML);
-
-    $('.cal-popover').popover({
-        container: 'body'
-    });
-
-    $('.event-item, .event-name').click(function () {
-        self.updatePanel($(this).attr("data-id"));
-    });
-
-    this.panel();
-};
-
-CalendarObject.prototype.createDay = function (day) {
-    // Checks if event are in event list
-
-    var matchCount = 0;
-    var activeDate = this.asDate(day);
-    var todayClass = this.isDateToday(activeDate) ? 'cal-today' : '';
-
-    var calendarDay = '<div class="cal-big-1 ' + todayClass + '"><span class="day">' + day + '</span>';
-
-    this.events.forEach(function (event) {
-
-        if (event.dueDate === activeDate) {
-
-            if (matchCount === 0) calendarDay += '<ul class="event-list text-left">';
-
-            calendarDay += '\n                <li class="event-item toggle-event" data-id="' + event.bill.id + '">\n                             <span class="event-name text-truncate toggle-event" data-id="' + event.bill.id + '">\n                                <span class="badge badge-' + event.bill.status.color + ' w-100 pl-2 pb-1 text-left event-name-highlight hvr-pulse-shrink">\n                                   ' + event.bill.merchant.name + '</span>\n                             </span>                \n                 </li>';
-            matchCount++;
-        }
-    });
-
-    if (matchCount > 0) calendarDay += '</ul>';
-
-    calendarDay += '</div>';
-    return calendarDay;
-};
-
-CalendarObject.prototype.isDateToday = function (date) {
-
-    var today = this.formatDate(new Date());
-
-    return today === date;
-};
-
-CalendarObject.prototype.formatDate = function (date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-
-    return [year, month, day].join('-');
-};
-
-// could add language support later.... in theory
-CalendarObject.prototype.renderMonthHeader = function (weekdays) {
-
-    var headerHTML = '<div class="row cal-row cal-header">';
-
-    weekdays.forEach(function (day) {
-        headerHTML += '<div class="cal-1-header text-truncate">' + day + '</div>';
-    });
-
-    headerHTML += '</div>';
-
-    return headerHTML;
-};
-
-CalendarObject.prototype.changeMonth = function (direction) {
-    var self = this;
-
-    if (self.currMonth === 11 && direction === "forward") {
-        self.currMonth = -1;
-        self.currYear++;
-    }
-
-    if (self.currMonth === 0 && direction === "back") {
-        self.currMonth = 12;
-        self.currYear--;
-    }
-
-    if (direction === "forward") {
-        self.currMonth++;
-    } else {
-        self.currMonth--;
-    }
-
-    this.eventsSync();
-};
-
-// Update the events pulling new data before refreshing calendar
-CalendarObject.prototype.eventsSync = function () {
-    var self = this;
-
-    return this.loading(api.getData('calendar/events', self.asDate(1)));
-};
-
-CalendarObject.prototype.loading = function (data) {
-    var self = this;
-
-    $('.cal-loader, .cal-status').show();
-    $('.calendar-body, .card-header').addClass('cal-blur');
-
-    console.log("yes");
-
-    data.then(function (d) {
-        self.events = d;
-        $('.cal-loader, .cal-status').hide();
-        $('.calendar-body,  .card-header').removeClass('cal-blur');
-        self.renderMonth();
-    }, function (error) {
-        $('.cal-loader, .cal-status').hide();
-        console.log("Error fetching calendar data.");
-    });
-};
-
-CalendarObject.prototype.asDate = function (day) {
-
-    if (day < 10) {
-        day = "0" + day;
-    }
-
-    // starts at zero offset
-    var month = this.currMonth + 1;
-    if (month < 10) {
-        month = "0" + month;
-    }
-
-    var d = this.currYear + "-" + month + "-" + day;
-
-    return d;
-};
-
-CalendarObject.prototype.panel = function () {
-    var self = this;
-
-    $('.calendar-overlay').off();
-
-    var panelEvent = $('#calendar-panel').scotchPanel({
-        containerSelector: '#calendar', // Make this appear on the entire screen
-        direction: 'right', // Make it toggle in from the left
-        duration: 550, // Speed in ms how fast you want it to be
-        transition: 'ease-in-out', // CSS3 transition type: linear, ease, ease-in, ease-out, ease-in-out, cubic-bezier(P1x,P1y,P2x,P2y)
-        clickSelector: '.toggle-event', // Enables toggling when clicking elements of this class
-        distanceX: '400px', // Size fo the toggle
-        beforePanelOpen: function beforePanelOpen() {
-            // Reset all panels
-            $('.scotch-panel').css('z-index', 0);
-            // Bring current panel to top
-            $('#calendar-panel').removeClass('hidden-on-load').css('z-index', -1);
-        },
-        enableEscapeKey: true // Clicking Esc will close the panel
-    });
-
-    $('.calendar-overlay').click(function () {
-        // CLOSE ONLY
-        panelEvent.close();
-    });
-};
-
-CalendarObject.prototype.getBillEvent = function (id) {
-    var foundEvent = null;
-
-    this.events.forEach(function (event) {
-        if (parseInt(id) === event.bill.id) return foundEvent = event;
-    });
-
-    return foundEvent;
-};
-
-CalendarObject.prototype.updatePanel = function (id) {
-
-    var event = this.getBillEvent(id);
-
-    $('#panel-event-name').text(event.bill.merchant.name);
-
-    //$('#event-details-address').text(event.bill.merchant.address);
-    $('#event-details-bill-link').attr('href', "./bill/view/" + event.bill.id);
-    //$('#event-details-city').text(event.bill.merchant.address.city);
-    $('#event-details-map').text();
-    $('#event-details-payment-method').text(event.bill.method.name);
-    $('#event-details-state').text();
-    $('#event-details-zipcode').text();
-};
-
-module.exports = CalendarObject;
-
-/***/ }),
-
-/***/ 167:
+/***/ 136:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(168);
+var content = __webpack_require__(137);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -458,7 +83,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(2)(content, options);
+var update = __webpack_require__(4)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -491,23 +116,23 @@ if(false) {
 
 /***/ }),
 
-/***/ 168:
+/***/ 137:
 /***/ (function(module, exports, __webpack_require__) {
 
-var escape = __webpack_require__(169);
-exports = module.exports = __webpack_require__(1)(false);
+var escape = __webpack_require__(138);
+exports = module.exports = __webpack_require__(3)(false);
 // imports
 
 
 // module
-exports.push([module.i, "\n.cal-loader {\n    top:0;\n    left:0;\n    right:0;\n    bottom:0;\n    width: 100%;\n    height: 100%;\n    position: fixed;\n    background-color: rgba(29, 27, 27, 0.12); /* change if the mask should have another color then white */\n    z-index:99999999; /* makes sure it stays on top */\n    -webkit-border-radius: 10px;\n    -moz-border-radius: 10px;\n    border-radius: 10px;\n\n}\n\n\n.cal-status {\n    width:300px;\n    height:300px;\n    position:absolute;\n    left:50%; /* centers the loading animation horizontally one the screen */\n    top:50%; /* centers the loading animation vertically one the screen */\n    background-image:url(" + escape(__webpack_require__(170)) + "); /* path to your loading animation */\n    background-repeat:no-repeat;\n    background-position:center;\n    margin:-150px 0 0 -150px; /* is width and height divided by two */\n}\n\n\n.cal-blur {\n    -webkit--filter: blur(4px);\n    filter: blur(4px);\n}\n\n\n\n\n.cal-1 {\n    width: 14.281%;\n    border-right: 1px solid #c6c2c6;\n    border-top: 1px solid #d6d2d6;\n    text-align: right;\n    height: 35px;\n    line-height: 3;\n    padding-right: 9px;\n}\n\n.cal-1:hover {\n    background-color: #ececec;\n}\n\n.cal-row .cal-1:last-child, .cal-row .cal-1-header:last-child  {\n    border-right: 0;\n}\n\n\n.cal-1-header {\n    width: 14.281%;\n    border-right: 1px solid #c6c2c6;\n    border-top: 1px solid #d6d2d6;\n    text-align: right;\n    height: 35px;\n    line-height: 3;\n    padding-right: 9px;\n    border-bottom:  2px solid #c6c2c6;\n    text-align: center;\n}\n\n\n\n.next-month, .prev-month {\n    cursor: pointer;\n}\n\n.next-month:hover, .prev-month:hover {\n    cursor: pointer;\n    color: #00B4DB;\n}\n.cal-title {\n    font-weight: bold;\n}\n\n\n.cal-title-text {\n\n    font-size: 20px;\n}\n.cal-header {\n   background-color: #eaecef;\n    padding: 0;\n    font-weight: bold;\n\n}\n\n\n.calendar-body {\n    margin-left:15px;\n    margin-right:15px;\n}\n\n.calendar-body .cal-row:last-child {\n    border-bottom: 0;\n}\n\n.cal-due-date {\n    cursor: pointer;\n    color: #db3b42;\n    font-weight: bold;\n    background-color: #2312120f;\n}\n\n.cal-today {\n    font-weight: bold;\n    background: rgb(246, 252, 255)\n}\n\n.cal-today-btn {\n    margin-bottom: 7px;\n    margin-left: 11px;\n}\n\n\n/* BIG CALENDAR */\n\n.calendar-container {\n    width: 100%;\n    height: 100vh;\n    padding-left: 6%;\n\n}\n\n#calendar {\n    box-shadow: 0 9px 23px rgba(0, 0, 0, 0.09), 0 5px 5px rgba(0, 0, 0, 0.06) !important;\n    -webkit-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -moz-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -o-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -webkit-border-radius: 0.4167rem;\n    -moz-border-radius: 0.4167rem;\n    -ms-border-radius: 0.4167rem;\n    -o-border-radius: 0.4167rem;\n    border-radius: 0.4167rem;\n\n    padding:0;\n    margin:0;\n\n}\n\n\n\n.cal-big-1 {\n    width: 14.281%;\n    position: relative;\n    border-right: 1px solid #ebe6eb;\n    border-top: 1px solid #ebe6eb;\n    text-align: right;\n    line-height: 3;\n    padding-right: 9px;\n    overflow: hidden;\n}\n\n.cal-big-1:after {\n    content: \"\";\n    display: block;\n    padding-bottom: 48%;\n}\n\n.cal-big-1:hover {\n    background-color: #ececec;\n}\n\n.cal-row .cal-big-1:last-child {\n    border-right: 0;\n}\n\n\n.event-list li {\n    list-style-type: none;\n}\n\n/*.event-list li:before {*/\n    /*font-family: Font Awesome\\ 5 Free;*/\n    /*font-weight: 900;*/\n    /*-webkit-font-smoothing: antialiased;*/\n    /*text-rendering: auto;*/\n    /*content: '\\f4c0';*/\n    /*margin:-20px 5px 0 -15px;*/\n    /*color: #102911;*/\n    /*position: relative;*/\n    /*top: 10px*/\n\n/*}*/\n\n\n.event-list {\n    line-height: 1.3;\n    padding-left:5px;\n    height: 0;\n    position: relative;\n    top: -10px\n}\n\n.event-item {\n    cursor: pointer;\n}\n\n.event-name-highlight:hover {\n\n}\n\n.event-details-header {\n    background-color: #dcdcdc;\n    border-bottom: 2px solid #e0e0e0;\n    position: relative;\n    top: -16px;\n    left: -31px;\n    padding: 10px;\n    width: calc(100% + 50px);\n}\n\n.event-details-title {\n    font-weight: bold;\n}\n\n\n.event-details-body {\n    background-color: #eaeaea;\n    position: relative;\n    left: -31px;\n    top: -16px;\n    width: calc(100% + 62px);\n\n\n}\n\n.event-details-footer {\n    background-color: #dcdcdc;\n    border-bottom: 2px solid #e0e0e0;\n    position: relative;\n    padding: 10px;\n    padding-left: 20px;\n    border-bottom-right-radius: 10px;\n    left: -31px;\n    top: -16px;\n    width: calc(100% + 62px);\n}\n\n#calendar-panel {\n    background-color: transparent;\n    border-radius: 10px;\n}\n\n\n\n.calendar-overlay {\n    position: fixed;\n\n    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0.65+0,0+100;Neutral+Density */\n    background: -moz-linear-gradient(left, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 100%); /* FF3.6-15 */\n    background: -webkit-linear-gradient(left, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* Chrome10-25,Safari5.1-6 */\n    background: linear-gradient(to right, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */\n    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=1 ); /* IE6-9 */\n\n    width: 100%;\n    height: 100%;\n    display: none;\n    z-index: 999999;\n    -webkit-transition: all 225ms ease;\n    -moz-transition: all 225ms ease;\n    transition: all 225ms ease;\n\n    -webkit-animation-duration: 1s;\n    animation-duration: 1s;\n    -webkit-animation-fill-mode: both;\n    animation-fill-mode: both;\n    border-radius: 10px;\n\n    -webkit-animation-name: fadeIn;\n    animation-name: fadeIn;\n    cursor: pointer;\n}\n.scotch-is-showing .calendar-overlay {\n    display: block;\n}\n\n\n\n@-webkit-keyframes fadeIn {\n    0% {\n        opacity: 0;\n    }\n\n    100% {\n        opacity: 1;\n    }\n}\n\n@keyframes fadeIn {\n    0% {\n        opacity: 0;\n    }\n\n    100% {\n        opacity: 1;\n    }\n}\n\n", ""]);
+exports.push([module.i, "\n.cal-loader {\n    top:0;\n    left:0;\n    right:0;\n    bottom:0;\n    width: 100%;\n    height: 100%;\n    position: fixed;\n    background-color: rgba(29, 27, 27, 0.12); /* change if the mask should have another color then white */\n    z-index:99999999; /* makes sure it stays on top */\n    -webkit-border-radius: 10px;\n    -moz-border-radius: 10px;\n    border-radius: 10px;\n\n}\n\n\n.cal-status {\n    width:300px;\n    height:300px;\n    position:absolute;\n    left:50%; /* centers the loading animation horizontally one the screen */\n    top:50%; /* centers the loading animation vertically one the screen */\n    background-image:url(" + escape(__webpack_require__(139)) + "); /* path to your loading animation */\n    background-repeat:no-repeat;\n    background-position:center;\n    margin:-150px 0 0 -150px; /* is width and height divided by two */\n}\n\n\n.cal-blur {\n    -webkit--filter: blur(4px);\n    filter: blur(4px);\n}\n\n\n\n\n.cal-1 {\n    width: 14.281%;\n    border-right: 1px solid #c6c2c6;\n    border-top: 1px solid #d6d2d6;\n    text-align: right;\n    height: 35px;\n    line-height: 3;\n    padding-right: 9px;\n}\n\n.cal-1:hover {\n    background-color: #ececec;\n}\n\n.cal-row .cal-1:last-child, .cal-row .cal-1-header:last-child  {\n    border-right: 0;\n}\n\n\n.cal-1-header {\n    width: 14.281%;\n    border-right: 1px solid #c6c2c6;\n    border-top: 1px solid #d6d2d6;\n    text-align: right;\n    height: 35px;\n    line-height: 3;\n    padding-right: 9px;\n    border-bottom:  2px solid #c6c2c6;\n    text-align: center;\n}\n\n\n\n.next-month, .prev-month {\n    cursor: pointer;\n}\n\n.next-month:hover, .prev-month:hover {\n    cursor: pointer;\n    color: #00B4DB;\n}\n.cal-title {\n    font-weight: bold;\n}\n\n\n.cal-title-text {\n\n    font-size: 20px;\n}\n.cal-header {\n   background-color: #eaecef;\n    padding: 0;\n    font-weight: bold;\n\n}\n\n\n.calendar-body {\n    margin-left:15px;\n    margin-right:15px;\n}\n\n.calendar-body .cal-row:last-child {\n    border-bottom: 0;\n}\n\n.cal-due-date {\n    cursor: pointer;\n    color: #db3b42;\n    font-weight: bold;\n    background-color: #2312120f;\n}\n\n.cal-today {\n    font-weight: bold;\n    background: rgb(246, 252, 255)\n}\n\n.cal-today-btn {\n    margin-bottom: 7px;\n    margin-left: 11px;\n}\n\n\n/* BIG CALENDAR */\n\n.calendar-container {\n    width: 100%;\n    height: 100vh;\n    padding-left: 6%;\n\n}\n\n#calendar {\n    box-shadow: 0 9px 23px rgba(0, 0, 0, 0.09), 0 5px 5px rgba(0, 0, 0, 0.06) !important;\n    -webkit-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -moz-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -o-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;\n    -webkit-border-radius: 0.4167rem;\n    -moz-border-radius: 0.4167rem;\n    -ms-border-radius: 0.4167rem;\n    -o-border-radius: 0.4167rem;\n    border-radius: 0.4167rem;\n\n    padding:0;\n    margin:0;\n\n}\n\n\n\n.cal-big-1 {\n    width: 14.281%;\n    position: relative;\n    border-right: 1px solid #ebe6eb;\n    border-top: 1px solid #ebe6eb;\n    text-align: right;\n    line-height: 3;\n    padding-right: 9px;\n    overflow: hidden;\n}\n\n.cal-big-1:after {\n    content: \"\";\n    display: block;\n    padding-bottom: 48%;\n}\n\n.cal-big-1:hover {\n    background-color: #ececec;\n}\n\n.cal-row .cal-big-1:last-child {\n    border-right: 0;\n}\n\n\n.event-list li {\n    list-style-type: none;\n}\n\n/*.event-list li:before {*/\n    /*font-family: Font Awesome\\ 5 Free;*/\n    /*font-weight: 900;*/\n    /*-webkit-font-smoothing: antialiased;*/\n    /*text-rendering: auto;*/\n    /*content: '\\f4c0';*/\n    /*margin:-20px 5px 0 -15px;*/\n    /*color: #102911;*/\n    /*position: relative;*/\n    /*top: 10px*/\n\n/*}*/\n\n\n.event-list {\n    line-height: 1.3;\n    padding-left:5px;\n    height: 0;\n    position: relative;\n    top: -10px\n}\n\n.event-item {\n    cursor: pointer;\n}\n\n.event-name-highlight:hover {\n\n}\n\n.event-details-header {\n    background-color: #dcdcdc;\n    border-bottom: 2px solid #e0e0e0;\n    position: relative;\n    top: -16px;\n    left: -31px;\n    padding: 10px;\n    width: calc(100% + 50px);\n}\n\n.event-details-title {\n    font-weight: bold;\n}\n\n\n.event-details-body {\n    background-color: #eaeaea;\n    position: relative;\n    left: -31px;\n    top: -16px;\n    width: calc(100% + 62px);\n\n\n}\n\n.event-details-footer {\n    background-color: #dcdcdc;\n    border-bottom: 2px solid #e0e0e0;\n    position: relative;\n    padding: 10px;\n    padding-left: 20px;\n    border-bottom-right-radius: 10px;\n    left: -31px;\n    top: -16px;\n    width: calc(100% + 62px);\n}\n\n#calendar-panel {\n    background-color: transparent;\n    border-radius: 10px;\n}\n\n\n\n.calendar-overlay {\n    position: fixed;\n\n    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0.65+0,0+100;Neutral+Density */\n    background: -moz-linear-gradient(left, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 100%); /* FF3.6-15 */\n    background: -webkit-linear-gradient(left, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* Chrome10-25,Safari5.1-6 */\n    background: linear-gradient(to right, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */\n    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=1 ); /* IE6-9 */\n\n    width: 100%;\n    height: 100%;\n    display: none;\n    z-index: 999999;\n    -webkit-transition: all 225ms ease;\n    -moz-transition: all 225ms ease;\n    transition: all 225ms ease;\n\n    -webkit-animation-duration: 1s;\n    animation-duration: 1s;\n    -webkit-animation-fill-mode: both;\n    animation-fill-mode: both;\n    border-radius: 10px;\n\n    -webkit-animation-name: fadeIn;\n    animation-name: fadeIn;\n    cursor: pointer;\n}\n.scotch-is-showing .calendar-overlay {\n    display: block;\n}\n\n\n\n@-webkit-keyframes fadeIn {\n    0% {\n        opacity: 0;\n    }\n\n    100% {\n        opacity: 1;\n    }\n}\n\n@keyframes fadeIn {\n    0% {\n        opacity: 0;\n    }\n\n    100% {\n        opacity: 1;\n    }\n}\n\n", ""]);
 
 // exports
 
 
 /***/ }),
 
-/***/ 169:
+/***/ 138:
 /***/ (function(module, exports) {
 
 module.exports = function escape(url) {
@@ -530,26 +155,26 @@ module.exports = function escape(url) {
 
 /***/ }),
 
-/***/ 170:
+/***/ 139:
 /***/ (function(module, exports) {
 
 module.exports = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwcHgiICBoZWlnaHQ9IjIwMHB4IiAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQiIGNsYXNzPSJsZHMtcmlwcGxlIiBzdHlsZT0iYmFja2dyb3VuZDogbm9uZTsiPjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjEzLjY0NDIiIGZpbGw9Im5vbmUiIG5nLWF0dHItc3Ryb2tlPSJ7e2NvbmZpZy5jMX19IiBuZy1hdHRyLXN0cm9rZS13aWR0aD0ie3tjb25maWcud2lkdGh9fSIgc3Ryb2tlPSIjOGNkMGU1IiBzdHJva2Utd2lkdGg9IjIiPjxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9InIiIGNhbGNNb2RlPSJzcGxpbmUiIHZhbHVlcz0iMDs0MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxLjYiIGtleVNwbGluZXM9IjAgMC4yIDAuOCAxIiBiZWdpbj0iLTAuOHMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIj48L2FuaW1hdGU+PGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ib3BhY2l0eSIgY2FsY01vZGU9InNwbGluZSIgdmFsdWVzPSIxOzAiIGtleVRpbWVzPSIwOzEiIGR1cj0iMS42IiBrZXlTcGxpbmVzPSIwLjIgMCAwLjggMSIgYmVnaW49Ii0wLjhzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSI+PC9hbmltYXRlPjwvY2lyY2xlPjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjMzLjIyMjgiIGZpbGw9Im5vbmUiIG5nLWF0dHItc3Ryb2tlPSJ7e2NvbmZpZy5jMn19IiBuZy1hdHRyLXN0cm9rZS13aWR0aD0ie3tjb25maWcud2lkdGh9fSIgc3Ryb2tlPSIjMzc2ODg4IiBzdHJva2Utd2lkdGg9IjIiPjxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9InIiIGNhbGNNb2RlPSJzcGxpbmUiIHZhbHVlcz0iMDs0MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxLjYiIGtleVNwbGluZXM9IjAgMC4yIDAuOCAxIiBiZWdpbj0iMHMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIj48L2FuaW1hdGU+PGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ib3BhY2l0eSIgY2FsY01vZGU9InNwbGluZSIgdmFsdWVzPSIxOzAiIGtleVRpbWVzPSIwOzEiIGR1cj0iMS42IiBrZXlTcGxpbmVzPSIwLjIgMCAwLjggMSIgYmVnaW49IjBzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSI+PC9hbmltYXRlPjwvY2lyY2xlPjwvc3ZnPg=="
 
 /***/ }),
 
-/***/ 171:
+/***/ 140:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var InvalidMonthError = __webpack_require__(172);
-var InvalidMonthsError = __webpack_require__(173);
-var InvalidMonthsAbbrError = __webpack_require__(174);
+var InvalidMonthError = __webpack_require__(141);
+var InvalidMonthsError = __webpack_require__(142);
+var InvalidMonthsAbbrError = __webpack_require__(143);
 
-var InvalidWeekdayError = __webpack_require__(175);
-var InvalidWeekdaysError = __webpack_require__(176);
-var InvalidWeekdaysAbbrError = __webpack_require__(177);
+var InvalidWeekdayError = __webpack_require__(144);
+var InvalidWeekdaysError = __webpack_require__(145);
+var InvalidWeekdaysAbbrError = __webpack_require__(146);
 
 var MONTHS = [
   'January',
@@ -811,7 +436,7 @@ module.exports = calendar;
 
 /***/ }),
 
-/***/ 172:
+/***/ 141:
 /***/ (function(module, exports) {
 
 module.exports = function InvalidMonthError(message) {
@@ -822,7 +447,7 @@ module.exports = function InvalidMonthError(message) {
 
 /***/ }),
 
-/***/ 173:
+/***/ 142:
 /***/ (function(module, exports) {
 
 module.exports = function InvalidMonthsError(message) {
@@ -833,7 +458,7 @@ module.exports = function InvalidMonthsError(message) {
 
 /***/ }),
 
-/***/ 174:
+/***/ 143:
 /***/ (function(module, exports) {
 
 module.exports = function InvalidMonthsAbbrError(message) {
@@ -844,7 +469,7 @@ module.exports = function InvalidMonthsAbbrError(message) {
 
 /***/ }),
 
-/***/ 175:
+/***/ 144:
 /***/ (function(module, exports) {
 
 module.exports = function InvalidMonthError(message) {
@@ -855,7 +480,7 @@ module.exports = function InvalidMonthError(message) {
 
 /***/ }),
 
-/***/ 176:
+/***/ 145:
 /***/ (function(module, exports) {
 
 module.exports = function InvalidMonthsError(message) {
@@ -866,7 +491,7 @@ module.exports = function InvalidMonthsError(message) {
 
 /***/ }),
 
-/***/ 177:
+/***/ 146:
 /***/ (function(module, exports) {
 
 module.exports = function InvalidMonthsAbbrError(message) {
@@ -877,7 +502,382 @@ module.exports = function InvalidMonthsAbbrError(message) {
 
 /***/ }),
 
-/***/ 2:
+/***/ 170:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Calendar = __webpack_require__(171);
+if ($("#calendar")[0]) {
+    // Do something if class exists
+
+
+    var cal = new Calendar();
+}
+
+/***/ }),
+
+/***/ 171:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _calendar = __webpack_require__(136);
+
+var _calendar2 = _interopRequireDefault(_calendar);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var api = __webpack_require__(5);
+
+var calendar = __webpack_require__(140);
+
+//Constructor
+function CalendarObject(settings) {
+    var self = this;
+    // Attach Div ID
+    this.settings = settings;
+
+    this.today();
+    this.events = [];
+
+    // Setup initial panel
+    this.panel();
+
+    // Get Events
+
+    this.init();
+    this.eventsSync();
+}
+
+CalendarObject.prototype.init = function () {
+    var self = this;
+
+    $('.next-month').click(function () {
+        self.changeMonth("forward");
+    });
+
+    $('.prev-month').click(function () {
+        self.changeMonth("back");
+    });
+
+    $('.cal-today-btn').click(function () {
+        // Resets date
+        self.today();
+        self.eventsSync();
+    });
+};
+
+CalendarObject.prototype.today = function () {
+    var d = new Date();
+    this.currMonth = d.getMonth();
+    this.currYear = d.getFullYear();
+};
+
+CalendarObject.prototype.renderMonth = function () {
+    var self = this;
+
+    var cal = calendar().of(self.currYear, self.currMonth);
+
+    $('.event-item, .event-item').off();
+    $('.calendar-body').empty();
+    $('.cal-title-text').text(cal.month + ' - ' + cal.year);
+
+    var calHTML = self.renderMonthHeader(cal.weekdaysAbbr);
+
+    for (var i = 0; i < cal.calendar.length; i++) {
+
+        calHTML += '<div class="row cal-row">';
+
+        for (var j = 0; j < 7; j++) {
+            if (cal.calendar[i][j] === 0) {
+                calHTML += '<div class="cal-big-1"> </div>';
+            } else {
+                calHTML += self.createDay(cal.calendar[i][j]);
+            }
+        }
+        calHTML += '</div>';
+    }
+
+    $('.calendar-body').append(calHTML);
+
+    $('.cal-popover').popover({
+        container: 'body'
+    });
+
+    $('.event-item, .event-name').click(function () {
+        self.updatePanel($(this).attr("data-id"));
+    });
+
+    this.panel();
+};
+
+CalendarObject.prototype.createDay = function (day) {
+    // Checks if event are in event list
+
+    var matchCount = 0;
+    var activeDate = this.asDate(day);
+    var todayClass = this.isDateToday(activeDate) ? 'cal-today' : '';
+
+    var calendarDay = '<div class="cal-big-1 ' + todayClass + '"><span class="day">' + day + '</span>';
+
+    this.events.forEach(function (event) {
+
+        if (event.dueDate === activeDate) {
+
+            if (matchCount === 0) calendarDay += '<ul class="event-list text-left">';
+
+            calendarDay += '\n                <li class="event-item toggle-event" data-id="' + event.bill.id + '">\n                             <span class="event-name text-truncate toggle-event" data-id="' + event.bill.id + '">\n                                <span class="badge badge-' + event.bill.status.color + ' w-100 pl-2 pb-1 text-left event-name-highlight hvr-pulse-shrink">\n                                   ' + event.bill.merchant.name + '</span>\n                             </span>                \n                 </li>';
+            matchCount++;
+        }
+    });
+
+    if (matchCount > 0) calendarDay += '</ul>';
+
+    calendarDay += '</div>';
+    return calendarDay;
+};
+
+CalendarObject.prototype.isDateToday = function (date) {
+
+    var today = this.formatDate(new Date());
+
+    return today === date;
+};
+
+CalendarObject.prototype.formatDate = function (date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+};
+
+// could add language support later.... in theory
+CalendarObject.prototype.renderMonthHeader = function (weekdays) {
+
+    var headerHTML = '<div class="row cal-row cal-header">';
+
+    weekdays.forEach(function (day) {
+        headerHTML += '<div class="cal-1-header text-truncate">' + day + '</div>';
+    });
+
+    headerHTML += '</div>';
+
+    return headerHTML;
+};
+
+CalendarObject.prototype.changeMonth = function (direction) {
+    var self = this;
+
+    if (self.currMonth === 11 && direction === "forward") {
+        self.currMonth = -1;
+        self.currYear++;
+    }
+
+    if (self.currMonth === 0 && direction === "back") {
+        self.currMonth = 12;
+        self.currYear--;
+    }
+
+    if (direction === "forward") {
+        self.currMonth++;
+    } else {
+        self.currMonth--;
+    }
+
+    this.eventsSync();
+};
+
+// Update the events pulling new data before refreshing calendar
+CalendarObject.prototype.eventsSync = function () {
+    var self = this;
+
+    return this.loading(api.getData('calendar/events', self.asDate(1)));
+};
+
+CalendarObject.prototype.loading = function (data) {
+    var self = this;
+
+    $('.cal-loader, .cal-status').show();
+    $('.calendar-body, .card-header').addClass('cal-blur');
+
+    console.log("yes");
+
+    data.then(function (d) {
+        self.events = d;
+        $('.cal-loader, .cal-status').hide();
+        $('.calendar-body,  .card-header').removeClass('cal-blur');
+        self.renderMonth();
+    }, function (error) {
+        $('.cal-loader, .cal-status').hide();
+        console.log("Error fetching calendar data.");
+    });
+};
+
+CalendarObject.prototype.asDate = function (day) {
+
+    if (day < 10) {
+        day = "0" + day;
+    }
+
+    // starts at zero offset
+    var month = this.currMonth + 1;
+    if (month < 10) {
+        month = "0" + month;
+    }
+
+    var d = this.currYear + "-" + month + "-" + day;
+
+    return d;
+};
+
+CalendarObject.prototype.panel = function () {
+    var self = this;
+
+    $('.calendar-overlay').off();
+
+    var panelEvent = $('#calendar-panel').scotchPanel({
+        containerSelector: '#calendar', // Make this appear on the entire screen
+        direction: 'right', // Make it toggle in from the left
+        duration: 550, // Speed in ms how fast you want it to be
+        transition: 'ease-in-out', // CSS3 transition type: linear, ease, ease-in, ease-out, ease-in-out, cubic-bezier(P1x,P1y,P2x,P2y)
+        clickSelector: '.toggle-event', // Enables toggling when clicking elements of this class
+        distanceX: '400px', // Size fo the toggle
+        beforePanelOpen: function beforePanelOpen() {
+            // Reset all panels
+            $('.scotch-panel').css('z-index', 0);
+            // Bring current panel to top
+            $('#calendar-panel').removeClass('hidden-on-load').css('z-index', -1);
+        },
+        enableEscapeKey: true // Clicking Esc will close the panel
+    });
+
+    $('.calendar-overlay').click(function () {
+        // CLOSE ONLY
+        panelEvent.close();
+    });
+};
+
+CalendarObject.prototype.getBillEvent = function (id) {
+    var foundEvent = null;
+
+    this.events.forEach(function (event) {
+        if (parseInt(id) === event.bill.id) return foundEvent = event;
+    });
+
+    return foundEvent;
+};
+
+CalendarObject.prototype.updatePanel = function (id) {
+
+    var event = this.getBillEvent(id);
+
+    $('#panel-event-name').text(event.bill.merchant.name);
+
+    //$('#event-details-address').text(event.bill.merchant.address);
+    $('#event-details-bill-link').attr('href', "./bill/view/" + event.bill.id);
+    //$('#event-details-city').text(event.bill.merchant.address.city);
+    $('#event-details-map').text();
+    $('#event-details-payment-method').text(event.bill.method.name);
+    $('#event-details-state').text();
+    $('#event-details-zipcode').text();
+};
+
+module.exports = CalendarObject;
+
+/***/ }),
+
+/***/ 3:
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+
+/***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -943,7 +943,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(4);
+var	fixUrls = __webpack_require__(8);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -1264,7 +1264,7 @@ function updateLink (link, options, obj) {
 
 /***/ }),
 
-/***/ 3:
+/***/ 5:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1304,9 +1304,11 @@ module.exports = {
     updateData: function updateData(location, data) {
         return module.exports.addData(location, data);
     },
-    // query for post data
-    // parameter for url info
-    // ex: players/Name+Last/?post=3 type/parameter/query
+
+    post: function post(location, data) {
+        return module.exports.addData(location, data);
+    },
+
     getData: function getData(type, parameter, query) {
         parameter = typeof parameter !== 'undefined' ? parameter : "";
         query = typeof query !== 'undefined' ? query : "";
@@ -1333,7 +1335,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 4:
+/***/ 8:
 /***/ (function(module, exports) {
 
 

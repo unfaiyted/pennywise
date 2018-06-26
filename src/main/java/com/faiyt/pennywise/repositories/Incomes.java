@@ -23,4 +23,6 @@ public interface Incomes extends CrudRepository<Income, Long> {
 
 
 
+
+
 }

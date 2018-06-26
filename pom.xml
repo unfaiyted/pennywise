@@ -162,6 +162,13 @@
 		</dependency>
 
 
+		<dependency>
+			<groupId>com.plaid</groupId>
+			<artifactId>plaid-java</artifactId>
+			<version>3.0.2</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
