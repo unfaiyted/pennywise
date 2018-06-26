@@ -60,19 +60,19 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 179);
+/******/ 	return __webpack_require__(__webpack_require__.s = 186);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 17:
+/***/ 149:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var api = __webpack_require__(3);
-var alert = __webpack_require__(5);
+var api = __webpack_require__(5);
+var alert = __webpack_require__(9);
 
 // Trigger on page to remove entries from page, settings need to be setup to delete
 // both visual and database data from user.
@@ -133,13 +133,13 @@ module.exports = DeleteObject;
 
 /***/ }),
 
-/***/ 179:
+/***/ 186:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var DeleteObj = __webpack_require__(17);
+var DeleteObj = __webpack_require__(149);
 
 // Deletes a bill from the list of bills
 var deleteIncome = new DeleteObj({
@@ -151,7 +151,7 @@ var deleteIncome = new DeleteObj({
 
 /***/ }),
 
-/***/ 3:
+/***/ 5:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -222,7 +222,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 5:
+/***/ 9:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

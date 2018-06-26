@@ -27,6 +27,7 @@
 
     </div>
 
+    <canvas id="chart-daily" width="400" height="200"></canvas>
 
 </div>
 
@@ -34,9 +35,6 @@
 
 <div th:replace="partials/layout :: footer" />
 
-<script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
-
-
-<script th:src="@{~/built/charts.js}"></script>
+<script th:src="@{~/built/analysis.js}"></script>
 </body>
 </html>

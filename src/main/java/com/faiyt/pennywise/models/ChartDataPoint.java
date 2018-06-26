@@ -3,15 +3,15 @@ package com.faiyt.pennywise.models;
 
 // Pojo Chart element for storing data that will
 // eventually be displayed in chart format to the page.
-public class ChartElement {
+public class ChartDataPoint {
 
     private String name;
     private Double value;
 
 
-    public ChartElement() {}
+    public ChartDataPoint() {}
 
-    public ChartElement(String name, Double value) {
+    public ChartDataPoint(String name, Double value) {
         this.name = name;
         this.value = value;
     }

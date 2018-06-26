@@ -1,7 +1,7 @@
 package com.faiyt.pennywise.services;
 
 import com.faiyt.pennywise.models.Chart;
-import com.faiyt.pennywise.models.ChartElement;
+import com.faiyt.pennywise.models.ChartDataSet;
 import com.faiyt.pennywise.models.finance.Account;
 import com.faiyt.pennywise.models.finance.Transaction;
 import com.faiyt.pennywise.repositories.Accounts;
@@ -55,7 +55,10 @@ public class InstitutionService {
 
     public Chart getDailySpendingByAccount(Long id) {
         Account account = getAccounts().findById(id).get();
-      return new Chart(getAccounts().getSpendingByDay(account.getAccountId()));
+
+        ChartDataSet dataSet = new ChartDataSet("Account name", getAccounts().getSpendingByDay(account.getAccountId()));
+
+      return new Chart(new ArrayList<ChartDataSet>());
     }
 
 

@@ -78,7 +78,6 @@ public class BillService {
 
         }
 
-
         return new Chart(categoryNames, series);
     }
 
