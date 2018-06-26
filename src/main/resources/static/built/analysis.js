@@ -4611,7 +4611,76 @@ module.exports = {
 /***/ }),
 /* 3 */,
 /* 4 */,
-/* 5 */,
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// Functions for local json file interactions
+module.exports = {
+
+    settings: { //settings
+        url: window.location.origin + "/api/",
+        rateLimit: 5,
+        token: $("meta[name='_csrf']").attr("content"),
+        header: $("meta[name='_csrf_header']").attr("content")
+    },
+
+    //Inserts data into server
+    addData: function addData(location, data) {
+        location = typeof location !== 'undefined' ? location : "";
+        return fetch(module.exports.settings.url + location, {
+            method: "post",
+            credentials: "same-origin",
+            headers: {
+                "X-CSRF-Token": module.exports.settings.token,
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        }).then(function (response) {
+            return response.json();
+        });
+    },
+
+    deleteData: function deleteData(location, data) {
+        return module.exports.addData(location, data);
+    },
+
+    updateData: function updateData(location, data) {
+        return module.exports.addData(location, data);
+    },
+
+    post: function post(location, data) {
+        return module.exports.addData(location, data);
+    },
+
+    getData: function getData(type, parameter, query) {
+        parameter = typeof parameter !== 'undefined' ? parameter : "";
+        query = typeof query !== 'undefined' ? query : "";
+
+        return fetch(module.exports.settings.url + type + "/" + parameter + query, {
+            method: 'GET',
+            credentials: 'same-origin',
+            redirect: 'follow',
+            agent: null,
+            headers: {
+                "Content-Type": "text/plain",
+                'Authorization': 'Basic ' + btoa('username:password')
+            }
+        }).then(function (response) {
+            var json = response.json();
+            if (response.status >= 200 && response.status < 300) {
+                return json;
+            } else {
+                return json.then(Promise.reject.bind(Promise));
+            }
+        });
+    }
+};
+
+/***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19100,38 +19169,52 @@ var dailySpending = __webpack_require__(189);
 
 
 var Chart = __webpack_require__(190);
+var api = __webpack_require__(5);
 
-var ctx = document.getElementById("chart-daily");
-var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ["2018-05-22", "2018-05-09", "2018-04-26", "2018-04-23", "2018-04-22", "2018-03-23", "2018-03-10", "2018-02-25", "2018-02-22", "2018-02-21", "2018-02-08", "2018-01-26", "2018-01-23", "2018-01-22", "2018-01-09", "2017-12-27", "2017-12-24", "2017-12-23", "2017-12-10", "2017-11-27", "2017-11-24", "2017-11-23", "2017-11-10", "2017-10-28", "2017-10-25", "2017-10-24", "2017-10-11", "2017-09-28", "2017-09-25", "2017-09-24", "2017-09-11", "2017-08-29", "2017-08-26", "2017-08-25"],
-        datasets: [{
-            label: 'Chase Checking x9337',
-            data: [89.4, 6.33, 5.4, 16.33, 89.4, 89.4, 6.33, 5.4, 16.33, 89.4, 6.33, 5.4, 16.33, 89.4, 6.33, 5.4, 16.33, 89.4, 6.33, 5.4, 16.33, 89.4, 6.33, 5.4, 16.33, 89.4, 6.33, 5.4, 16.33, 89.4, 6.33, 5.4, 16.33, 89.4],
-            backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-            borderColor: ['rgba(255,99,132,1)'],
-            borderWidth: 1
-        }, {
-            label: 'Chase Savings x0999',
-            data: [11.4, 6.33, 5.4, 22.33, 89.4, 89.4, 6.33, 51.4, 29.33, 80.4, 63.33, 5.4, 16.33, 49.4, 6.33, 5.4, 16.33, 89.4, 6.33, 5.4, 16.33, 89.4, 6.33, 5.4, 16.33, 89.4, 6.33, 5.4, 16.33, 89.4, 6.33, 5.4, 16.33, 89.4],
-            backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
-            borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
-            borderWidth: 1
+var colors = {
+    backgroundColor: ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
+    borderColor: ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)']
 
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    callback: function callback(value, index, values) {
-                        return '$' + value.toFixed(2);
-                    }
-                }
-            }]
-        }
+};
+
+api.getData("institution/account/daily/spending/9").then(function (data) {
+    console.log(data);
+
+    var datasets = [];
+
+    for (var i = 0; i < data.dataSets.length; i++) {
+
+        datasets.push({
+            label: data.dataSets[i].label,
+            data: data.dataSets[i].data,
+            backgroundColor: [colors.backgroundColor[i]],
+            borderColor: [colors.borderColor[i]]
+
+        });
     }
+
+    var chartData = {
+        labels: data.labels,
+        datasets: datasets
+    };
+
+    // Generate Chart
+    var ctx = document.getElementById("chart-daily");
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: chartData,
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        callback: function callback(value, index, values) {
+                            return '$' + value.toFixed(2);
+                        }
+                    }
+                }]
+            }
+        }
+    });
 });
 
 /***/ }),
